@@ -1,0 +1,59 @@
+﻿@model IEnumerable<W23G37.Controllers.LlogariteController.LlogariteViewModel>
+
+@{
+    ViewData["Title"] = "Rolet e Stafit";
+}
+
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Emri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Mbiemri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rolet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Emri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Mbiemri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Email)
+                </td>
+                <td>
+                    @if (item.Rolet.Count > 1)
+                    {
+                        for (var i = 0; i < item.Rolet.Count - 1; i++)
+                        {
+                            <span>@item.Rolet[i], </span>
+                        }
+                        <span>@item.Rolet[^1]</span>
+                    }
+                    else if (item.Rolet.Count == 1)
+                    {
+                        <span>@item.Rolet[0]</span>
+                    }
+                </td>
+                <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoRoletUser", new { id=item.Perdoruesi.AspNetUserId })'"><i class="bi bi-person-add"></i></button>
+                    <button class="btn btn-danger" onclick="location.href='@Url.Action("FshijRoletUser", new { id=item.Perdoruesi.AspNetUserId })'"><i class="fa-solid fa-user-xmark"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

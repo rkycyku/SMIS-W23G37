@@ -1,0 +1,78 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Afati Paraqitjes Semestrit";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("APSShtoni")'">Shtoni Afatin <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Lloji Semestrit
+            </th>
+            <th>
+                Viti Akademik
+            </th>
+
+            <th>
+                Niveli Studimeve
+            </th>
+            <th>
+                Tot te Paraqitur
+            </th>
+            <th>
+                Aktiv nga
+            </th>
+            <th>
+                Aktiv deri me
+            </th>
+            <th>
+                Data Krijimit
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.APSListTotStudenteve) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Key.LlojiSemestrit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Key.VitiAkademik)
+            </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value) Student
+                </td>
+            <td>
+                    @($"{item.Key.DataFillimitAfatit:dd/MM/yyyy}")
+            </td>
+            <td>
+                    @($"{item.Key.DataMbarimitAfatit:dd/MM/yyyy}")
+            </td>
+            <td>
+                    @($"{item.Key.DataFillimitAfatit:dd/MM/yyyy}")
+            </td>
+            <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("APSDetaje", new { id=item.Key.APSID})'"><i class="fa-solid fa-circle-info"></i></button>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

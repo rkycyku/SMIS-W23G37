@@ -1,0 +1,37 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Detajet per: Semestrin e " + (Model.Semestri.NrSemestrit).ToString() + " te nivelit " + (Model.NiveliStudimit.EmriNivelitStudimeve).ToString();
+}
+
+<div>
+    <table class="tableStyle table table-striped mt-4">
+        <tr>
+            <th>
+                ID:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Semestri.SemestriID)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Semestri:
+            </th>
+            <td>
+               @Html.DisplayFor(model => model.Semestri.NrSemestrit)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Niveli Studimit:
+            </th>
+            <td>
+                <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetNiveliStudimit", new { id=Model.NiveliStudimit.NiveliStudimeveID})'">@Html.DisplayFor(model => model.NiveliStudimit.EmriNivelitStudimeve) - @Html.DisplayFor(model => model.NiveliStudimit.ShkurtesaEmritNivelitStudimeve) </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("SemestriIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+</div>

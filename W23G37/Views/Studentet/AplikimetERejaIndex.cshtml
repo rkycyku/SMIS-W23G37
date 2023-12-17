@@ -1,0 +1,64 @@
+﻿@model W23G37.Controllers.StudentetController.StudentetViewModel
+
+@{
+    ViewData["Title"] = "Aplikimet e Reja";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>Krijo Llogarin</th>
+            <th>
+                Studenti
+            </th>
+            <th>
+                Kodi Financiar
+            </th>
+            <th>
+                Drejtimi
+            </th>
+            <th>
+                Viti Akademik
+            </th>
+            <th>
+                Data Aplikimit
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.AplikimetEReja) {
+            <tr>
+
+                <td>
+                    <button class="btn btn-success" @(item.Pagesat != null ? "" : "disabled") onclick="location.href='@Url.Action("ShtoniLlogarinStudentit", new { id = item.AplikimiID})'">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                </td>
+
+            <td>
+                    @Html.DisplayFor(modelItem => item.Emri) @Html.DisplayFor(modelItem => item.Mbiemri)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KodiFinanciar)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Departamentet.ShkurtesaDepartamentit) -  @Html.DisplayFor(modelItem => item.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VitiAkademikRegjistrim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataRegjistrimit)
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+﻿@model W23G37.Controllers.DepartamentetController.DepartamentetViewModel
+
+@{
+    ViewData["Title"] = "Lista e Departamenteve";
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("Create")'">Shtoni Departamentin <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Emri
+            </th>
+            <th>
+                Shkurtesa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Departamentet)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartamentiID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmriDepartamentit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShkurtesaDepartamentit)
+            </td>
+            <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("Details", new { id=item.DepartamentiID})'"><i class="fa-solid fa-circle-info"></i></button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

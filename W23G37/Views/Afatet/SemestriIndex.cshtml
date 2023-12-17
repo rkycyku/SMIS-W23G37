@@ -1,0 +1,51 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Semestrat";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoniSemestrin")'">Shtoni Semestrin <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Semestri ID
+            </th>
+            <th>
+                Semestri
+            </th>
+            <th>
+                Niveli i Studimeve
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Semestrat) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SemestriID)
+                </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NrSemestrit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.NiveliStudimeve.EmriNivelitStudimeve) - @Html.DisplayFor(modelItem => item.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve)
+            </td>
+                <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("DetajetSemestri", new { id=item.SemestriID})'"><i class="fa-solid fa-circle-info"></i></button>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

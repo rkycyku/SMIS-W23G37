@@ -1,0 +1,115 @@
+﻿@model W23G37.Controllers.LlogariteController.LlogariteViewModel
+
+@{
+    ViewData["Title"] = "Te dhenat e Llogaris per " + (Model.Perdoruesi.Emri).ToString() + " " + (Model.Perdoruesi.Mbiemri).ToString();
+}
+
+<div>
+    <table class="tableStyle table table-striped mt-4">
+        <tr>
+            <th colspan="2" style="text-align: center">
+                Informatat Personale
+            </th>
+            <th colspan="2" style="text-align: center">
+                Kontakti
+            </th>
+        </tr>
+        <tr>
+            <th>
+                ID:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Perdoruesi.UserID)
+            </td>
+            <th>
+                Numri Kontaktit:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TeDhenatPerdoruesit.NrKontaktit)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Emri):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Perdoruesi.Emri)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Adresa):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Adresa)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Mbiemri):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Perdoruesi.Mbiemri)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Qyteti):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Qyteti)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Email):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Perdoruesi.Email)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Shteti):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Shteti)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Username):
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Perdoruesi.Username)
+            </td>
+            <th>
+                Zip Kodi:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TeDhenatPerdoruesit.ZipKodi)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rolet):
+            </th>
+            <td>
+                @if (Model.Rolet.Count > 1)
+                {
+                    for (var i = 0; i < Model.Rolet.Count - 1; i++)
+                    {
+                        <span>@Model.Rolet[i], </span>
+                    }
+                    <span>@Model.Rolet[^1]</span>
+                }
+                else if (Model.Rolet.Count == 1)
+                {
+                    <span>@Model.Rolet[0]</span>
+                }
+            </td>
+            <th>
+            </th>
+            <td>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Index")'"><i class="fa-solid fa-arrow-left"></i></button>
+    <button class="btn btn-warning" onclick="location.href='@Url.Action("Edit", new { id = Model.Perdoruesi.AspNetUserId})'"><i class="fa-solid fa-pen-to-square"></i></button>
+</div>

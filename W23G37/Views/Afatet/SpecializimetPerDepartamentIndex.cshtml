@@ -1,0 +1,48 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Specializimet Per Departament";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("SpecializimetPerDepartamentShtoni")'">Shtoni Specializimin <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Emri Specializimit
+            </th>
+            <th>
+                Departamenti
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SpecializimetPerDepartament) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmriSpecializimit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Departamenti.EmriDepartamentit) - @Html.DisplayFor(modelItem => item.Departamenti.ShkurtesaDepartamentit)
+            </td>
+            <td>
+                @*
+                <button class="btn btn-success" onclick="location.href='@Url.Action("SpecializimetPerDepartamentEdit", new { id=item.SpecializimiID})'"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-success" onclick="location.href='@Url.Action("SpecializimetPerDepartamentFshi", new { id=item.SpecializimiID})'"><i class="fa-solid fa-trasg"></i></button>
+                 *@  
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("SpecializimetPerDepartamentDetaje", new { id=item.SpecializimiID})'"><i class="fa-solid fa-circle-info"></i></button>
+            </tr>
+}
+    </tbody>
+</table>

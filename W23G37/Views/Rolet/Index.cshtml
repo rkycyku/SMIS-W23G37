@@ -1,0 +1,43 @@
+﻿@model IEnumerable<W23G37.Controllers.RoletController.RoletViewModel>
+
+@{
+    ViewData["Title"] = "Rolet";
+}
+
+<p>
+    
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-lg"></i> Shtoni nje Role</a>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID e Rolit
+            </th>
+            <th>
+                Emri Rolit
+            </th>
+            <th>
+                Totali i Perdoruesve
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotaliPerdoruesve)
+            </td>
+            <td>
+                    <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete", new { emriRolit = item.Name,  idRoli = item.ID})'"><i class="bi bi-trash3"></i></button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

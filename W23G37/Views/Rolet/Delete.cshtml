@@ -1,0 +1,43 @@
+﻿@model W23G37.Controllers.RoletController.RoletViewModel
+
+@{
+    ViewData["Title"] = "Fshini Rolin";
+}
+
+<h3>A jeni te sigurt qe deshironi te fshini kete rol?</h3>
+<div>
+    <hr />
+
+    <form asp-action="Delete">
+
+        <table class="tableStyle table table-striped">
+            <tr>
+                <th>
+                    ID e Rolit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.ID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Emri Rolit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Totali i Perdoruesve:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.TotaliPerdoruesve)
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" asp-for="Name" />
+        <a class="btn btn-primary" asp-action="Index"><i class="bi bi-box-arrow-left"></i></a>
+        <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+    </form>
+</div>

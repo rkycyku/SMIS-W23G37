@@ -1,0 +1,114 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Detajet per Regjistrimi e semestrit " + (Model.APS.LlojiSemestrit).ToString() + ' ' +(Model.APS.VitiAkademik).ToString() + " - " + (Model.APS.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve).ToString();
+}
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+    <table class="tableStyle table table-striped mt-4">
+        <tr>
+            <th>
+                ID:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.APS.APSID)
+            </td>
+        </tr>
+        <tr>
+            <th>
+               Viti Akademik:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.APS.VitiAkademik)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Niveli i Studimeve:
+            </th>
+            <td>
+                    <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetNiveliStudimit", new { id=Model.APS.NiveliStudimeveID})'">@Html.DisplayFor(model => model.APS.NiveliStudimeve.EmriNivelitStudimeve) - @Html.DisplayFor(model => model.APS.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve)</a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Afati Paraqitjes:
+            </th>
+            <td>
+                    @($"{Model.APS.DataFillimitAfatit:dd/MM/yyyy}") - @($"{Model.APS.DataMbarimitAfatit:dd/MM/yyyy}")
+            </td>
+        </tr>
+            <tr>
+                <th>
+                    Data Krijimit:
+                </th>
+                <td>
+                    @($"{Model.APS.DataKrijimit:dd/MM/yyyy}")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Tot te Paraqitur:
+                </th>
+                <td>
+                    @Model.ParaqitjaSemestrave.Count Student
+                </td>
+            </tr>
+    </table>
+    </div>
+    <div style="margin-left: 1em; flex: 2;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="5" style="text-align: center;">
+                    Studentet që e kanë paraqitur këtë semester
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Studenti
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Semestri
+                </th>
+                <th>
+                    Data Paraqitjes
+                </th>
+                <th>
+                    Nderrimi Orarit
+                </th>
+            </tr>
+            @foreach (var item in Model.ParaqitjaSemestrave)
+            {
+                <tr>
+                    <td>
+                        @item.Studenti.Emri @item.Studenti.Mbiemri
+                    </td>
+                    
+                    <td>
+                        @item.Studenti.Email
+                    </td>
+
+                    <td>
+
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetSemestri", new { id=item.SemestriID})'">Semestri @item.Semestri.NrSemestrit</a>
+
+                    </td>
+
+                    <td>
+                        @($"{item.DataParaqitjes:dd/MM/yyyy}")
+                    </td>
+
+                    <td>
+                        @item.NderrimiOrarit
+                    </td>
+                    </tr>
+            }
+        </table>
+    </div>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("APSIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+</div>

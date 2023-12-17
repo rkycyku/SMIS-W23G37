@@ -1,0 +1,93 @@
+﻿@model IEnumerable<W23G37.Controllers.LokacionetController.LokacionetViewModel>
+
+@{
+    ViewData["Title"] = "Lista e Lokacionev";
+}
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("Create")'">Shtoni Lokacionin <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID e Lokacionit
+            </th>
+            <th>
+                Emri
+            </th>
+            <th>
+                Shkurtesa
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Qyteti
+            </th>
+            <th>
+                Data Krijimit
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lokacioni.LokacioniID)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Lokacioni.EmriLokacionit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Lokacioni.ShkurtesaLokacionit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Lokacioni.AdresaLokacionit)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Lokacioni.QytetiLokacionit)
+            </td>
+            <td>
+                    @($"{item.Lokacioni.DataKrijimit:dd/MM/yyyy}")
+            </td>
+            <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("Details", new { id=item.Lokacioni.LokacioniID})'"><i class="fa-solid fa-circle-info"></i></button>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoDepartamentinLokacion", new { id=item.Lokacioni.LokacioniID})'"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@item.Lokacioni.ShkurtesaLokacionit">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+                <div class="modal fade" id="@item.Lokacioni.ShkurtesaLokacionit" tabindex="-1" role="dialog" aria-labelledby="FshiLokacion" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="FshiLokacion">A jeni te sigurt qe deshironi ta fshini kete lokacion?</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>ID:</strong> @item.Lokacioni.LokacioniID</p>
+                                <p><strong>Emri Lokacionit:</strong> @item.Lokacioni.EmriLokacionit</p>
+                                <p><strong>Shkurtesa:</strong> @item.Lokacioni.ShkurtesaLokacionit</p>
+                                <p><strong>Adresa:</strong> @item.Lokacioni.AdresaLokacionit, @item.Lokacioni.QytetiLokacionit</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" onclick="location.href='@Url.Action("Fshij", new { LokacioniID = item.Lokacioni.LokacioniID})'"><i class="fa-solid fa-trash"></i></button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+}
+    </tbody>
+</table>

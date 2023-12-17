@@ -1,0 +1,110 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Afatin e Paraqitjes te Semestrit";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="APSShtoni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="formaSelect mb-3">
+                <label asp-for="APS.LlojiSemestrit">Niveli i Studimeve</label>
+                <select asp-for="APS.LlojiSemestrit" class="form-control" required>
+                    <option disabled value="">Zgjedhni Llojin e Semestrit</option>
+                    <option value="dimëror" id="semestriDimëror">Semestri Dimëror</option>
+                    <option value="veror" id="semestriVeror">Semestri Veror</option>
+                </select>
+            </div>
+            <div class="formaSelect mb-3">
+                <label asp-for="NiveliStudimit">Niveli i Studimeve</label>
+                <select asp-for="APS.NiveliStudimeveID" class="form-control" required>
+                    <option disabled value="">Zgjedhni Nivelin e Studimeve</option>
+                    @foreach (var item in Model.NiveliStudimeve)
+                    {
+                        <option value="@item.NiveliStudimeveID">@item.EmriNivelitStudimeve - @item.ShkurtesaEmritNivelitStudimeve</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="APS.DataFillimitAfatit" class="control-label">Data Fillimit per Paraqitje</label>
+                <input asp-for="APS.DataFillimitAfatit" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="fillimiSemestrit" />
+                <span asp-validation-for="APS.DataFillimitAfatit" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="APS.DataMbarimitAfatit" class="control-label">Data Mbarimit per Paraqitje</label>
+                <input asp-for="APS.DataMbarimitAfatit" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="mbarimiSemestrit" />
+                <span asp-validation-for="APS.DataMbarimitAfatit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("APSIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-add"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var dataEDitesSotme = new Date();
+            var vitiAktual = dataEDitesSotme.getFullYear();
+
+            var fillimiSemestritDimeror = new Date(vitiAktual, 9, 1);
+            var mbarimiSemestritDimeror = new Date(vitiAktual + 1, 2, 1); 
+
+            if ((vitiAktual + 1) % 4 === 0) {
+                mbarimiSemestritDimeror.setFullYear(vitiAktual + 1, 2, 1); 
+            } else {
+                mbarimiSemestritDimeror.setFullYear(vitiAktual + 1, 1, 29); 
+            }
+
+            var fillimiSemestritVeror = new Date(vitiAktual + 1, 2, 1);
+            var mbarimiSemestritVeror = new Date(vitiAktual + 1, 8, 31);
+
+            var fillimiSemestrit = document.getElementById("fillimiSemestrit");
+            var mbarimiSemestrit = document.getElementById("mbarimiSemestrit");
+
+            fillimiSemestrit.min = "@DateTime.Now.ToString("yyyy-MM-dd")";
+            mbarimiSemestrit.min = "@DateTime.Now.ToString("yyyy-MM-dd")";
+
+            fillimiSemestrit.value = dataEDitesSotme.toISOString().split('T')[0];
+
+            if (dataEDitesSotme >= fillimiSemestritDimeror && dataEDitesSotme <= mbarimiSemestritDimeror) {
+                fillimiSemestrit.max = mbarimiSemestritDimeror.toISOString().split('T')[0];
+                mbarimiSemestrit.max = mbarimiSemestritDimeror.toISOString().split('T')[0];
+
+                var semestriVeror = document.getElementById("semestriVeror");
+                var semestriDimëror = document.getElementById("semestriDimëror");
+
+                mbarimiSemestrit.value = mbarimiSemestritDimeror.toISOString().split('T')[0];
+
+                semestriVeror.disabled = true;
+                semestriDimëror.selected = true;
+            } else {
+                fillimiSemestrit.max = mbarimiSemestritVeror.toISOString().split('T')[0];
+                mbarimiSemestrit.max = mbarimiSemestritVeror.toISOString().split('T')[0];
+
+                var semestriVeror = document.getElementById("semestriVeror");
+                var semestriDimëror = document.getElementById("semestriDimëror");
+
+                mbarimiSemestrit.value = mbarimiSemestritVeror.toISOString().split('T')[0];
+
+                semestriDimëror.disabled = true;
+                semestriVeror.selected = true;
+            }
+
+            fillimiSemestrit.addEventListener('change', function () {
+                if (fillimiSemestrit.value) {
+                    mbarimiSemestrit.min = fillimiSemestrit.value;
+                } else {
+                    mbarimiSemestrit.min = "@DateTime.Now.ToString("yyyy-MM-dd")";
+                }
+            });
+        });
+    </script>
+
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

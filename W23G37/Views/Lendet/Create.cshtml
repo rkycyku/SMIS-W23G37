@@ -1,0 +1,56 @@
+﻿@model W23G37.Controllers.LendetController.LendetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Lenden";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Lenda.EmriLendes" class="control-label">Emri Lendes</label>
+                <input asp-for="Lenda.EmriLendes" class="form-control" />
+                <span asp-validation-for="Lenda.EmriLendes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lenda.ShkurtesaLendes" class="control-label">Shkurtesa Lendes</label>
+                <input asp-for="Lenda.ShkurtesaLendes" class="form-control" />
+                <span asp-validation-for="Lenda.ShkurtesaLendes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lenda.KreditELendes" class="control-label">ECTS</label>
+                <input asp-for="Lenda.KreditELendes" class="form-control" />
+                <span asp-validation-for="Lenda.KreditELendes" class="text-danger"></span>
+            </div>
+            <div class="formaSelect mb-3 mt-3">
+                <label asp-for="Lenda.KategoriaLendes">Kategoria Lendes</label>
+                <select asp-for="KategoriaLendesZgjedhur" class="form-control" required>
+                    <option disabled value="">Zgjedhni Kategorine</option>
+                    <option value="Obligative">Obligative</option>
+
+                    <option value="Zgjedhore">Zgjedhore</option>
+                </select>
+            </div>
+            <div class="formaSelect mb-3">
+                <label asp-for="Lenda.SemestriLigjerimit">Ligjerohet ne</label>
+                <select asp-for="SemestriLigjerimitZgjedhur" class="form-control" required>
+                    <option disabled value="">Zgjedhni Semestrin</option>
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        <option value="@i">Semestrin @i</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mt-3">
+                <button class="btn btn-primary" asp-action="Index"><i class="fa-solid fa-arrow-left"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

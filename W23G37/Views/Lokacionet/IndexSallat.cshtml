@@ -1,0 +1,51 @@
+﻿@model IEnumerable<W23G37.Controllers.LokacionetController.LokacionetViewModel>
+
+@{
+    ViewData["Title"] = "Lista e Sallave";
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoniSallat")'">Shtoni Sallen <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID Salles
+            </th>
+            <th>
+                Kodi Salles
+            </th>
+            <th>
+                Kapaciteti
+            </th>
+            <th>
+                Lokacioni
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salla.SallaID)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Salla.KodiSalles)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Salla.KapacitetiSalles)
+            </td>
+            <td>
+                    <a class="DetajetLink" onclick="location.href='@Url.Action("Details", new { id=item.Salla.Lokacioni.LokacioniID})'">@item.Salla.Lokacioni.EmriLokacionit</a>
+
+            </td>
+            <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("DetailsSallat", new { id=item.Salla.SallaID})'"><i class="fa-solid fa-circle-info"></i></button>
+                    <button class="btn btn-danger" onclick="location.href='@Url.Action("DeleteSallat", new { id=item.Salla.SallaID})'"><i class="fa-solid fa-trash"></i></button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

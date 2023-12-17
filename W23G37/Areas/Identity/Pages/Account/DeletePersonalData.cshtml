@@ -1,0 +1,27 @@
+﻿@page
+@model DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Fshini nje llogari nga sistemi";
+}
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>Kjo llogari do te fshihet pergjithmone dhe si e tille te gjitha te dhenat bashk me te! Kthimi i llogaris dhe i te dhenave nuk do te jete i mundur!</strong>
+    </p>
+</div>
+
+<div>
+    <form id="delete-user" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" autocomplete="Email" aria-required="true" placeholder="Vendosni Email Adresen" />
+            <label asp-for="Input.Email" class="form-label"></label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+        <button class="w-100 btn btn-lg btn-danger" type="submit">Fshini kete llogari</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

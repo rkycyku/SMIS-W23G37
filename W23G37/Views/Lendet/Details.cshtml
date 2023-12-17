@@ -1,0 +1,172 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model W23G37.Controllers.LendetController.LendetViewModel
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Te Dhenat e Lendes";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th>
+                    ID:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.LendaID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Kodi Lendes:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.KodiLendes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Emri:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.EmriLendes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Shkurtesa:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.ShkurtesaLendes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    ECTS:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.KreditELendes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Kategoria:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lenda.KategoriaLendes)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Ligjerohet:
+                </th>
+                <td>
+                    Semestrin e @Html.DisplayFor(model => model.Lenda.SemestriLigjerimit)
+                </td>
+            </tr>
+        </table>
+
+        <div>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Index")'"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoLendenDepartament", new { id=Model.Lenda.LendaID})'"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+    <div style="margin-left: 1em; flex: 2;">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            @foreach (var departamenti in Model.Departamentet)
+            {
+                <li class="nav-item">
+                    <a class="nav-link @if (Model.Departamentet.IndexOf(departamenti) == 0) {
+                <text>show active</text>
+ } "
+                       id="@departamenti.ShkurtesaDepartamentit-tab" data-toggle="tab" href="#@departamenti.ShkurtesaDepartamentit" role="tab"
+                       aria-controls="@departamenti.ShkurtesaDepartamentit" aria-selected="true">@departamenti.ShkurtesaDepartamentit</a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            @foreach (var departamenti in Model.Departamentet)
+            {
+                <div class="tab-pane fade @if (Model.Departamentet.IndexOf(departamenti) == 0) {
+            <text>show active</text>
+} "
+                     id="@departamenti.ShkurtesaDepartamentit" role="tabpanel" aria-labelledby="@departamenti.ShkurtesaDepartamentit-tab">
+                    <table class="tableStyle table table-striped mt-4">
+                        <tr>
+                            <th>Deparamenti:</th>
+
+                            <td>
+                                                            <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Departamentet", new { id=departamenti.DepartamentiID})'">@departamenti.EmriDepartamentit</a>
+
+                                <td>
+                        </td>
+                        </tr>
+                    </table>
+                    <table class="tableStyle table table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Pozita</th>
+                                <th>Funksione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.DepartamentetMeProfesore.ContainsKey(departamenti))
+                            {
+                                var profesoret = Model.DepartamentetMeProfesore[departamenti];
+                                var totaliProfesoreve = profesoret.Count;
+
+                                @for (var i = 0; i < totaliProfesoreve; i++)
+                                {
+                                    var profesori = profesoret[i];
+
+                                    <tr>
+                                        <td>@profesori.Item1.Emri</td>
+                                        <td>@profesori.Item1.Mbiemri</td>
+                                        <td>@profesori.Item2</td>
+                                        <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@departamenti.ShkurtesaDepartamentit@profesori.Item1.UserID@profesori.Item2">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="@departamenti.ShkurtesaDepartamentit@profesori.Item1.UserID@profesori.Item2" tabindex="-1" role="dialog" aria-labelledby="professorModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="professorModalLabel">Largoni @(@profesori.Item2)in/en per kete lende</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Emri:</strong> @profesori.Item1.Emri</p>
+                                                    <p><strong>Mbiemri:</strong> @profesori.Item1.Mbiemri</p>
+                                                    <p><strong>Pozita:</strong> @profesori.Item2/e</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                                <button class="btn btn-danger" onclick="location.href='@Url.Action("FshiProfoesorinPerLenden", new { LendaID = Model.Lenda.LendaID,  DepartamentiID = @departamenti.DepartamentiID, ProfesoriID = @profesori.Item1.UserID, Pozita =  @profesori.Item2})'"><i class="fa-solid fa-trash"></i></button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-close"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

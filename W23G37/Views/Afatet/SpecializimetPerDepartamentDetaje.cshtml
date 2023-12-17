@@ -1,0 +1,47 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Detajet per Specializimin";
+}
+
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th>
+                    ID:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.SpecializimiPerDepartament.SpecializimiID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Emri Specializimit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.SpecializimiPerDepartament.EmriSpecializimit)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Departamenti:
+                </th>
+                <td>
+                    <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Departamentet", new { id=Model.SpecializimiPerDepartament.DepartamentiID})'">@Html.DisplayFor(model => model.SpecializimiPerDepartament.Departamenti.EmriDepartamentit) - @Html.DisplayFor(model => model.SpecializimiPerDepartament.Departamenti.ShkurtesaDepartamentit) </a>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Data Krijimit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.SpecializimiPerDepartament.DataKrijimt)
+                </td>
+            </tr>
+        </table>
+        </div>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("SpecializimetPerDepartamentIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+</div>

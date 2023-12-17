@@ -1,0 +1,43 @@
+﻿@model W23G37.Controllers.LokacionetController.LokacionetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Departamentin per Lokacion";
+}
+
+<div class="row">
+    <div class="col-md-4">
+
+        <form id="ShtoLendenDepartament" asp-action="ShtoDepartamentinLokacion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Lokacioni.LokacioniID" class="control-label">Lokacioni</label>
+                <input type="text" class="form-control" disabled
+                       value="@Model.Lokacioni.EmriLokacionit" />
+                <span asp-validation-for="Lokacioni.LokacioniID" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Lokacioni.LokacioniID"/>
+            <div class="formaSelect mb-3">
+                <label asp-for="Departamentet">Zgjedhni Departamentin</label>
+                <select id="DepartamentiZgjedhur" asp-for="DepartamentiZgjedhur" class="form-control" required>
+                    <option selected disabled value="">Zgjedhni Departamentin</option>
+                    @foreach (var departamenti in Model.Departamentet)
+                    {
+                        <option value="@departamenti.DepartamentiID">@departamenti.EmriDepartamentit</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <button type="button"class="btn btn-secondary" onclick="location.href='@Url.Action("Details", new { id = Model.Lokacioni.LokacioniID})'"><i class="fa-solid fa-close"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

@@ -1,0 +1,108 @@
+﻿@model W23G37.Controllers.LokacionetController.LokacionetViewModel
+
+@{
+    ViewData["Title"] = "Te Dhenat e Lokacionit";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th>
+                    ID:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lokacioni.LokacioniID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Emri Lokacionit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lokacioni.EmriLokacionit)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Shkurtesa:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lokacioni.ShkurtesaLokacionit)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Adresa:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lokacioni.AdresaLokacionit)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Qyteti:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Lokacioni.QytetiLokacionit)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Data Krijimit:
+                </th>
+                <td>
+                    @($"{Model.Lokacioni.DataKrijimit:dd/MM/yyyy}")
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Index")'"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoDepartamentinLokacion", new { id=Model.Lokacioni.LokacioniID})'"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+    <div style="margin-left: 1em; flex: 2;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="2">
+                    Departamentet aktive per kete lokacion
+                </th>
+            </tr>
+            @foreach (var departamenti in Model.Departamentet)
+            {
+                <tr>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Departamentet", new { id=departamenti.DepartamentiID})'">@departamenti.ShkurtesaDepartamentit - @departamenti.EmriDepartamentit</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div style="margin-left: 1em; flex: 3;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="2">
+                    Sallat aktive per kete lokacion
+                </th>
+            </tr>
+            @foreach (var salla in Model.Sallat)
+            {
+                <tr>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetailsSallat", "Lokacionet", new { id=salla.SallaID})'">@salla.KodiSalles - @salla.KapacitetiSalles Student</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

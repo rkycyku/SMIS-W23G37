@@ -1,0 +1,85 @@
+﻿@model W23G37.Controllers.LlogariteController.LlogariteViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Rolin e Stafit";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="tableStyle table table-striped mt-4">
+                <tr>
+                    <th>
+                        ID:
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.UserID)
+                    </td>
+                </tr>
+            <tr>
+                <th>
+                    Emri:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Perdoruesi.Emri)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Mbiemri:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Perdoruesi.Mbiemri)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Email:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Perdoruesi.Email)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Rolet:
+                </th>
+                <td>
+                    @if (Model.Rolet.Count > 1)
+                    {
+                        for (var i = 0; i < Model.Rolet.Count - 1; i++)
+                        {
+                            <span>@Model.Rolet[i], </span>
+                        }
+                        <span>@Model.Rolet[^1]</span>
+                    }
+                    else if (Model.Rolet.Count == 1)
+                    {
+                        <span>@Model.Rolet[0]</span>
+                    }
+                </td>
+            </tr>
+                </table>
+        <form asp-action="ShtoRoletUser">
+            <input type="hidden" asp-for="Perdoruesi.AspNetUserId" name="AspNetUserId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="formaSelect mb-3">
+                <label asp-for="RoletPerEditimit">Zgjedhni Rolin</label>
+                <select asp-for="roliZgjedhur" class="form-control" required>
+                    <option disabled value="">Zgjedhni Rolin</option>
+                    @foreach (var role in Model.RoletPerEditimit)
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="location.href='@Url.Action("RoletPerUser")'"><i class="fa-solid fa-arrow-left"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-user-plus"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

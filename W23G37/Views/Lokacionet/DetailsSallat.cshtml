@@ -1,0 +1,47 @@
+﻿@model W23G37.Controllers.LokacionetController.LokacionetViewModel
+
+@{
+    ViewData["Title"] = "Te Dhenat e Salles";
+}
+
+<div>
+    <table class="tableStyle table table-striped mt-4">
+        <tr>
+            <th>
+                ID:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Salla.SallaID)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Kodi Salles:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Salla.KodiSalles)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Kapaciteti:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Salla.KapacitetiSalles)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Lokacioni:
+            </th>
+            <td>
+                <a class="DetajetLink" onclick="location.href='@Url.Action("Details", new { id=Model.Lokacioni.LokacioniID})'">@Model.Lokacioni.EmriLokacionit</a>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<form>
+    <button class="btn btn-primary" asp-action="IndexSallat"><i class="fa-solid fa-arrow-left"></i></button>
+</form>

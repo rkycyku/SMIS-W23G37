@@ -1,0 +1,71 @@
+﻿@model W23G37.Controllers.LendetController.LendetViewModel
+
+@{
+    ViewData["Title"] = "Lista e Lendeve";
+}
+
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("Create")'">Shtoni Lenden <i class="fa-solid fa-plus"></i></button>
+</p>
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Kodi Lendes
+            </th>
+            <th>
+                Emri
+            </th>
+            <th>
+                Shkurtesa
+            </th>
+            <th>
+                ECTS
+            </th>
+            <th>
+                Kategoria
+            </th>
+            <th>
+                Ligjerohet
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Lendet)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LendaID)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.KodiLendes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmriLendes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShkurtesaLendes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KreditELendes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KategoriaLendes)
+                </td>
+                <td>
+                    Semestrin e @Html.DisplayFor(modelItem => item.SemestriLigjerimit)
+                </td>
+                <td>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("Details", new { id=item.LendaID})'"><i class="fa-solid fa-circle-info"></i></button>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoLendenDepartament", new { id=item.LendaID})'"><i class="fa-solid fa-plus"></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

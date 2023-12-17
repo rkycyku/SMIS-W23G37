@@ -1,0 +1,82 @@
+﻿@page
+@using static W23G37.Controllers.RoletController;
+
+@model RegisterModel
+@{
+    ViewData["Title"] = "Krijoni Llogarite";
+}
+
+
+<div class="row">
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" style="display: flex; gap: 1em; flex-direction: column">
+        <div style="display: flex; gap: 1em; flex-direction: row">
+            <div class="col-md-4">
+                <h2>Te dhenat Kryesore</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Emri" class="form-control" autocomplete="Emri" aria-required="true" placeholder="Filan" />
+                    <label asp-for="Input.Emri">Emri</label>
+                    <span asp-validation-for="Input.Emri" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Mbiemri" class="form-control" autocomplete="Mbiemri" aria-required="true" placeholder="Fisteku" />
+                    <label asp-for="Input.Mbiemri">Mbiemri</label>
+                    <span asp-validation-for="Input.Mbiemri" class="text-danger"></span>
+                </div>
+                <div class="formaSelect mb-3">
+                    <label asp-for="Input.RoliIZgjedhur">Zgjedhni Rolin</label>
+                    <select asp-for="Input.RoliIZgjedhur" class="form-control" required>
+                        <option disabled value="">Zgjedhni Rolin</option>
+                        @foreach (var role in ViewData["Roles"] as List<RoletViewModel>)
+                        {
+                            <option value="@role.Name">@role.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-floating mb-3">
+                    <br />
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                    <h3>Te Dhenat Ndihmese</h3>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Adresa" class="form-control" autocomplete="Adresa" aria-required="true" placeholder="Lagjja Kalabria" />
+                        <label asp-for="Input.Adresa">Adresa</label>
+                        <span asp-validation-for="Input.Adresa" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Qyteti" class="form-control" autocomplete="Qyteti" aria-required="true" placeholder="Prishtine" />
+                        <label asp-for="Input.Qyteti">Qyteti</label>
+                        <span asp-validation-for="Input.Qyteti" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Shteti" class="form-control" autocomplete="Shteti" aria-required="true" placeholder="Kosove" />
+                        <label asp-for="Input.Shteti">Shteti</label>
+                        <span asp-validation-for="Input.Shteti" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ZipKodi" class="form-control" autocomplete="ZipKodi" aria-required="true" placeholder="10000" />
+                        <label asp-for="Input.ZipKodi">Zip Kodi</label>
+                        <span asp-validation-for="Input.ZipKodi" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.NrTelefonit" class="form-control" autocomplete="NrTelefonit" aria-required="true" placeholder="+38343111000" />
+                        <label asp-for="Input.NrTelefonit">Nr. Telefonit</label>
+                        <span asp-validation-for="Input.NrTelefonit" class="text-danger"></span>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Krijo Llogarine</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

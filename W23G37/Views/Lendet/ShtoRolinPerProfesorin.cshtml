@@ -1,0 +1,64 @@
+﻿@model W23G37.Controllers.LendetController.LendetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Profesor-in/en / Asistent-in/en per Lende";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mb-3">
+            <label asp-for="Lenda.LendaID" class="control-label">Lenda</label>
+            <input type="text" class="form-control" disabled
+                   value="@($"{Model.Lenda.KodiLendes} - {Model.Lenda.EmriLendes}")" />
+            <span asp-validation-for="Lenda.LendaID" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Departamenti.DepartamentiID" class="control-label">Departamenti</label>
+            <input type="text" class="form-control" disabled
+                   value="@Model.Departamenti.EmriDepartamentit" />
+            <span asp-validation-for="Departamenti.DepartamentiID" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Perdoruesi.UserID" class="control-label">Profesori</label>
+            <input type="text" class="form-control" disabled
+                   value="@($"{Model.Perdoruesi.Emri} {Model.Perdoruesi.Mbiemri}")" />
+            <span asp-validation-for="Perdoruesi.UserID" class="text-danger"></span>
+        </div>
+        <form id="ShtoRolinPerProfesorin" asp-action="ShtoRolinPerProfesorin" method="post">
+            <input type="hidden" asp-for="Lenda.LendaID"/>
+            <input type="hidden" asp-for="Departamenti.DepartamentiID"/>
+            <input type="hidden" asp-for="Perdoruesi.UserID"/>
+            <div class="formaSelect mb-3">
+                <label asp-for="LDP.Pozita">Zgjedhni Poziten</label>
+                <select id="PozitaZgjedhur" asp-for="PozitaZgjedhur" class="form-control" required>
+                    <option selected disabled value="">Zgjedhni Poziten</option>
+                    @foreach (var role in Model.RoletELejuaraPerzgjedhje)
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </select>
+            </div>
+
+        </form>
+        <div class="form-group mt-3">
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("ShtoProfesorinPerLende", new { LendaID = Model.Lenda.LendaID, DepartamentiZgjedhur = Model.Departamenti.DepartamentiID})'"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn btn-secondary" onclick="location.href='@Url.Action("Details", new { id = Model.Lenda.LendaID})'"><i class="fa-solid fa-close"></i></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var pozitaZgjedhur = document.getElementById('PozitaZgjedhur');
+
+            pozitaZgjedhur.addEventListener('change', function () {
+                document.getElementById('ShtoRolinPerProfesorin').submit();
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

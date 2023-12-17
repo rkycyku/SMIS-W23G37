@@ -1,0 +1,18 @@
+
+.login {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  width: 80%;
+  margin-top: 5em;
+  background-color: #E4E9F7;
+}
+  
+
+.loginImg {
+  height: 100px;
+  width: 100px;
+  margin-bottom: 1em;
+}

@@ -1,0 +1,99 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Detajet per Nivelin e Studimit: " + (Model.NiveliStudimit.EmriNivelitStudimeve).ToString() + " - " + (Model.NiveliStudimit.ShkurtesaEmritNivelitStudimeve).ToString();
+}
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th>
+                    ID:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.NiveliStudimit.NiveliStudimeveID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Niveli Studimit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.NiveliStudimit.EmriNivelitStudimeve)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Shkurtesa Emrit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.NiveliStudimit.ShkurtesaEmritNivelitStudimeve)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Data Krijimit:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.NiveliStudimit.DataKrijimit)
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-left: 1em; flex: 2;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="2">
+                    Semestrat per kete Nivel Studimi
+                </th>
+            </tr>
+            @foreach (var item in Model.Semestrat)
+            {
+                <tr>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetSemestri", new { id=item.SemestriID})'">Semestri @item.NrSemestrit</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div style="margin-left: 1em; flex: 3;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="2">
+                    Afatet e paraqitjes se semestrit per kete Nivel Studimi
+                </th>
+            </tr>
+            @foreach (var item in Model.APSList)
+            {
+                <tr>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("APSDetaje", new { id=item.APSID})'">Regjistrimi i semestrit @item.LlojiSemestrit @item.VitiAkademik - @item.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve</a>
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+    <div style="margin-left: 1em; flex: 4;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="2">
+                    Departamentet Aktive per Nivelin
+                </th>
+            </tr>
+            @foreach (var item in Model.NiveliStudimitDepartamentiList)
+            {
+                <tr>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("Details","Departamentet", new { id=item.Departamentet.DepartamentiID})'">@item.Departamentet.EmriDepartamentit - @item.Departamentet.ShkurtesaDepartamentit</a>
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("NiveliStudimeveIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+</div>

@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager;
+@model W23G37.Controllers.HomeController.LlogariteViewModel
+
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>
+        window.location = "/Identity/Account/Manage/"
+    </script>
+}
+
+@{
+    ViewData["Title"] = "Profili Im";
+}
+
+<div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#informatatPersonale" role="tab" aria-controls="home" aria-selected="true">Informatat Personale</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#kontakti" role="tab" aria-controls="profile" aria-selected="false">Kontakti</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="informatatPersonale" role="tabpanel" aria-labelledby="informatatPersonale-tab">
+            <table class="tableStyle table table-striped mt-4">
+                <tr>
+                    <th>
+                        ID:
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.UserID)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Perdoruesi.Emri):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.Emri)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Perdoruesi.Mbiemri):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.Mbiemri)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Perdoruesi.Email):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Perdoruesi.Username):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.Perdoruesi.Username)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="kontakti" role="tabpanel" aria-labelledby="kontakti-tab">
+            <table class="tableStyle table table-striped mt-4">
+                <tr>
+                    <th>
+                        Numri Kontaktit:
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.TeDhenatPerdoruesit.NrKontaktit)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Qyteti):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Qyteti)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+
+                        Zip Kodi:
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.TeDhenatPerdoruesit.ZipKodi)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Adresa):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Adresa)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Shteti):
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.TeDhenatPerdoruesit.Shteti)
+                    </td>
+                </tr>
+            </table>
+            </dl>
+        </div>
+    </div>
+
+</div>

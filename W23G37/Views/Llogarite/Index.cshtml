@@ -1,0 +1,89 @@
+﻿@model IEnumerable<W23G37.Controllers.LlogariteController.LlogariteViewModel>
+
+@{
+    ViewData["Title"] = "Llogarite e Reja";
+}
+
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Emri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Mbiemri)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perdoruesi.Username)
+            </th>
+            <th>
+                Nr Kontaktit
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Qyteti)
+            </th>
+            <th>
+                Zip Kodi
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeDhenatPerdoruesit.Shteti)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rolet)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Emri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Mbiemri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perdoruesi.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeDhenatPerdoruesit.NrKontaktit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeDhenatPerdoruesit.Qyteti)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeDhenatPerdoruesit.ZipKodi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeDhenatPerdoruesit.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeDhenatPerdoruesit.Shteti)
+                <td>
+                        @if (item.Rolet.Count > 1)
+                        {
+                            for (var i = 0; i < item.Rolet.Count - 1; i++)
+                            {
+                            <span>@item.Rolet[i], </span>
+                            }
+                        <span>@item.Rolet[^1]</span>
+                        }
+                        else if (item.Rolet.Count == 1)
+                        {
+                        <span>@item.Rolet[0]</span>
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

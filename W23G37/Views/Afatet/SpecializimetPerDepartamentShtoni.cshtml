@@ -1,0 +1,34 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Specializimin";
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SpecializimetPerDepartamentShtoni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="formaSelect mb-3">
+                <label asp-for="Departamentet">Niveli i Studimeve</label>
+                <select asp-for="DepartamentiZgjedhur" class="form-control" required>
+                    <option disabled value="">Zgjedhni Departamentin</option>
+                    @foreach (var item in Model.Departamentet)
+                    {
+                        <option value="@item.DepartamentiID">@item.EmriDepartamentit - @item.ShkurtesaDepartamentit</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SpecializimiPerDepartament.EmriSpecializimit" class="control-label">Emri Specializimit</label>
+                <input asp-for="SpecializimiPerDepartament.EmriSpecializimit" class="form-control" />
+                <span asp-validation-for="SpecializimiPerDepartament.EmriSpecializimit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" asp-action="SpecializimetPerDepartamentIndex"><i class="fa-solid fa-arrow-left"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
