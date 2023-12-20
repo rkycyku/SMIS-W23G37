@@ -29,7 +29,7 @@ Profesoret:
 
 ## Konfigurimi
 
-Se pari duhet te behet konfigurimi i Connection String ne W23G37/appsettings.json dhe duhet te nderrohet emri i Server me ate te serverit tuaj, Emri i Databazes nuk preferohet te ndryshohet, pastaj ju duhet te beni run komanden **Update-Database** ne **Serverin e Projektit - W23G37** -> *Tools > NuGet Package Manager > Package Manager Console* e cili do te mundesoj gjenerimin ne teresi te databases dhe insertimin e te dhenave bazike, pasi te keni perfunduar me keto hapa ju duhet qe te beni **run** serverin dhe pastaj ne VSC pjesen e React qe gjendet tek **w23g37web** duhet te hapet ne terminal pastaj duhen te behen run keto komonda: 
+Se pari duhet te behet konfigurimi i Connection String ne W23G37/appsettings.json dhe duhet te nderrohet emri i Server me ate te serverit tuaj, Emri i Databazes nuk preferohet te ndryshohet, pastaj ju duhet te beni run komanden **Update-Database** ne **Serverin e Projektit - W23G37** -> *Tools > NuGet Package Manager > Package Manager Console* e cili do te mundesoj gjenerimin ne teresi te databases dhe insertimin e te dhenave bazike gjithashtu mund te perdoret edhe nje SQL File i gatshem me te dhena te ndryshme si Departamente, Salla, Lokacione ejt. Ky file gjendet tek *Databaza > W23G37Databaza.sql*, pasi te keni perfunduar me keto hapa ju duhet qe te beni **run** serverin dhe pastaj ne VSC pjesen e React qe gjendet tek **w23g37web** duhet te hapet ne terminal pastaj duhen te behen run keto komonda: 
 
 - **npm i** - Bene instalimin automatik te paketave te nevojtura,
 - **npm run build** - Bene Build Projektin,
@@ -40,4 +40,9 @@ Pasi qe te behet konfigurimi ju mund te kyqeni me keto te dhena:
 
 | **Email** | **Password** | **Aksesi**                    |
 | ------------ | ------------ | ----------------------------- |
-| admin@ubt-uni.net       | Admin1@        | Administrator (Akses i Plote) |
+| admin@ubt-uni.net       | Admin1@        | Admin |
+| financa.financa@ubt-uni.net       | financafinanca1@        | Financa |
+| administrat.administrat@ubt-uni.net       | administratadministrat1@        | Administrat |
+| asistent.asistent@ubt-uni.net       | asistentasistent1@        | Asistent |
+| profesor.profesor@ubt-uni.net       | profesorprofesor1@        | Profesor |
+| ss6@ubt-uni.net      | ss6@ubt-uni.net        | Student |
