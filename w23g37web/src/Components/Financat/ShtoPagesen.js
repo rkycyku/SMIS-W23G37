@@ -232,7 +232,7 @@ const ShtoProduktin = (props) => {
                 {bankat &&
                   bankat.map((banka) => (
                     <option value={banka.bankaID}>
-                      {banka.emriBankes} - {banka.kodiBankes}
+                      {banka.emriBankes} - {banka &&banka.kodiBankes}
                     </option>
                   ))}
               </select>

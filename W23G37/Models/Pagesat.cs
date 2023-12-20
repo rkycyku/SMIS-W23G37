@@ -21,7 +21,6 @@ namespace W23G37.Models
         [ForeignKey(nameof(BankaID))]
         public virtual Bankat? Bankat { get; set; }
         [ForeignKey(nameof(PersoniID))]
-        
         public virtual Perdoruesi? Perdoruesi { get; set; }
         [ForeignKey(nameof(AplikimiID))]
         public virtual AplikimetEReja? AplikimetEReja { get; set; }

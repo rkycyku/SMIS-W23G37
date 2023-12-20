@@ -27,12 +27,14 @@ namespace W23G37.Data.Migrations
                         name: "FK_PataqitjaSemestrit_Departamentet_DepartamentiID",
                         column: x => x.DepartamentiID,
                         principalTable: "Departamentet",
-                        principalColumn: "DepartamentiID");
+                        principalColumn: "DepartamentiID",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_PataqitjaSemestrit_Perdoruesit_StudentiID",
                         column: x => x.StudentiID,
                         principalTable: "Perdoruesit",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(

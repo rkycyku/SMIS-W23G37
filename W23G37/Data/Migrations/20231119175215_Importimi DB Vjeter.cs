@@ -136,7 +136,8 @@ namespace W23G37.Data.Migrations
                         name: "FK_LendetDepartamentiProfesori_Departamentet_DepartamentiID",
                         column: x => x.DepartamentiID,
                         principalTable: "Departamentet",
-                        principalColumn: "DepartamentiID");
+                        principalColumn: "DepartamentiID"
+                        , onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_LendetDepartamentiProfesori_Lendet_LendaID",
                         column: x => x.LendaID,
@@ -147,7 +148,8 @@ namespace W23G37.Data.Migrations
                         name: "FK_LendetDepartamentiProfesori_Perdoruesit_ProfesoriID",
                         column: x => x.ProfesoriID,
                         principalTable: "Perdoruesit",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

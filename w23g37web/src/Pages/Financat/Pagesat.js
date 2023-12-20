@@ -171,7 +171,7 @@ const Pagesat = () => {
                   <tr key={p.pagesaID}>
                     <td>{p.llojiPageses}</td>
                     <td>
-                      {p.bankat.kodiBankes} - {p.bankat.emriBankes}
+                      {p.bankat && p.bankat.kodiBankes} - {p.bankat && p.bankat.emriBankes}
                     </td>
                     <td>
                       {p.aplikimiID != null
@@ -185,17 +185,18 @@ const Pagesat = () => {
                           p.perdoruesi.teDhenatRegjistrimitStudentit &&
                           p.perdoruesi.teDhenatRegjistrimitStudentit
                             .kodiFinanciar != null
-                        ? p.perdoruesi.teDhenatRegjistrimitStudentit
+                        ? p.perdoruesi && p.perdoruesi.teDhenatRegjistrimitStudentit
+                         && p.perdoruesi.teDhenatRegjistrimitStudentit
                             .kodiFinanciar +
                           " - " +
-                          p.perdoruesi.emri +
+                          p.perdoruesi && p.perdoruesi.emri +
                           " " +
-                          p.perdoruesi.mbiemri
-                        : p.perdoruesi.username +
+                          p.perdoruesi && p.perdoruesi.mbiemri
+                        : p.perdoruesi && p.perdoruesi.username +
                           " - " +
-                          p.perdoruesi.emri +
+                          p.perdoruesi && p.perdoruesi.emri +
                           " " +
-                          p.perdoruesi.mbiemri}
+                          p.perdoruesi && p.perdoruesi.mbiemri}
                     </td>
                     <td>
                       {p.pagesa != null

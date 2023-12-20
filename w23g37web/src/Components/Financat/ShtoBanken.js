@@ -8,9 +8,9 @@ import { faXmark, faBan, faL, faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 
 const ShtoBanken = (props) => {
-  const [llojiBankes, setLlojiBankes] = useState("");
+  const [llojiBankes, setLlojiBankes] = useState("Hyrese/Dalese");
   const [ibanFillimi, setIbanFillimi] = useState("");
-  const [valuta, setValuta] = useState("");
+  const [valuta, setValuta] = useState("Euro");
   const [swiftKodi, setSwiftKodi] = useState("");
   const [bicKodi, setBicKodi] = useState([]);
   const [adresaBankes, setAdresaBankes] = useState([]);
@@ -162,7 +162,6 @@ const ShtoBanken = (props) => {
                 value={kodiBankes}
                 type="text"
                 placeholder="Kodi Bankes"
-                autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -174,7 +173,6 @@ const ShtoBanken = (props) => {
                 value={numriLlogaris}
                 type="text"
                 placeholder="Numri Llogaris"
-                autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -195,7 +193,6 @@ const ShtoBanken = (props) => {
                 value={bicKodi}
                 type="text"
                 placeholder="BIC Kodi"
-                autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -207,7 +204,6 @@ const ShtoBanken = (props) => {
                 value={swiftKodi}
                 type="text"
                 placeholder="SWIFT Kodi"
-                autoFocus
               />
             </Form.Group>
             <Form.Group
@@ -237,7 +233,6 @@ const ShtoBanken = (props) => {
                 value={ibanFillimi}
                 type="text"
                 placeholder="XK05"
-                autoFocus
               />
             </Form.Group>
             <Form.Group

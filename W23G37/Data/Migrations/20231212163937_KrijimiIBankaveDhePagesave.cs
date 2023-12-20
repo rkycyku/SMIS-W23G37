@@ -54,17 +54,20 @@ namespace W23G37.Data.Migrations
                         name: "FK_Pagesat_AplikimetEReja_AplikimiID",
                         column: x => x.AplikimiID,
                         principalTable: "AplikimetEReja",
-                        principalColumn: "AplikimiID");
+                        principalColumn: "AplikimiID",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Pagesat_Bankat_BankaID",
                         column: x => x.BankaID,
                         principalTable: "Bankat",
-                        principalColumn: "BankaID");
+                        principalColumn: "BankaID",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Pagesat_Perdoruesit_PersoniID",
                         column: x => x.PersoniID,
                         principalTable: "Perdoruesit",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(

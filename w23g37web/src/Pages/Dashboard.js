@@ -177,7 +177,7 @@ const Dashboard = () => {
                 <td>
                   <strong>Pozita: </strong>
                 </td>
-                <td>{teDhenat.rolet.join(", ")}</td>
+                <td>{teDhenat.rolet && teDhenat.rolet.join(", ")}</td>
               </tr>
               <tr>
                 <td>
