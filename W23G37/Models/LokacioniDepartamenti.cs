@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace W23G37.Models
 {
@@ -14,6 +15,7 @@ namespace W23G37.Models
         [ForeignKey("LokacioniID")]
         public virtual Lokacionet Lokacioni { get; set; }
         [ForeignKey("DepartamentiID")]
+        [JsonIgnore]
         public virtual Departamentet Departamentet { get; set;}
 
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;

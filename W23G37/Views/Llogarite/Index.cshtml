@@ -4,6 +4,14 @@
     ViewData["Title"] = "Llogarite e Reja";
 }
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <table class="tableStyle table table-striped">
     <thead>
         <tr>

@@ -260,7 +260,7 @@ namespace W23G37.Controllers
 
             foreach(var afati in aps)
             {
-                var paraqitjaSemestrit = await _context.PataqitjaSemestrit.Include(x => x.Semestri).Include(x => x.Studenti).Where(x => x.APSID == afati.APSID).ToListAsync();
+                var paraqitjaSemestrit = await _context.ParaqitjaSemestrit.Include(x => x.Semestri).Include(x => x.Studenti).Where(x => x.APSID == afati.APSID).ToListAsync();
 
                 APSListaMeTotStudenteve.Add(afati, paraqitjaSemestrit.Count);
             }
@@ -277,7 +277,7 @@ namespace W23G37.Controllers
         {
             var aps = await _context.AfatiParaqitjesSemestrit.Include(x => x.NiveliStudimeve).Where(x => x.APSID == id).FirstOrDefaultAsync();
 
-            var paraqitjaSemestrit = await _context.PataqitjaSemestrit.Include(x => x.Semestri).Include(x => x.Studenti).Where(x => x.APSID == id).ToListAsync();
+            var paraqitjaSemestrit = await _context.ParaqitjaSemestrit.Include(x => x.Semestri).Include(x => x.Studenti).Where(x => x.APSID == id).ToListAsync();
 
             AfatetViewModel modeli = new()
             {

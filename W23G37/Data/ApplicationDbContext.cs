@@ -21,7 +21,7 @@ namespace W23G37.Data
         public DbSet<Lokacionet> Lokacionet { get; set; }
         public DbSet<Sallat> Sallat { get; set; }
         public DbSet<LokacioniDepartamenti> LokacionetDepartamenti { get; set; }
-        public DbSet<ParaqitjaSemestrit> PataqitjaSemestrit { get; set; }
+        public DbSet<ParaqitjaSemestrit> ParaqitjaSemestrit { get; set; }
         public DbSet<NiveliStudimeve> NiveliStudimeve { get; set; }
         public DbSet<Semestri> Semestri { get; set; }
         public DbSet<AfatiParaqitjesSemestrit> AfatiParaqitjesSemestrit { get; set; }
@@ -31,5 +31,7 @@ namespace W23G37.Data
         public DbSet<NiveliStudimitDepartamenti> NiveliStudimitDepartamenti { get; set; }
         public DbSet<Bankat> Bankat {  get; set; }
         public DbSet<Pagesat> Pagesat { get; set; }
+
+       
     }
 }

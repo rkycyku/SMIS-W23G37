@@ -39,4 +39,22 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administrata\Data\" />
+    <Folder Include="Areas\Administrata\Models\" />
+    <Folder Include="Areas\Administrata\Views\" />
+    <Folder Include="Areas\Financat\Data\" />
+    <Folder Include="Areas\Financat\Models\" />
+    <Folder Include="Areas\Financat\Views\" />
+    <Folder Include="Areas\Perdoruesit\Data\" />
+    <Folder Include="Areas\Perdoruesit\Models\" />
+    <Folder Include="Areas\Perdoruesit\Views\" />
+    <Folder Include="Areas\Profesor\Data\" />
+    <Folder Include="Areas\Profesor\Models\" />
+    <Folder Include="Areas\Profesor\Views\" />
+    <Folder Include="Areas\Studentet\Data\" />
+    <Folder Include="Areas\Studentet\Models\" />
+    <Folder Include="Areas\Studentet\Views\" />
+  </ItemGroup>
+
 </Project>

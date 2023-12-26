@@ -40,11 +40,8 @@ const KrijoAplikiminERi = () => {
   const [pershkrimiMesazhit, setPershkrimiMesazhit] = useState("");
 
   const DitaSotme = new Date();
-  const DatelindjaMaxLejuar = new Date(
-    DitaSotme.getFullYear() - 17,
-    DitaSotme.getMonth(),
-    DitaSotme.getDate()
-  );
+  const DatelindjaMaxLejuar = new Date(DitaSotme.getFullYear() - 17, DitaSotme.getMonth(), DitaSotme.getDate());
+
 
   const getToken = localStorage.getItem("token");
 
@@ -66,8 +63,8 @@ const KrijoAplikiminERi = () => {
           authentikimi
         );
         setDepartamentet(departamentet.data);
-        setVitiAkademikRegjistrim(vitiAkademikRegjistrim.data);
-        console.log(vitiAkademikRegjistrim.data);
+        setVitiAkademikRegjistrim(vitiAkademikRegjistrim.data)
+        console.log(vitiAkademikRegjistrim.data)
       } catch (err) {
         console.log(err);
       }
@@ -138,7 +135,7 @@ const KrijoAplikiminERi = () => {
       niveliStudimitID === 0
     ) {
       setPershkrimiMesazhit(
-        "<strong>Ju lutemi plotesoni te gjitha fushat me *</strong>"
+        '<strong>Ju lutemi plotesoni te gjitha fushat me *</strong>'
       );
       setTipiMesazhit("danger");
       setShfaqMesazhin(true);
@@ -148,11 +145,9 @@ const KrijoAplikiminERi = () => {
       const NrPeronsalNMKREGEX = /^\d{13}$/;
       const telefoniREGEX = /^(?:\+\d{11}|\d{9})$/;
       const emailREGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const VetemShkronjaREGEX = /^[a-zA-ZçëÇË -]+$/;
+      const VetemShkronjaREGEX = /^[a-zA-Z -]+$/;
 
-      var kodiFinanciar = await axios.get(
-        `https://localhost:7251/api/Administrata/gjeneroKodinFinanciar?departamentiID=${departamentiID}&niveliStudimitID=${niveliStudimitID}`
-      );
+      var kodiFinanciar = await axios.get(`https://localhost:7251/api/Administrata/gjeneroKodinFinanciar?departamentiID=${departamentiID}&niveliStudimitID=${niveliStudimitID}`)
 
       if (shteti == "Kosovë" && !NrPeronsalRKSREGEX.test(nrPersonal)) {
         setPershkrimiMesazhit(
@@ -166,124 +161,113 @@ const KrijoAplikiminERi = () => {
         );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (
-        shteti == "Maqedoni e Veriut" &&
-        !NrPeronsalNMKREGEX.test(nrPersonal)
-      ) {
+      } else if (shteti == "Maqedoni e Veriut" && !NrPeronsalNMKREGEX.test(nrPersonal)) {
         setPershkrimiMesazhit(
           "<strong>Numri Personal duhet te jete ne formatin NNNNNNNNNNNNN! N - Numer, 13 Karaktere</strong>"
         );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (!emailREGEX.test(emailPersonal)) {
-        setPershkrimiMesazhit("<strong>Ky email nuk eshte valid!</strong>");
+      } else if (
+        !emailREGEX.test(emailPersonal)
+      ) {
+        setPershkrimiMesazhit(
+          "<strong>Ky email nuk eshte valid!</strong>"
+        );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (!telefoniREGEX.test(nrKontaktit)) {
+      } else if (
+        !telefoniREGEX.test(nrKontaktit)
+      ) {
         setPershkrimiMesazhit(
           "Numri telefonit duhet te jete ne formatin: <strong>045123123 ose +38343123132</strong>"
         );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (!VetemShkronjaREGEX.test(emri)) {
+      } else if (
+        !VetemShkronjaREGEX.test(emri)
+      ) {
         setPershkrimiMesazhit(
           "<strong>Emri mund te permbaje vetem shkronja, hapesira dhe -!</strong>"
         );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (!VetemShkronjaREGEX.test(emriPrindit)) {
+      } else if (
+        !VetemShkronjaREGEX.test(emriPrindit)
+      ) {
         setPershkrimiMesazhit(
-          "<strong>Emri Prindit mund te permbaje vetem shkronja, hapesira dhe -!</strong>"
-        );
-        setTipiMesazhit("danger");
-        setShfaqMesazhin(true);
-      } else if (!VetemShkronjaREGEX.test(mbimeri)) {
-        setPershkrimiMesazhit(
-          "<strong>Mbiemri mund te permbaje vetem shkronja, hapesira dhe -!</strong>"
-        );
-        setTipiMesazhit("danger");
-        setShfaqMesazhin(true);
-      } else if (!VetemShkronjaREGEX.test(qyteti)) {
-        setPershkrimiMesazhit(
-          "<strong>Qyteti mund te permbaje vetem shkronja, hapesira dhe -!</strong>"
-        );
+          "<strong>Emri Prindit mund te permbaje vetem shkronja, hapesira dhe -!</strong>"        );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
       } else if (
-        (shteti == "Maqedoni e Veriut" || shteti == "Shqipëri") &&
-        (zipKodi < 1000 || zipKodi > 9999)
+        !VetemShkronjaREGEX.test(mbimeri)
       ) {
         setPershkrimiMesazhit(
-          "<strong>Kodi Postar duhet te permbaj vetem 4 numra!</strong>"
-        );
+          "<strong>Mbiemri mund te permbaje vetem shkronja, hapesira dhe -!</strong>"        );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
-      } else if (shteti == "Kosovë" && (zipKodi < 10000 || zipKodi > 99999)) {
+      } else if (
+        !VetemShkronjaREGEX.test(qyteti)
+      ) {
         setPershkrimiMesazhit(
-          "<strong>Kodi Postar duhet te permbaj vetem 5 numra!</strong>"
-        );
+          "<strong>Qyteti mund te permbaje vetem shkronja, hapesira dhe -!</strong>"        );
+        setTipiMesazhit("danger");
+        setShfaqMesazhin(true);
+      } else if (
+        (shteti == "Maqedoni e Veriut" || shteti == "Shqipëri") && (zipKodi < 1000 || zipKodi > 9999)
+      ) {
+        setPershkrimiMesazhit(
+          "<strong>Kodi Postar duhet te permbaj vetem 4 numra!</strong>"        );
+        setTipiMesazhit("danger");
+        setShfaqMesazhin(true);
+      } else if (
+        (shteti == "Kosovë") && (zipKodi < 10000 || zipKodi > 99999)
+      ) {
+        setPershkrimiMesazhit(
+          "<strong>Kodi Postar duhet te permbaj vetem 5 numra!</strong>"        );
         setTipiMesazhit("danger");
         setShfaqMesazhin(true);
       } else {
-        axios
-          .post(
-            "https://localhost:7251/api/Administrata/KrijoniAplikimERi",
-            {
-              aplikimetEReja: {
-                Emri: emri,
-                Mbiemri: mbimeri,
-                NrPersonal: nrPersonal.toString(),
-                EmriPrindit: emriPrindit,
-                EmailPersonal: emailPersonal,
-                NrKontaktit: nrKontaktit,
-                Qyteti: qyteti,
-                ZipKodi: zipKodi,
-                Adresa: adresa,
-                Shteti: shteti,
-                Gjinia: gjinia,
-                DataLindjes: dataLindjes,
-                KodiFinanciar: kodiFinanciar.data.toString(),
-                DepartamentiID: departamentiID,
-                NiveliStudimitID: niveliStudimitID,
-                VitiAkademikRegjistrim: vitiAkademikRegjistrim,
-                LlojiRegjistrimit: LlojiRegjistrimit,
-              },
+      axios
+        .post(
+          "https://localhost:7251/api/Administrata/KrijoniAplikimERi",
+          {
+            aplikimetEReja: {
+              Emri: emri,
+              Mbiemri: mbimeri,
+              NrPersonal: nrPersonal.toString(),
+              EmriPrindit: emriPrindit,
+              EmailPersonal: emailPersonal,
+              NrKontaktit: nrKontaktit,
+              Qyteti: qyteti,
+              ZipKodi: zipKodi,
+              Adresa: adresa,
+              Shteti: shteti,
+              Gjinia: gjinia,
+              DataLindjes: dataLindjes,
+              KodiFinanciar: kodiFinanciar.data.toString(),
+              DepartamentiID: departamentiID,
+              NiveliStudimitID: niveliStudimitID,
+              VitiAkademikRegjistrim: vitiAkademikRegjistrim,
+              LlojiRegjistrimit: LlojiRegjistrimit,
             },
-            authentikimi
-          )
-          .then(() => {
-            setPershkrimiMesazhit(
-              "<strong>Aplikimi u pranua! Ju lutem keshilloni studentit te beje pagesen permes kodit financiar.</strong>"
-            );
-            setTipiMesazhit("success");
-            setShfaqMesazhin(true);
-
-            setEmri("");
-            setEmriPrindit("");
-            setMbiemri("");
-            setNrPersonal("");
-            setEmailPersonal("");
-            setKodiFinanciar("");
-            setNrKontaktit("");
-            setGjinia("M");
-            setDataLindejs(null);
-            setQyteti("");
-            setAdresa("");
-            setShteti("Kosovë");
-            setZipKodi("");
-            setDepartamentiID("");
-            setNiveliStudimitID("");
-            setLlojiRegjistrimit("I Rregullt");
-            setVitiAkademikRegjistrim("");
-          })
-          .catch((error) => {
-            console.error(error);
-            setPershkrimiMesazhit(
-              "<strong>Ju lutemi kontaktoni me stafin pasi ndodhi nje gabim ne server!</strong>"
-            );
-            setTipiMesazhit("danger");
-            setShfaqMesazhin(true);
-          });
+          },
+          authentikimi
+        )
+        .then(() => {
+          setPershkrimiMesazhit(
+            "<strong>Aplikimi u pranua! Ju lutem keshilloni studentit te beje pagesen permes kodit financiar.</strong>"
+          );
+          setTipiMesazhit("success");
+          setShfaqMesazhin(true);
+        })
+        .catch((error) => {
+          console.error(error);
+          setPershkrimiMesazhit(
+            "<strong>Ju lutemi kontaktoni me stafin pasi ndodhi nje gabim ne server!</strong>"
+          );
+          setTipiMesazhit("danger");
+          setShfaqMesazhin(true);
+        });
       }
     }
   }
@@ -315,11 +299,7 @@ const KrijoAplikiminERi = () => {
                 onChange={handleChange(setEmri)}
                 required
                 autoFocus
-                disabled={
-                  vitiAkademikRegjistrim == "Nuk ka afat te hapur"
-                    ? true
-                    : false
-                }
+                disabled={(vitiAkademikRegjistrim == "Nuk ka afat te hapur")? true:false}
               />
             </Form.Group>
 
@@ -355,7 +335,7 @@ const KrijoAplikiminERi = () => {
                 Numri Personal <span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
-                type={shteti == "Shqipëri" ? "text" : "number"}
+                type={shteti == "Shqipëri"? "text" : "number"}
                 placeholder="1100110011"
                 value={nrPersonal}
                 onChange={handleChange(setNrPersonal)}
@@ -387,7 +367,9 @@ const KrijoAplikiminERi = () => {
               />
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridLastName">
-              <Form.Label>Gjinia</Form.Label>
+              <Form.Label>
+                Gjinia
+              </Form.Label>
               <Form.Select value={gjinia} onChange={handleGjiniaChange}>
                 <option selected value="M">
                   Mashkull
@@ -396,25 +378,21 @@ const KrijoAplikiminERi = () => {
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridLastName">
-              <Form.Label>
-                Data Lindjes<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Data Lindjes<span style={{ color: "red" }}>*</span></Form.Label>
               <Col>
-                <DatePicker
-                  selected={dataLindjes}
-                  onChange={(date) => setDataLindejs(date)}
-                  className="form-control"
-                  dateFormat="dd/MM/yyyy"
-                  maxDate={DatelindjaMaxLejuar}
-                />
+              <DatePicker
+                selected={dataLindjes}
+                onChange={(date) => setDataLindejs(date)}
+                className="form-control"
+                dateFormat="dd/MM/yyyy"
+      maxDate={DatelindjaMaxLejuar}
+              />
               </Col>
             </Form.Group>
           </Row>
           <Row className="mb-3 gap-1">
             <Form.Group as={Col} className="p-0" controlId="formGridAdresa">
-              <Form.Label>
-                Adresa<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Adresa<span style={{ color: "red" }}>*</span></Form.Label>
               <Form.Control
                 placeholder="Agim Bajrami 60"
                 value={adresa}
@@ -422,9 +400,7 @@ const KrijoAplikiminERi = () => {
               />
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridQyteti">
-              <Form.Label>
-                Qyteti<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Qyteti<span style={{ color: "red" }}>*</span></Form.Label>
               <Form.Control
                 placeholder="Kaçanik"
                 value={qyteti}
@@ -432,9 +408,7 @@ const KrijoAplikiminERi = () => {
               />
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridState">
-              <Form.Label>
-                Shteti<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Shteti<span style={{ color: "red" }}>*</span></Form.Label>
               <Form.Select value={shteti} onChange={handleShtetiChange}>
                 <option selected>Kosovë</option>
                 <option>Shqipëri</option>
@@ -454,9 +428,7 @@ const KrijoAplikiminERi = () => {
           </Row>
           <Row className="mb-3 gap-1">
             <Form.Group as={Col} className="p-0" controlId="formGridAdresa">
-              <Form.Label>
-                Departamenti<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Departamenti<span style={{ color: "red" }}>*</span></Form.Label>
               <Form.Select
                 value={departamentiID}
                 onChange={handleDepartamentiChange}>
@@ -472,13 +444,11 @@ const KrijoAplikiminERi = () => {
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridQyteti">
-              <Form.Label>
-                Niveli Studimit<span style={{ color: "red" }}>*</span>
-              </Form.Label>
+              <Form.Label>Niveli Studimit<span style={{ color: "red" }}>*</span></Form.Label>
               <Form.Select
                 value={niveliStudimitID}
                 onChange={handleNiveliStudimiChange}
-                disabled={niveletEStudimit.length > 0 ? false : true}>
+                disabled={niveletEStudimit.length > 0? false : true}>
                 <option value={0} hidden selected>
                   Zgjedhni Nivelin e Studimit
                 </option>

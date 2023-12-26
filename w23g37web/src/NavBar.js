@@ -274,6 +274,27 @@ function Navbar(props) {
                     </ul>
                   </li>
                 )}
+                {teDhenat &&
+                teDhenat.rolet &&
+                teDhenat.rolet.includes("Student") && (
+                  <>
+                  <li>
+                    <Link to="/RegjistrimiISemestrit">
+                      <i class="bx bx-pie-chart-alt-2">
+                        <FontAwesomeIcon icon={faBuildingColumns} />
+                      </i>
+                      <span class="link_name">Regjistrimi i Semestrit</span>
+                    </Link>
+                    <ul class="sub-menu blank">
+                      <li>
+                        <Link class="link_name" to="/RegjistrimiISemestrit">
+                        Regjistrimi i Semestrit
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </>
+                )}
               <li>
                 <Link to="/PerditesoTeDhenat">
                   <i class="bx bx-pie-chart-alt-2">

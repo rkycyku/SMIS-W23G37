@@ -89,19 +89,36 @@ namespace W23G37.Areas.Identity.Pages.Account
             [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Qyteti duhet te permbaje vetem shkronja.")]
             public string? Qyteti { get; set; }
 
-            [Required(ErrorMessage = "Ju lutem shenoni Shtetin!")]
-            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Shteti duhet te permbaje vetem shkronja!")]
-            public string? Shteti { get; set; }
-
             [Required(ErrorMessage = "Ju lutem shenoni Zip Kodin!")]
-            [Range(10000, 99999, ErrorMessage = "Zip Kodi duhet te jete mes 10000 dhe 99999!")]
+            [Range(1000, 99999, ErrorMessage = "Zip Kodi duhet te jete mes 1000 dhe 99999!")]
             public int? ZipKodi { get; set; }
 
             [Required(ErrorMessage = "Ju lutem shenoni Numri e Telefonit!")]
-            [RegularExpression(@"^3834[345689][0-9]{6}$", ErrorMessage = "Numri i telefonit duhet te jete ne formatin 38343111222, 3834411122 etj!")]
+            [RegularExpression(@"^(?:\+\d{11}|\d{9})$", ErrorMessage = "Numri telefonit duhet te jete ne formatin: 045123123 ose +38343123132!")]
             public string? NrTelefonit { get; set; }
 
+            [Required(ErrorMessage = "Ju lutem shenoni Daten e Lindjes!")]
+            public DateTime? DataLindjes { get; set; }
+
+            [Required(ErrorMessage = "Ju lutem shenoni Emailin Perosnal!")]
+            [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Numri i telefonit duhet te jete ne formatin 38343111222, 3834411122 etj!")]
+            public string? EmailPersonal { get; set; }
+
+            [Required(ErrorMessage = "Ju lutem shenoni Emrin e Prindit!")]
+            [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Emri Prindit duhet te permbaje vetem shkronja.")]
+            public string? EmriPrindit { get; set; }
+
+            [Required(ErrorMessage = "Ju lutem shenoni Numrin Personal!")]
+            [RegularExpression(@"^(?:\d{10}|[A-Za-z]\d{8}[A-Za-z]|\d{13})$", ErrorMessage = "Numri Personal duhet te jete ne formatin NNNNNNNNNN! N - Numer, 10 Karaktere, LNNNNNNNNL! N - Numer & L - Shkronje, 10 Karaktere, NNNNNNNNNNNNN! N - Numer, 13 Karaktere")]
+            public string? NrPersonal { get; set; }
+
+            public string? ShtetiZgjedhur { get; set; }
+
+            public string? GjiniaZgjedhur { get; set; }
+
             public string? RoliIZgjedhur { get; set; }
+
+            public DateTime? DataKrijimit { get; set; } = DateTime.Now;
         }
 
 
@@ -110,7 +127,7 @@ namespace W23G37.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            var rolet = await _roleManager.Roles.Where(x => x.Name != "User").ToListAsync();
+            var rolet = await _roleManager.Roles.Where(x => x.Name != "User").Where(x => x.Name != "Student").ToListAsync();
 
             var roletWithUsersCount = new List<RoletViewModel>();
 
@@ -145,16 +162,10 @@ namespace W23G37.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                var totaliPerdoruesve = await _userManager.Users.CountAsync();
-                var numriRendorPerdoruesit = totaliPerdoruesve + 1;
+                var emri = Input.Emri.ToLower();
+                var mbiemri = Input.Mbiemri.ToLower();
 
-                var emri = Input.RoliIZgjedhur != "Student" ? Input.Emri.ToLower() : Input.Emri.Trim().ToLower();
-                var mbiemri = Input.RoliIZgjedhur != "Student" ? Input.Mbiemri.ToLower() : Input.Mbiemri.Trim().ToLower();
-
-                var emriShkronjaPare = emri[0];
-                var mbiemriShkronjaPare = mbiemri[0];
-
-                var UsernameGjeneruar = Input.RoliIZgjedhur != "Student" ? emri.ToString() + "." + mbiemri.ToString() : emriShkronjaPare.ToString() + mbiemriShkronjaPare.ToString() + numriRendorPerdoruesit.ToString();
+                var UsernameGjeneruar = emri.ToString() + "." + mbiemri.ToString();
                 var EmailGjeneruar = UsernameGjeneruar.ToString() + "@ubt-uni.net";
 
                 var ekziston = await _context.Perdoruesit.Where(x=> x.Email == EmailGjeneruar).ToListAsync();
@@ -168,11 +179,9 @@ namespace W23G37.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, EmailGjeneruar.ToString(), CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, EmailGjeneruar.ToString(), CancellationToken.None);
 
-                var passwordi = Input.RoliIZgjedhur != "Student" ? emri.ToString() + mbiemri.ToString() + "1@" : EmailGjeneruar; // Set the password you want to use
+                var passwordi = emri.ToString() + mbiemri.ToString() + "1@";
 
                 var result = await _userManager.CreateAsync(user, passwordi);
-
-
 
                 if (result.Succeeded)
                 {
@@ -182,7 +191,7 @@ namespace W23G37.Areas.Identity.Pages.Account
 
                     await _userManager.AddToRolesAsync(user, new[] { "User", Input.RoliIZgjedhur });
 
-                    Perdoruesi perdoruesi = new()
+                    Perdoruesi perdoruesi = new Perdoruesi()
                     {
                         AspNetUserId = userId,
                         Emri = Input.Emri,
@@ -198,9 +207,15 @@ namespace W23G37.Areas.Identity.Pages.Account
                         UserID = perdoruesi.UserID,
                         Adresa = Input.Adresa,
                         Qyteti = Input.Qyteti,
-                        Shteti = Input.Shteti,
+                        Shteti = Input.ShtetiZgjedhur,
                         ZipKodi = Input.ZipKodi > 0 ? Input.ZipKodi : 0,
-                        NrKontaktit = Input.NrTelefonit
+                        NrKontaktit = Input.NrTelefonit,
+                        DataKrijimit = Input.DataKrijimit,
+                        DataLindjes = Input.DataLindjes,
+                        EmailPersonal = Input.EmailPersonal,
+                        EmriPrindit = Input.EmriPrindit,
+                        Gjinia = Input.GjiniaZgjedhur,
+                        NrPersonal = Input.NrPersonal,
                     };
                     await _context.TeDhenatPerdoruesit.AddAsync(teDhenatPerdoruesit);
                     await _context.SaveChangesAsync();
@@ -213,19 +228,19 @@ namespace W23G37.Areas.Identity.Pages.Account
                     await _context.LlogaritERejaTeKrijuara.AddAsync(llogaritERejaTeKrijuara);
                     await _context.SaveChangesAsync();
 
+                    TempData["Message"] = "Llogaria u krijua me Sukses!";
                 }
-
 
 
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-                return LocalRedirect("/Llogarite");
 
+                return LocalRedirect("/Llogarite");
             }
 
-            var rolet = await _roleManager.Roles.Where(x => x.Name != "User").ToListAsync();
+            var rolet = await _roleManager.Roles.Where(x => x.Name != "User").Where(x => x.Name != "Student").ToListAsync();
 
             var roletWithUsersCount = new List<RoletViewModel>();
 

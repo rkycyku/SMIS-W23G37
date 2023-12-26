@@ -1,4 +1,4 @@
-import { Navigate, useNavigate , Route, Routes } from "react-router-dom";
+import { Navigate, useNavigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./Pages/Dashboard";
 import LogIn from "./Pages/LogIn";
@@ -9,6 +9,7 @@ import { useState } from "react";
 import KrijoAplikiminERi from "./Pages/Administrata/KrijoAplikiminERi";
 import Bankat from "./Pages/Financat/Bankat";
 import Pagesat from "./Pages/Financat/Pagesat";
+import RegjistrimiISemestrit from "./Pages/Studenti/RegjistrimiISemestrit";
 
 function App() {
   const { setTitle, aktivizoSetPerditeso } = useTitle();
@@ -25,7 +26,6 @@ function App() {
   }, [perditeso]);
 
   return (
-    
     <div className="App">
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
@@ -35,9 +35,13 @@ function App() {
         <Route path="/KrijoAplikiminERi" element={<KrijoAplikiminERi />} />
         <Route path="/Bankat" element={<Bankat />} />
         <Route path="/Pagesat" element={<Pagesat />} />
+        <Route
+          path="/RegjistrimiISemestrit"
+          element={<RegjistrimiISemestrit />}
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-      </div>
+    </div>
   );
 }
 

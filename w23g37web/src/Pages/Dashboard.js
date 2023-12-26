@@ -9,28 +9,14 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import Mesazhi from "../Components/TeTjera/layout/Mesazhi";
 import PerditesoTeDhenat from "./Gjenerale/TeDhenat/PerditesoTeDhenat";
 
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+
 const Dashboard = () => {
-  const [shfaqAdmin, setShfaqAdmin] = useState(false);
+  const [eshteStudent, setEshteStudent] = useState(false);
   const [teDhenat, setTeDhenat] = useState([]);
   const [perditeso, setPerditeso] = useState("");
   const [loading, setLoading] = useState(true);
-  const [shfaqPorosite, setShfaqPorosite] = useState(false);
-  const [shfaqDetajet, setShfaqDetajet] = useState(false);
-  const [shfaqMesazhet, setShfaqMesazhet] = useState(false);
-  const [nrFatures, setNumriFatures] = useState(0);
-  const [show, setShow] = useState(false);
-  const [edito, setEdito] = useState(false);
-  const [emri, setEmri] = useState("");
-  const [mbiemri, setMbiemri] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [adresa, setAdresa] = useState("");
-  const [nrKontaktit, setNrKontaktit] = useState("");
-  const [id, setId] = useState();
-  const [mbyllPerditesoTeDhenat, setMbyllPerditesoTeDhenat] = useState(true);
-  const [shfaqMesazhin, setShfaqMesazhin] = useState(false);
-  const [tipiMesazhit, setTipiMesazhit] = useState("");
-  const [pershkrimiMesazhit, setPershkrimiMesazhit] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,11 +34,20 @@ const Dashboard = () => {
     if (getID) {
       const vendosTeDhenat = async () => {
         try {
-          const perdoruesi = await axios.get(
+          const rolet = await axios.get(
             `https://localhost:7251/api/Perdoruesi/shfaqSipasID?idUserAspNet=${getID}`,
             authentikimi
           );
+          const perdoruesi = await axios.get(
+            `https://localhost:7251/api/Perdoruesi/ShfaqTeDhenatNgaID?id=${getID}`,
+            authentikimi
+          );
           setTeDhenat(perdoruesi.data);
+
+          if (rolet.data.rolet.includes("Student")) {
+            setEshteStudent(true);
+          }
+
           console.log(perdoruesi.data);
         } catch (err) {
           console.log(err);
@@ -66,58 +61,6 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [perditeso]);
-
-  const perditesoTeDhenat = async () => {
-    try {
-      const info = {
-        emri: emri,
-        mbiemri: mbiemri,
-        email: email,
-        username: username,
-        teDhenatPerdoruesit: {
-          nrKontaktit: nrKontaktit,
-          adresa: adresa,
-        },
-      };
-      fetch("https://localhost:7285/api/Perdoruesi/perditesoPerdorues/" + id, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(info),
-      });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleShfaqPorosite = () => {
-    setShfaqAdmin(false);
-    setShfaqDetajet(false);
-    setShfaqPorosite(true);
-    setShfaqMesazhet(false);
-  };
-
-  const handleShfaqAdminDashboard = () => {
-    setShfaqAdmin(true);
-    setShfaqDetajet(false);
-    setShfaqPorosite(false);
-    setShfaqMesazhet(false);
-  };
-
-  const handleShfaqMesazhet = () => {
-    setShfaqAdmin(false);
-    setShfaqDetajet(false);
-    setShfaqPorosite(false);
-    setShfaqMesazhet(true);
-  };
-
-  const handleEditoMbyll = () => setEdito(false);
-
-  const handleShow = (ID) => {
-    setId(ID);
-    setMbyllPerditesoTeDhenat(false);
-  };
 
   return (
     <>
@@ -142,53 +85,234 @@ const Dashboard = () => {
         ) : (
           <div class="containerDashboard">
             <h3 class="titulliPershkrim">Te dhenat personale</h3>
-            <table>
-              <tr>
-                <td>
-                  <strong>Emri:</strong>
-                </td>
-                <td>{teDhenat.emri}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Mbiemri:</strong>
-                </td>
-                <td>{teDhenat.mbiemri}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Username:</strong>
-                </td>
-                <td>{teDhenat.username}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Email:</strong>
-                </td>
-                <td>{teDhenat.email}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Numri Kontaktit:</strong>
-                </td>
-                <td>{teDhenat.nrKontaktit}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Pozita: </strong>
-                </td>
-                <td>{teDhenat.rolet && teDhenat.rolet.join(", ")}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Adresa: </strong>
-                </td>
-                <td>
-                  {teDhenat.adresa}, {teDhenat.qyteti}, {teDhenat.shteti}{" "}
-                  {teDhenat.zipKodi}
-                </td>
-              </tr>
-            </table>
+            <Tabs
+              defaultActiveKey="InformatatPersonale"
+              id="uncontrolled-tab-example"
+              className="mb-3">
+              <Tab eventKey="InformatatPersonale" title="Informatat Personale">
+                <table>
+                  <tr>
+                    <td>
+                      <strong>
+                        {!eshteStudent ? "ID:" : "ID e Studentit:"}
+                      </strong>
+                    </td>
+                    <td>
+                      {!eshteStudent
+                        ? teDhenat &&
+                          teDhenat.teDhenatPerdoruesit &&
+                          teDhenat.teDhenatPerdoruesit.userID
+                        : teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit.idStudenti}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Përdoruesi:</strong>
+                    </td>
+                    <td>{teDhenat && teDhenat.email}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Nr. Personal:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.nrPersonal}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Emri:</strong>
+                    </td>
+                    <td>{teDhenat && teDhenat.emri}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Emri i prindit:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.emriPrindit}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Mbiemri: </strong>
+                    </td>
+                    <td>{teDhenat && teDhenat.mbiemri}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Datëlindja: </strong>
+                    </td>
+                    <td>
+                    {new Date(
+                        teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.dataLindjes
+                      ).toLocaleDateString("en-GB", { dateStyle: "short" })}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Gjinia: </strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.gjinia}
+                    </td>
+                  </tr>
+                </table>
+              </Tab>
+              <Tab eventKey="Kontakti" title="Kontakti">
+                <table>
+                  <tr>
+                    <td>
+                      <strong>Shteti:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.shteti}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Vendbanimi:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.qyteti}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Adresa:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.adresa}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>ZipKodi:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.zipKodi}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Telefon:</strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.nrKontaktit}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Emaili Privat: </strong>
+                    </td>
+                    <td>
+                      {teDhenat &&
+                        teDhenat.teDhenatPerdoruesit &&
+                        teDhenat.teDhenatPerdoruesit.emailPersonal}
+                    </td>
+                  </tr>
+                </table>
+              </Tab>
+              {eshteStudent && (
+                <Tab
+                  eventKey="TeDhenatRegjistrimit"
+                  title="Te Dhenat Regjistrimit">
+                  <table>
+                    <tr>
+                      <td>
+                        <strong>Kodi Financiar:</strong>
+                      </td>
+                      <td>
+                        {teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit.kodiFinanciar}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Fakulteti:</strong>
+                      </td>
+                      <td>
+                        {teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit
+                            .departamentet &&
+                          teDhenat.teDhenatRegjistrimitStudentit.departamentet
+                            .emriDepartamentit}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Niveli:</strong>
+                      </td>
+                      <td>
+                        {teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit
+                            .niveliStudimeve &&
+                          teDhenat.teDhenatRegjistrimitStudentit.niveliStudimeve
+                            .emriNivelitStudimeve}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Regjistruar në vitin akademik:</strong>
+                      </td>
+                      <td>
+                        {teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit
+                            .vitiAkademikRegjistrim}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Data e regjistrimit:</strong>
+                      </td>
+                      <td>
+                      {new Date(
+                        teDhenat &&
+                        teDhenat.teDhenatRegjistrimitStudentit &&
+                        teDhenat.teDhenatRegjistrimitStudentit
+                          .dataRegjistrimit
+                      ).toLocaleDateString("en-GB", { dateStyle: "short" })}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Lloji i regjistrimit: </strong>
+                      </td>
+                      <td>
+                        {teDhenat &&
+                          teDhenat.teDhenatRegjistrimitStudentit &&
+                          teDhenat.teDhenatRegjistrimitStudentit
+                            .llojiRegjistrimit}
+                      </td>
+                    </tr>
+                  </table>
+                </Tab>
+              )}
+            </Tabs>
           </div>
         )}
       </div>

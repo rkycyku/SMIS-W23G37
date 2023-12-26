@@ -69,16 +69,8 @@ namespace W23G37.Controllers
             var emriShkronjaPare = emri[0];
             var mbiemriShkronjaPare = mbiemri[0];
 
-            var UsernameGjeneruar = emriShkronjaPare.ToString() + mbiemriShkronjaPare.ToString() + numriRendorPerdoruesit.ToString();
+            var UsernameGjeneruar = $"{emriShkronjaPare}{mbiemriShkronjaPare}{numriRendorPerdoruesit:D5}";
             var EmailGjeneruar = UsernameGjeneruar.ToString() + "@ubt-uni.net";
-
-            var ekziston = await _context.Perdoruesit.Where(x => x.Email == EmailGjeneruar).ToListAsync();
-
-            if (ekziston.Count > 0)
-            {
-                UsernameGjeneruar = emri.ToString() + "." + mbiemri.ToString() + "." + (ekziston.Count + 1).ToString();
-                EmailGjeneruar = UsernameGjeneruar.ToString() + "@ubt-uni.net";
-            }
 
             await _userStore.SetUserNameAsync(user, EmailGjeneruar.ToString(), CancellationToken.None);
             await _emailStore.SetEmailAsync(user, EmailGjeneruar.ToString(), CancellationToken.None);
@@ -93,7 +85,15 @@ namespace W23G37.Controllers
 
                 await _userManager.AddToRolesAsync(user, new[] { "User", "Student" });
 
-                Perdoruesi perdoruesi = new Perdoruesi
+                DateTime dataEDitesSotme = DateTime.Now;
+                int vitiAktual = dataEDitesSotme.Year % 100;
+
+                DateTime fillimiRegjistrimeve = new DateTime(vitiAktual, 6, 1);
+                DateTime mbarimiRegjistrimeve = new DateTime(vitiAktual, 10, 7);
+
+                string StudentiID;
+
+                Perdoruesi perdoruesi = new()
                 {
                     AspNetUserId = userId,
                     Emri = studenti.Emri,
@@ -121,6 +121,9 @@ namespace W23G37.Controllers
                 await _context.TeDhenatPerdoruesit.AddAsync(teDhenatPerdoruesit);
                 await _context.SaveChangesAsync();
 
+
+                StudentiID = $"{vitiAktual}{vitiAktual + 1}{perdoruesi.UserID:D5}";
+
                 TeDhenatRegjistrimitStudentit teDhenatRegjistrimitStudentit = new()
                 {
                     UserId = perdoruesi.UserID,
@@ -130,6 +133,7 @@ namespace W23G37.Controllers
                     LlojiRegjistrimit = studenti.LlojiRegjistrimit,
                     NiveliStudimitID = studenti.NiveliStudimitID,
                     VitiAkademikRegjistrim = studenti.VitiAkademikRegjistrim,
+                    IdStudenti = StudentiID,
                 };
 
                 await _context.TeDhenatRegjistrimitStudentit.AddAsync(teDhenatRegjistrimitStudentit);

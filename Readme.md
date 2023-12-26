@@ -45,4 +45,4 @@ Pasi qe te behet konfigurimi ju mund te kyqeni me keto te dhena:
 | administrat.administrat@ubt-uni.net       | administratadministrat1@        | Administrat |
 | asistent.asistent@ubt-uni.net       | asistentasistent1@        | Asistent |
 | profesor.profesor@ubt-uni.net       | profesorprofesor1@        | Profesor |
-| ss6@ubt-uni.net      | ss6@ubt-uni.net        | Student |
+| ss00002@ubt-uni.net      | ss00002@ubt-uni.net        | Student |
