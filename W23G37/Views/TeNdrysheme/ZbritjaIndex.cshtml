@@ -1,0 +1,48 @@
+﻿@model W23G37.Controllers.TeNdryshemeController.TeNdryshmeViewModel
+
+@{
+    ViewData["Title"] = "Zbritjet";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert" style="width: 90%;">
+        <span>@TempData["Message"]</span>
+        <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <button class="btn btn-success" onclick="location.href='@Url.Action("ZbritjaShtoni")'">Shtoni Zbritjen<i class="fa-solid fa-plus"></i></button>
+</p>
+
+<table class="tableStyle table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID Zbrtijes
+            </th>
+            <th>
+                Lloji Zbrtijes
+            </th>
+            <th>
+                Zbritja ne %
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Zbritjet) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZbritjaID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmriZbritjes) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zbritja) %
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

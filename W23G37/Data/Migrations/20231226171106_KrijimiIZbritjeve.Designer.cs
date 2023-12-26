@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using W23G37.Data;
 
@@ -11,9 +12,10 @@ using W23G37.Data;
 namespace W23G37.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231226171106_KrijimiIZbritjeve")]
+    partial class KrijimiIZbritjeve
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -532,7 +534,9 @@ namespace W23G37.Data.Migrations
 
                     b.HasKey("LokacioniDepartamentiID");
 
-                    b.HasIndex("DepartamentiID");
+                    b.HasIndex("DepartamentiID")
+                        .IsUnique()
+                        .HasFilter("[DepartamentiID] IS NOT NULL");
 
                     b.HasIndex("LokacioniID");
 
@@ -624,7 +628,9 @@ namespace W23G37.Data.Migrations
 
                     b.HasKey("PagesaID");
 
-                    b.HasIndex("AplikimiID");
+                    b.HasIndex("AplikimiID")
+                        .IsUnique()
+                        .HasFilter("[AplikimiID] IS NOT NULL");
 
                     b.HasIndex("BankaID");
 

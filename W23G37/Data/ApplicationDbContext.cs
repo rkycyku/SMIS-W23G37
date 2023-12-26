@@ -31,7 +31,7 @@ namespace W23G37.Data
         public DbSet<NiveliStudimitDepartamenti> NiveliStudimitDepartamenti { get; set; }
         public DbSet<Bankat> Bankat {  get; set; }
         public DbSet<Pagesat> Pagesat { get; set; }
-
-       
+        public DbSet<Zbritjet> Zbritjet { get; set; }
+        public DbSet<ZbritjaStudenti> ZbritjaStudenti { get; set; }
     }
 }

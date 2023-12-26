@@ -129,16 +129,21 @@
                                 <li><a asp-area="" asp-controller="Afatet" asp-action="APSIndex">Afati Paraqitjes Semestrit</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <div class="icon-link2">
-                                <a>Te Ndryshme <i class='bx bxs-chevron-down arrow2'></i></a>
-                            </div>
-                            <ul class="sub-menu2">
-                                <li><a class="link_name" href="#">Te Ndryshme</a></li>
-                                <li><a asp-area="" asp-controller="Afatet" asp-action="NiveliStudimeveIndex">Niveli Studimeve</a></li>
-                                <li><a asp-area="" asp-controller="Afatet" asp-action="SpecializimetPerDepartamentIndex">Specializimet Per Departament</a></li>
-                            </ul>
-                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                        <a href="#">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <span class="link_name">Te Ndryshme</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href="#">Te Ndryshme</a></li>
+                        <li><a asp-area="" asp-controller="TeNdrysheme" asp-action="NiveliStudimeveIndex">Niveli Studimeve</a></li>
+                        <li><a asp-area="" asp-controller="TeNdrysheme" asp-action="SpecializimetPerDepartamentIndex">Specializimet Per Departament</a></li>
+                        <li><a asp-area="" asp-controller="TeNdrysheme" asp-action="ZbritjaIndex">Zbritja</a></li>
                     </ul>
                 </li>
                 @* <li>

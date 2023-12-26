@@ -59,7 +59,7 @@
     <div style="margin-left: 1em; flex: 2;">
         <table class="tableStyle table table-striped mt-4">
             <tr>
-                <th colspan="5" style="text-align: center;">
+                <th colspan="7" style="text-align: center;">
                     Studentet që e kanë paraqitur këtë semester
                 </th>
             </tr>
@@ -72,6 +72,12 @@
                 </th>
                 <th>
                     Semestri
+                </th>
+                <th>
+                    Departamenti
+                </th>
+                <th>
+                    Lokacioni
                 </th>
                 <th>
                     Data Paraqitjes
@@ -90,13 +96,15 @@
                     <td>
                         @item.Studenti.Email
                     </td>
-
                     <td>
-
-                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetSemestri", new { id=item.SemestriID})'">Semestri @item.Semestri.NrSemestrit</a>
-
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetSemestri", new { id=item.SemestriID})'">Semestri @item.Semestri?.NrSemestrit</a>
                     </td>
-
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Departamentet", new { id=item.Studenti?.TeDhenatRegjistrimitStudentit?.DepartamentiID})'">@item.Studenti?.TeDhenatRegjistrimitStudentit?.Departamentet?.ShkurtesaDepartamentit</a>
+                    </td>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Lokacionet", new { id=item.LokacioniID})'"> @item.Lokacioni?.EmriLokacionit</a>
+                    </td>
                     <td>
                         @($"{item.DataParaqitjes:dd/MM/yyyy}")
                     </td>

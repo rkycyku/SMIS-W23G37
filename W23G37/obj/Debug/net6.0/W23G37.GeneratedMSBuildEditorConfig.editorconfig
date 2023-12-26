@@ -76,44 +76,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XEFQU1NodG9uaS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/DetajetNiveliStudimit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XERldGFqZXROaXZlbGlTdHVkaW1pdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/DetajetSemestri.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XERldGFqZXRTZW1lc3RyaS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/NiveliStudimeveIndex.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XE5pdmVsaVN0dWRpbWV2ZUluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/SemestriIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNlbWVzdHJpSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/ShtoniNivelinEStudimeve.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNodG9uaU5pdmVsaW5FU3R1ZGltZXZlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/ShtoniSemestrin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNodG9uaVNlbWVzdHJpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/SpecializimetPerDepartamentDetaje.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNwZWNpYWxpemltZXRQZXJEZXBhcnRhbWVudERldGFqZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/SpecializimetPerDepartamentIndex.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNwZWNpYWxpemltZXRQZXJEZXBhcnRhbWVudEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/SpecializimetPerDepartamentShtoni.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFNwZWNpYWxpemltZXRQZXJEZXBhcnRhbWVudFNodG9uaS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Afatet/VendosniNivelinEStudimeveNeDepartament.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWZhdGV0XFZlbmRvc25pTml2ZWxpbkVTdHVkaW1ldmVOZURlcGFydGFtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Departamentet/Create.cshtml]
@@ -230,6 +202,42 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/Studentet/AplikimetERejaIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudGV0XEFwbGlraW1ldEVSZWphSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/DetajetNiveliStudimit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcRGV0YWpldE5pdmVsaVN0dWRpbWl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/NiveliStudimeveIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcTml2ZWxpU3R1ZGltZXZlSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/ShtoniNivelinEStudimeve.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcU2h0b25pTml2ZWxpbkVTdHVkaW1ldmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/SpecializimetPerDepartamentDetaje.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcU3BlY2lhbGl6aW1ldFBlckRlcGFydGFtZW50RGV0YWplLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/SpecializimetPerDepartamentIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcU3BlY2lhbGl6aW1ldFBlckRlcGFydGFtZW50SW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/SpecializimetPerDepartamentShtoni.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcU3BlY2lhbGl6aW1ldFBlckRlcGFydGFtZW50U2h0b25pLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/VendosniNivelinEStudimeveNeDepartament.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcVmVuZG9zbmlOaXZlbGluRVN0dWRpbWV2ZU5lRGVwYXJ0YW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/ZbritjaIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcWmJyaXRqYUluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Programim/CSharp/W23G37Projekti/W23G37/Views/TeNdrysheme/ZbritjaShtoni.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVOZHJ5c2hlbWVcWmJyaXRqYVNodG9uaS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Programim/CSharp/W23G37Projekti/W23G37/Views/_ViewImports.cshtml]

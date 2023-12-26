@@ -175,28 +175,28 @@ const Pagesat = () => {
                     </td>
                     <td>
                       {p.aplikimiID != null
-                        ? p.aplikimetEReja &&
-                          p.aplikimetEReja.kodiFinanciar +
+                        ? (p.aplikimetEReja &&
+                          p.aplikimetEReja.kodiFinanciar) +
                             " - " +
-                            p.aplikimetEReja.emri +
+                            (p.aplikimetEReja.emri) +
                             " " +
-                            p.aplikimetEReja.mbiemri
+                            (p.aplikimetEReja.mbiemri)
                         : p.perdoruesi &&
                           p.perdoruesi.teDhenatRegjistrimitStudentit &&
                           p.perdoruesi.teDhenatRegjistrimitStudentit
                             .kodiFinanciar != null
-                        ? p.perdoruesi && p.perdoruesi.teDhenatRegjistrimitStudentit
+                        ? (p.perdoruesi && p.perdoruesi.teDhenatRegjistrimitStudentit
                          && p.perdoruesi.teDhenatRegjistrimitStudentit
-                            .kodiFinanciar +
+                            .kodiFinanciar) +
                           " - " +
-                          p.perdoruesi && p.perdoruesi.emri +
+                          (p.perdoruesi && p.perdoruesi.emri) +
                           " " +
-                          p.perdoruesi && p.perdoruesi.mbiemri
-                        : p.perdoruesi && p.perdoruesi.username +
+                          (p.perdoruesi && p.perdoruesi.mbiemri)
+                        : (p.perdoruesi && p.perdoruesi.username) +
                           " - " +
-                          p.perdoruesi && p.perdoruesi.emri +
+                          (p.perdoruesi && p.perdoruesi.emri) +
                           " " +
-                          p.perdoruesi && p.perdoruesi.mbiemri}
+                          (p.perdoruesi && p.perdoruesi.mbiemri)}
                     </td>
                     <td>
                       {p.pagesa != null

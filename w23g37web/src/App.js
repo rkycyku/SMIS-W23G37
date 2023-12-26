@@ -10,6 +10,7 @@ import KrijoAplikiminERi from "./Pages/Administrata/KrijoAplikiminERi";
 import Bankat from "./Pages/Financat/Bankat";
 import Pagesat from "./Pages/Financat/Pagesat";
 import RegjistrimiISemestrit from "./Pages/Studenti/RegjistrimiISemestrit";
+import Statistika from "./Pages/Financat/Statistika";
 
 function App() {
   const { setTitle, aktivizoSetPerditeso } = useTitle();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/KrijoAplikiminERi" element={<KrijoAplikiminERi />} />
         <Route path="/Bankat" element={<Bankat />} />
         <Route path="/Pagesat" element={<Pagesat />} />
+        <Route path="/Statistika" element={<Statistika />} />
         <Route
           path="/RegjistrimiISemestrit"
           element={<RegjistrimiISemestrit />}

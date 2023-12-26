@@ -24,6 +24,7 @@ import {
   faPenToSquare,
   faBuildingColumns,
   faReceipt,
+  faChartPie,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -223,37 +224,52 @@ function Navbar(props) {
                 teDhenat.rolet &&
                 teDhenat.rolet.includes("Financa") && (
                   <>
-                  <li>
-                    <Link to="/Bankat">
-                      <i class="bx bx-pie-chart-alt-2">
-                        <FontAwesomeIcon icon={faBuildingColumns} />
-                      </i>
-                      <span class="link_name">Bankat</span>
-                    </Link>
-                    <ul class="sub-menu blank">
-                      <li>
-                        <Link class="link_name" to="/Bankat">
-                          Bankat
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                  <Link to="/Pagesat">
-                    <i class="bx bx-pie-chart-alt-2">
-                      <FontAwesomeIcon icon={faReceipt} />
-                    </i>
-                    <span class="link_name">Pagesat</span>
-                  </Link>
-                  <ul class="sub-menu blank">
                     <li>
-                      <Link class="link_name" to="/Pagesat">
-                        Pagesat
+                      <Link to="/Bankat">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faBuildingColumns} />
+                        </i>
+                        <span class="link_name">Bankat</span>
                       </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/Bankat">
+                            Bankat
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
-                  </ul>
-                </li>
-                </>
+                    <li>
+                      <Link to="/Pagesat">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faReceipt} />
+                        </i>
+                        <span class="link_name">Pagesat</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/Pagesat">
+                            Pagesat
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <Link to="/Statistika">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faChartPie} />
+                        </i>
+                        <span class="link_name">Statistika</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/Statistika">
+                          Statistika
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </>
                 )}
               {teDhenat &&
                 teDhenat.rolet &&
@@ -274,26 +290,26 @@ function Navbar(props) {
                     </ul>
                   </li>
                 )}
-                {teDhenat &&
+              {teDhenat &&
                 teDhenat.rolet &&
                 teDhenat.rolet.includes("Student") && (
                   <>
-                  <li>
-                    <Link to="/RegjistrimiISemestrit">
-                      <i class="bx bx-pie-chart-alt-2">
-                        <FontAwesomeIcon icon={faBuildingColumns} />
-                      </i>
-                      <span class="link_name">Regjistrimi i Semestrit</span>
-                    </Link>
-                    <ul class="sub-menu blank">
-                      <li>
-                        <Link class="link_name" to="/RegjistrimiISemestrit">
-                        Regjistrimi i Semestrit
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                </>
+                    <li>
+                      <Link to="/RegjistrimiISemestrit">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faBuildingColumns} />
+                        </i>
+                        <span class="link_name">Regjistrimi i Semestrit</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/RegjistrimiISemestrit">
+                            Regjistrimi i Semestrit
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </>
                 )}
               <li>
                 <Link to="/PerditesoTeDhenat">

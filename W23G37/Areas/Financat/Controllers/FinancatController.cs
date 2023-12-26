@@ -121,7 +121,8 @@ namespace W23G37.Areas.Financat.Controllers
             return Ok(banka);
         }
 
-        [Authorize(Policy = "eshteStaf")]
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
         [HttpGet]
         [Route("ShfaqniPagesat")]
         public async Task<IActionResult> ShfaqniPagesat()
