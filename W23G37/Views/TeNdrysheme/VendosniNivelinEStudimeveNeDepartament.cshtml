@@ -2,22 +2,18 @@
 
 
 @{
-    ViewData["Title"] = "Shtoni Afatin e Paraqitjes te Semestrit";
+    ViewData["Title"] = "Vendosni Nivelin E Studimeve Ne Departament";
 }
 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="VendosniNivelinEStudimeveNeDepartament">
+            <input type="hidden" asp-for="NiveliStudimeveZgjedhur" name="NiveliStudimeveZgjedhur" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="formaSelect mb-3">
-                <label asp-for="NiveliStudimit">Niveli i Studimeve</label>
-                <select asp-for="NiveliStudimeveZgjedhur" class="form-control" required>
-                    <option disabled value="">Zgjedhni Nivelin e Studimeve</option>
-                    @foreach (var item in Model.NiveliStudimeve)
-                    {
-                        <option value="@item.NiveliStudimeveID">@item.EmriNivelitStudimeve - @item.ShkurtesaEmritNivelitStudimeve</option>
-                    }
-                </select>
+            <div class="form-group mb-3">
+                <label asp-for="NiveliStudimit.EmriNivelitStudimeve" class="control-label">Niveli i Studimeve</label>
+                <input asp-for="NiveliStudimit.EmriNivelitStudimeve" class="form-control" disabled/>
+                <span asp-validation-for="NiveliStudimit.EmriNivelitStudimeve" class="text-danger"></span>
             </div>
             <div class="formaSelect mb-3">
                 <label asp-for="NiveliStudimit">Departamenti</label>

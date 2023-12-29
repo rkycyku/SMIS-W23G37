@@ -14,7 +14,6 @@
 
 <p>
     <button class="btn btn-success" onclick="location.href='@Url.Action("ShtoniNivelinEStudimeve")'">Shtoni Nivelin e Studimeve <i class="fa-solid fa-plus"></i></button>
-    <button class="btn btn-success" onclick="location.href='@Url.Action("VendosniNivelinEStudimeveNeDepartament")'">Caktoni Departamentin <i class="fa-solid fa-plus"></i></button>
 </p>
 <table class="tableStyle table table-striped">
     <thead>
@@ -31,7 +30,7 @@
             <th>
                 Data Krijimit
             </th>
-            <th></th>
+            <th>Funksione</th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +51,7 @@
                 </td>
                 <td>
                     <button class="btn btn-success" onclick="location.href='@Url.Action("DetajetNiveliStudimit", new { id=item.NiveliStudimeveID})'"><i class="fa-solid fa-circle-info"></i></button>
+                    <button class="btn btn-success" onclick="location.href='@Url.Action("VendosniNivelinEStudimeveNeDepartament", new { id=item.NiveliStudimeveID})'">Caktoni Departamentin <i class="fa-solid fa-plus"></i></button>
                 </td>
             </tr>
         }

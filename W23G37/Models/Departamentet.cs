@@ -12,5 +12,6 @@ namespace W23G37.Models
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
 
         public virtual LokacioniDepartamenti? LokacionetDepartamenti { get; set; }
+        public virtual List<TarifatDepartamenti>? TarifatDepartamenti { get; set; }
     }
 }

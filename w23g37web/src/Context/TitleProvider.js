@@ -16,7 +16,9 @@ export const TitleProvider = ({ children }) => {
   const [emri, setEmri] = useState("");
   const [mbiemri, setMbiemri] = useState("");
   const [rolet, setRolet] = useState([]);
-  
+
+  const [resetoFaqen, setResetoFaqen] = useState(0);
+
   const authentikimi = {
     headers: {
       Authorization: `Bearer ${getToken}`,
@@ -33,12 +35,14 @@ export const TitleProvider = ({ children }) => {
           setEmri(perdoruesi.data.emri);
           setMbiemri(perdoruesi.data.mbiemri);
           setRolet(perdoruesi.data.rolet);
+
         } catch (err) {
           console.log(err);
         }
       };
 
       vendosTeDhenat();
+
     }
   }, [perditeso]);
 

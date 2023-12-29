@@ -25,6 +25,7 @@ import {
   faBuildingColumns,
   faReceipt,
   faChartPie,
+  faEuroSign,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -48,7 +49,7 @@ function Navbar(props) {
 
   const [showMenu, setShowMenu] = useState(false);
   const [showMenu2, setShowMenu2] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const getID = localStorage.getItem("id");
   const getToken = localStorage.getItem("token");
@@ -255,6 +256,21 @@ function Navbar(props) {
                       </ul>
                     </li>
                     <li>
+                      <Link to="/TarifatDepartamentit">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faEuroSign} />
+                        </i>
+                        <span class="link_name">Tarifat e Departamentit</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/TarifatDepartamentit">
+                            Tarifat e Departamentit
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
                       <Link to="/Statistika">
                         <i class="bx bx-pie-chart-alt-2">
                           <FontAwesomeIcon icon={faChartPie} />
@@ -264,7 +280,7 @@ function Navbar(props) {
                       <ul class="sub-menu blank">
                         <li>
                           <Link class="link_name" to="/Statistika">
-                          Statistika
+                            Statistika
                           </Link>
                         </li>
                       </ul>
@@ -274,21 +290,36 @@ function Navbar(props) {
               {teDhenat &&
                 teDhenat.rolet &&
                 teDhenat.rolet.includes("Administrat") && (
-                  <li>
-                    <Link to="/KrijoAplikiminERi">
-                      <i class="bx bx-pie-chart-alt-2">
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </i>
-                      <span class="link_name">Krijoni Aplikim e Ri</span>
-                    </Link>
-                    <ul class="sub-menu blank">
-                      <li>
-                        <Link class="link_name" to="/KrijoAplikiminERi">
-                          Krijoni Aplikim e Ri
+                  <>
+                    <li>
+                      <div class="iocn-link">
+                        <Link to="#">
+                          <i>
+                            <FontAwesomeIcon icon={faBook} />
+                          </i>
+                          <span class="link_name">Aplikimet e Reja</span>
                         </Link>
-                      </li>
-                    </ul>
-                  </li>
+                        <i
+                          class="bx bxs-chevron-down arrow"
+                          onClick={handleArrowClick}>
+                          <FontAwesomeIcon icon={faChevronUp} />
+                        </i>
+                      </div>
+                      <ul class="sub-menu">
+                        <li>
+                          <Link class="link_name" to="#">
+                          Aplikimet e Reja
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/AplikimetEReja">Lista Aplikimeve</Link>
+                        </li>
+                        <li>
+                          <Link to="/KrijoAplikiminERi">Krijoni Aplikim e Ri</Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </>
                 )}
               {teDhenat &&
                 teDhenat.rolet &&

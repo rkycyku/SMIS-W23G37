@@ -99,6 +99,8 @@ const LogIn = () => {
         localStorage.setItem("id", decodedToken.id);
 
         navigate("/dashboard");
+        
+        window.location.reload();
       } else {
         setPershkrimiMesazhit(
           "<strong>Ju lutemi kontaktoni me stafin pasi ndodhi nje gabim ne server!</strong>"

@@ -23,6 +23,7 @@ namespace W23G37.Areas.Administrata.Controllers
         public class AdministrataModel
         {
             public virtual AplikimetEReja? AplikimetEReja { get; set; }
+            public virtual TarifatDepartamenti? TarifaDepartamenti { get; set; }
         }
 
         [Authorize(Policy = "eshteStaf")]
@@ -30,7 +31,7 @@ namespace W23G37.Areas.Administrata.Controllers
         [Route("shfaqDepartamentet")]
         public async Task<IActionResult> ShfaqDepartmanetet()
         {
-            var departamentet = await _context.Departamentet.ToListAsync();
+            var departamentet = await _context.Departamentet.Include(x => x.TarifatDepartamenti).Where(x => x.TarifatDepartamenti.Count > 0).ToListAsync();
 
             return Ok(departamentet);
         }
@@ -45,8 +46,7 @@ namespace W23G37.Areas.Administrata.Controllers
             return Ok(niveletEStudimit);
         }
 
-        /*[Authorize(Policy = "eshteStaf")]*/
-        [AllowAnonymous]
+        [Authorize(Policy = "eshteStaf")]
         [HttpGet]
         [Route("gjeneroKodinFinanciar")]
         public async Task<IActionResult> GjeneroKodinFinanciar(int departamentiID, int niveliStudimitID)
@@ -96,6 +96,55 @@ namespace W23G37.Areas.Administrata.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(aplikimi);
+        }
+
+        [Authorize(Policy = "eshteStaf")]
+        [HttpGet]
+        [Route("ShfaqZbritjet")]
+        public async Task<IActionResult> ShfaqZbritjet()
+        {
+            var zbritjet = await _context.Zbritjet.Where(x => x.LlojiZbritjes != "Extra").ToListAsync();
+
+            return Ok(zbritjet);
+        }
+
+        [Authorize(Policy = "eshteStaf")]
+        [HttpGet]
+        [Route("ShfaqAplikimetEReja")]
+        public async Task<IActionResult> ShfaqAplikimetEReja()
+        {
+            var aplikimetEReja = await _context.AplikimetEReja.Include(x => x.Departamentet).Include(x => x.NiveliStudimeve).ToListAsync();
+
+            return Ok(aplikimetEReja);
+        }
+
+        [Authorize(Policy = "eshteStaf")]
+        [HttpGet]
+        [Route("ShfaqAplikiminNgaID")]
+        public async Task<IActionResult> ShfaqAplikiminNgaID(int id)
+        {
+            var aplikimetEReja = await _context.AplikimetEReja.Include(x => x.Departamentet).ThenInclude(x => x.TarifatDepartamenti).Include(x => x.NiveliStudimeve).Include(x => x.Zbritja).Where(x => x.AplikimiID == id).FirstOrDefaultAsync();
+
+            var tarifa = await _context.TarifatDepartamenti.Where(x => x.DepartamentiID == aplikimetEReja.DepartamentiID && x.NiveliStudimitID == aplikimetEReja.NiveliStudimitID).FirstOrDefaultAsync();
+
+            AdministrataModel modeli = new()
+            {
+                AplikimetEReja = aplikimetEReja,
+                TarifaDepartamenti = tarifa,
+            };
+
+            return Ok(modeli);
+        }
+
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ShfaqLlogariteBankare")]
+        public async Task<IActionResult> ShfaqLlogariteBankare()
+        {
+            var bankat = await _context.Bankat.Where(x => x.LlojiBankes != "Dalese").ToListAsync();
+
+            return Ok(bankat);
         }
     }
 

@@ -11,6 +11,8 @@ import Bankat from "./Pages/Financat/Bankat";
 import Pagesat from "./Pages/Financat/Pagesat";
 import RegjistrimiISemestrit from "./Pages/Studenti/RegjistrimiISemestrit";
 import Statistika from "./Pages/Financat/Statistika";
+import TarifatDepartamentit from "./Pages/Financat/TarifatDepartamentit";
+import AplikimetEReja from "./Pages/Administrata/AplikimetEReja";
 
 function App() {
   const { setTitle, aktivizoSetPerditeso } = useTitle();
@@ -37,6 +39,8 @@ function App() {
         <Route path="/Bankat" element={<Bankat />} />
         <Route path="/Pagesat" element={<Pagesat />} />
         <Route path="/Statistika" element={<Statistika />} />
+        <Route path="/TarifatDepartamentit" element={<TarifatDepartamentit />} />
+        <Route path="/AplikimetEReja" element={<AplikimetEReja />} />
         <Route
           path="/RegjistrimiISemestrit"
           element={<RegjistrimiISemestrit />}

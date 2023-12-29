@@ -139,7 +139,20 @@ namespace W23G37.Controllers
                 await _context.TeDhenatRegjistrimitStudentit.AddAsync(teDhenatRegjistrimitStudentit);
                 await _context.SaveChangesAsync();
 
-                LlogaritERejaTeKrijuara llogaritERejaTeKrijuara = new LlogaritERejaTeKrijuara
+                var tarifa = await _context.TarifatDepartamenti.Where(x => x.NiveliStudimitID == studenti.NiveliStudimitID && x.DepartamentiID == studenti.DepartamentiID).FirstOrDefaultAsync();
+
+                TarifaStudenti tarifaStudenti = new()
+                {
+                    StudentiID = perdoruesi.UserID,
+                    TarifaFikse = studenti.LlojiKontrates == 3 ? tarifa?.TarifaVjetore : null,
+                    TarifaStudimitID = studenti.LlojiKontrates == 1 ? tarifa?.TarifaID : null,
+                    Zbritja1ID = studenti.ZbritjaID
+                };
+
+                await _context.TarifaStudenti.AddAsync(tarifaStudenti);
+                await _context.SaveChangesAsync();
+
+                LlogaritERejaTeKrijuara llogaritERejaTeKrijuara = new ()
                 {
                     AspNetUserID = userId,
                     PerdoruesiID = perdoruesi.UserID

@@ -4,7 +4,7 @@ import "../Styles/ProductTables.css";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Mesazhi from "../../Components/TeTjera/layout/Mesazhi";
-import ShtoPagesen from "../../Components/Financat/ShtoPagesen";
+import ShtoPagesen from "../../Components/Financat/Pagesat/ShtoPagesen";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBan,

@@ -17,6 +17,7 @@ namespace W23G37.Models
         public int? SpecializimiID { get; set; }
         public int UserId { get; set; }
         public string? IdStudenti { get; set; }
+        public int? LlojiKontrates { get; set; }
 
         [ForeignKey(nameof(DepartamentiID))]
         public virtual Departamentet? Departamentet { get; set;}

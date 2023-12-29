@@ -25,11 +25,17 @@ namespace W23G37.Models
         public int? NiveliStudimitID { get; set; }
         public string? VitiAkademikRegjistrim { get; set; }
         public string? LlojiRegjistrimit { get; set; }
+        public int? LlojiKontrates { get; set; }
+        public int? ZbritjaID { get; set; } = null;
+
         public DateTime? DataRegjistrimit { get; set; } = DateTime.Now;
         [ForeignKey(nameof(DepartamentiID))]
         public virtual Departamentet? Departamentet { get; set; }
         [ForeignKey(nameof(NiveliStudimitID))]
         public virtual NiveliStudimeve? NiveliStudimeve { get; set; }
+        [ForeignKey(nameof(ZbritjaID))]
+        public virtual Zbritjet? Zbritja { get; set; }
+
         [JsonIgnore]
         public virtual Pagesat? Pagesat { get; set; }
     }

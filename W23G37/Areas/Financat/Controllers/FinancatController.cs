@@ -27,6 +27,10 @@ namespace W23G37.Areas.Financat.Controllers
         {
             public virtual Bankat? Banka { get; set; }
             public virtual Pagesat? Pagesa { get; set; }
+            public virtual List<Departamentet>? Departamentet { get; set; }
+            public virtual Departamentet? Departamenti { get; set; }
+            public virtual List<TarifatDepartamenti>? TarifatDepartamentiList { get; set; }
+            public virtual TarifatDepartamenti? TarifatDepartamenti { get; set; }
         }
 
         public class Personi
@@ -121,8 +125,7 @@ namespace W23G37.Areas.Financat.Controllers
             return Ok(banka);
         }
 
-        /*[Authorize(Policy = "eshteStaf")]*/
-        [AllowAnonymous]
+        [Authorize(Policy = "eshteStaf")]
         [HttpGet]
         [Route("ShfaqniPagesat")]
         public async Task<IActionResult> ShfaqniPagesat()
@@ -202,6 +205,73 @@ namespace W23G37.Areas.Financat.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Pagesa u fshi me sukses!");
+        }
+
+        [Authorize(Policy = "eshteStaf")]
+        [HttpGet]
+        [Route("ShfaqniDepartamentet")]
+        public async Task<IActionResult> ShfaqniDepartamentet()
+        {
+            var departamentet = await _context.Departamentet.Include(x => x.TarifatDepartamenti).ToListAsync();
+
+            FinancatModel modeli = new()
+            {
+                Departamentet = departamentet.ToList(),
+            };
+
+            return Ok(modeli);
+        }
+
+        [Authorize(Policy = "eshteStaf")]
+        [HttpGet]
+        [Route("ShfaqniTarifatPerDepartamentin")]
+        public async Task<IActionResult> ShfaqniTarifatPerDepartamentin(int DepartamentiID)
+        {
+            var departamenti = await _context.Departamentet.Include(x => x.TarifatDepartamenti).ThenInclude(x => x.NiveliStudimeve).Where(x => x.DepartamentiID == DepartamentiID).FirstOrDefaultAsync();
+
+            FinancatModel modeli = new()
+            {
+                Departamenti = departamenti,
+            };
+
+            return Ok(modeli);
+        }
+
+        [AllowAnonymous]
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [HttpGet]
+        [Route("ShfaqniDetajetTarifes")]
+        public async Task<IActionResult> ShfaqniDetajetTarifes(int TarifaID)
+        {
+            var tarifa = await _context.TarifatDepartamenti.Include(x => x.NiveliStudimeve).Where(x => x.TarifaID == TarifaID).FirstOrDefaultAsync();
+
+            if(tarifa == null)
+            {
+                return BadRequest("Kjo tarife nuk u gjet!");
+            }
+
+            return Ok(tarifa);
+        }
+
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("PerditesoniTarifenDepartamentit")]
+        public async Task<IActionResult> PerditesoniTarifenDepartamentit(int tarifaID, [FromBody] FinancatModel tarifatDepartamenti)
+        {
+            var tarifaKerkim = await _context.TarifatDepartamenti.Include(x => x.NiveliStudimeve).Where(x => x.TarifaID == tarifaID).FirstOrDefaultAsync();
+
+            if (tarifaKerkim == null)
+            {
+                return BadRequest("Kjo tarife nuk u gjet!");
+            }
+
+            tarifaKerkim.TarifaVjetore = tarifatDepartamenti.TarifatDepartamenti.TarifaVjetore;
+
+            _context.TarifatDepartamenti.Update(tarifaKerkim);
+            await _context.SaveChangesAsync();
+
+            return Ok(tarifatDepartamenti);
         }
     }
 }

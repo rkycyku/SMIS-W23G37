@@ -24,6 +24,8 @@ const KrijoAplikiminERi = () => {
   const [qyteti, setQyteti] = useState("");
   const [adresa, setAdresa] = useState("");
   const [shteti, setShteti] = useState("Kosovë");
+  const [llojiKontrates, setLlojiKontrates] = useState(1);
+  const [llojiZbritjes, setLlojiZbritjes] = useState("");
   const [zipKodi, setZipKodi] = useState("");
   const [departamentiID, setDepartamentiID] = useState("");
   const [niveliStudimitID, setNiveliStudimitID] = useState("");
@@ -32,6 +34,7 @@ const KrijoAplikiminERi = () => {
 
   const [departamentet, setDepartamentet] = useState([]);
   const [niveletEStudimit, setNiveletEStudimit] = useState([]);
+  const [zbritjet, setZbritjet] = useState([]);
 
   const [roletSelektim, setRoletSelektim] = useState([]);
 
@@ -67,13 +70,26 @@ const KrijoAplikiminERi = () => {
         );
         setDepartamentet(departamentet.data);
         setVitiAkademikRegjistrim(vitiAkademikRegjistrim.data);
-        console.log(vitiAkademikRegjistrim.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const vendosZbritjet = async () => {
+      try {
+        const zbritjet = await axios.get(
+          `https://localhost:7251/api/Administrata/ShfaqZbritjet`,
+          authentikimi
+        );
+
+        setZbritjet(zbritjet.data);
       } catch (err) {
         console.log(err);
       }
     };
 
     vendosDepartamentet();
+    vendosZbritjet();
   }, []);
 
   useEffect(() => {
@@ -99,6 +115,14 @@ const KrijoAplikiminERi = () => {
 
   const handleShtetiChange = (event) => {
     setShteti(event.target.value);
+  };
+
+  const handleLlojiKontratesChange = (event) => {
+    setLlojiKontrates(event.target.value);
+  };
+
+  const handleLlojiZbritjesChange = (event) => {
+    setLlojiZbritjes(event.target.value);
   };
 
   const handleDepartamentiChange = (event) => {
@@ -151,7 +175,7 @@ const KrijoAplikiminERi = () => {
       const VetemShkronjaREGEX = /^[a-zA-ZçëÇË -]+$/;
 
       var kodiFinanciar = await axios.get(
-        `https://localhost:7251/api/Administrata/gjeneroKodinFinanciar?departamentiID=${departamentiID}&niveliStudimitID=${niveliStudimitID}`
+        `https://localhost:7251/api/Administrata/gjeneroKodinFinanciar?departamentiID=${departamentiID}&niveliStudimitID=${niveliStudimitID}`, authentikimi
       );
 
       if (shteti == "Kosovë" && !NrPeronsalRKSREGEX.test(nrPersonal)) {
@@ -247,6 +271,8 @@ const KrijoAplikiminERi = () => {
                 NiveliStudimitID: niveliStudimitID,
                 VitiAkademikRegjistrim: vitiAkademikRegjistrim,
                 LlojiRegjistrimit: LlojiRegjistrimit,
+                llojiKontrates: llojiKontrates,
+                zbritjaID: llojiZbritjes,
               },
             },
             authentikimi
@@ -303,6 +329,7 @@ const KrijoAplikiminERi = () => {
           />
         )}
         <Form className="mx-3">
+          <h3>Informatat Personale</h3>
           <Row className="mb-3 gap-1">
             <Form.Group as={Col} className="p-0" controlId="formGridName">
               <Form.Label>
@@ -348,7 +375,6 @@ const KrijoAplikiminERi = () => {
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3 gap-1">
             <Form.Group as={Col} className="p-0" controlId="formGridName">
               <Form.Label>
@@ -361,29 +387,6 @@ const KrijoAplikiminERi = () => {
                 onChange={handleChange(setNrPersonal)}
                 required
                 autoFocus
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} className="p-0" controlId="formGridLastName">
-              <Form.Label>
-                Email Personal<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="email@ubt-uni.net"
-                value={emailPersonal}
-                onChange={handleChange(setEmailPersonal)}
-                required
-              />
-            </Form.Group>
-            <Form.Group as={Col} className="p-0" controlId="formGridName">
-              <Form.Label>
-                Nr Kontaktit<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                placeholder="045123123 ose +38343123132"
-                value={nrKontaktit}
-                onChange={handleChange(setNrKontaktit)}
               />
             </Form.Group>
             <Form.Group as={Col} className="p-0" controlId="formGridLastName">
@@ -408,6 +411,32 @@ const KrijoAplikiminERi = () => {
                   maxDate={DatelindjaMaxLejuar}
                 />
               </Col>
+            </Form.Group>
+          </Row>
+          <hr />
+          <h3>Te Dhenat Ndihmese</h3>
+          <Row className="mb-3 gap-1">
+            <Form.Group as={Col} className="p-0" controlId="formGridLastName">
+              <Form.Label>
+                Email Personal<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="email@ubt-uni.net"
+                value={emailPersonal}
+                onChange={handleChange(setEmailPersonal)}
+                required
+              />
+            </Form.Group>
+            <Form.Group as={Col} className="p-0" controlId="formGridName">
+              <Form.Label>
+                Nr Kontaktit<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                placeholder="045123123 ose +38343123132"
+                value={nrKontaktit}
+                onChange={handleChange(setNrKontaktit)}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3 gap-1">
@@ -452,6 +481,9 @@ const KrijoAplikiminERi = () => {
               />
             </Form.Group>
           </Row>
+          <hr />
+          <h3>Te Dhenat Studimit</h3>
+
           <Row className="mb-3 gap-1">
             <Form.Group as={Col} className="p-0" controlId="formGridAdresa">
               <Form.Label>
@@ -505,6 +537,40 @@ const KrijoAplikiminERi = () => {
               </Form.Select>
             </Form.Group>
           </Row>
+          <Row className="mb-3 gap-1">
+            <Form.Group as={Col} className="p-0" controlId="formGridState">
+              <Form.Label>Lloji Kontrates</Form.Label>
+              <Form.Select
+                value={llojiKontrates}
+                onChange={handleLlojiKontratesChange}>
+                <option selected value={1}>
+                  1 Vjeqare
+                </option>
+                <option value={3}>3 Vjeqare</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} className="p-0" controlId="formGridAdresa">
+              <Form.Label>Zbritja</Form.Label>
+              <Form.Select
+                value={llojiZbritjes}
+                onChange={handleLlojiZbritjesChange}>
+                <option value={null} hidden selected>
+                  Zgjedhni Zbritjen
+                </option>
+                {zbritjet &&
+                  zbritjet.map((zbritja) => (
+                    <option value={zbritja.zbritjaID}>
+                      {zbritja.emriZbritjes} - Zbritja:{" "}
+                      {parseFloat(zbritja.zbritja).toFixed(2)} % - Kohezgjatja:{" "}
+                      {zbritja.llojiZbritjes}
+                    </option>
+                  ))}
+              </Form.Select>
+            </Form.Group>
+          </Row>
+
+          <hr />
+
           <div
             style={{ display: "flex", flexDirection: "column", width: "30%" }}>
             <Button variant="primary" type="submit" onClick={CreateAcc}>

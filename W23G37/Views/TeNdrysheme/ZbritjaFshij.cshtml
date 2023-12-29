@@ -1,0 +1,41 @@
+﻿@model W23G37.Controllers.TeNdryshemeController.TeNdryshmeViewModel
+@{
+    ViewData["Title"] = "Fshini Zbritjen";
+}
+
+<h4>A jeni te sigurt qe deshironi te fshini kete zbritje?</h4>
+<br />
+<table class="tableStyle table table-striped">
+    <tr>
+        <th>
+            Emri Zbritjes
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.Zbritja.EmriZbritjes)
+        </td>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Zbritja.Zbritja)
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.Zbritja.Zbritja)
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Lloji Zbritjes
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.Zbritja.LlojiZbritjes)
+        </td>
+    </tr>
+</table>
+
+<form asp-action="ZbritjaFshij">
+    <input type="hidden" asp-for="Zbritja.ZbritjaID" />
+    <div class="form-group">
+        <button class="btn btn-primary" asp-action="ZbritjaIndex"><i class="fa-solid fa-arrow-left"></i></button>
+        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+    </div>
+</form>

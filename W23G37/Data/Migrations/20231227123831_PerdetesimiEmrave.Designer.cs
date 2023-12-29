@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using W23G37.Data;
 
@@ -11,9 +12,10 @@ using W23G37.Data;
 namespace W23G37.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227123831_PerdetesimiEmrave")]
+    partial class PerdetesimiEmrave
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,9 +290,6 @@ namespace W23G37.Data.Migrations
                     b.Property<string>("KodiFinanciar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LlojiKontrates")
-                        .HasColumnType("int");
-
                     b.Property<string>("LlojiRegjistrimit")
                         .HasColumnType("nvarchar(max)");
 
@@ -315,9 +314,6 @@ namespace W23G37.Data.Migrations
                     b.Property<string>("VitiAkademikRegjistrim")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZbritjaID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ZipKodi")
                         .HasColumnType("int");
 
@@ -326,8 +322,6 @@ namespace W23G37.Data.Migrations
                     b.HasIndex("DepartamentiID");
 
                     b.HasIndex("NiveliStudimitID");
-
-                    b.HasIndex("ZbritjaID");
 
                     b.ToTable("AplikimetEReja");
                 });
@@ -935,9 +929,6 @@ namespace W23G37.Data.Migrations
                     b.Property<string>("KodiFinanciar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LlojiKontrates")
-                        .HasColumnType("int");
-
                     b.Property<string>("LlojiRegjistrimit")
                         .HasColumnType("nvarchar(max)");
 
@@ -979,9 +970,6 @@ namespace W23G37.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmriZbritjes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LlojiZbritjes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Zbritja")
@@ -1062,15 +1050,9 @@ namespace W23G37.Data.Migrations
                         .WithMany()
                         .HasForeignKey("NiveliStudimitID");
 
-                    b.HasOne("W23G37.Models.Zbritjet", "Zbritja")
-                        .WithMany()
-                        .HasForeignKey("ZbritjaID");
-
                     b.Navigation("Departamentet");
 
                     b.Navigation("NiveliStudimeve");
-
-                    b.Navigation("Zbritja");
                 });
 
             modelBuilder.Entity("W23G37.Models.LendetDepartamentiProfesori", b =>
@@ -1263,7 +1245,7 @@ namespace W23G37.Data.Migrations
             modelBuilder.Entity("W23G37.Models.TarifatDepartamenti", b =>
                 {
                     b.HasOne("W23G37.Models.Departamentet", "Departamenti")
-                        .WithMany("TarifatDepartamenti")
+                        .WithMany()
                         .HasForeignKey("DepartamentiID");
 
                     b.HasOne("W23G37.Models.NiveliStudimeve", "NiveliStudimeve")
@@ -1323,8 +1305,6 @@ namespace W23G37.Data.Migrations
             modelBuilder.Entity("W23G37.Models.Departamentet", b =>
                 {
                     b.Navigation("LokacionetDepartamenti");
-
-                    b.Navigation("TarifatDepartamenti");
                 });
 
             modelBuilder.Entity("W23G37.Models.Perdoruesi", b =>

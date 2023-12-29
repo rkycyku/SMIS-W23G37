@@ -21,6 +21,7 @@ namespace W23G37.Controllers
         {
             public int? NiveliStudimeveZgjedhur { get; set; }
             public int? DepartamentiZgjedhur { get; set; }
+            public string? ZbritjaZgjedhur { get; set; }
             public List<AfatiParaqitjesSemestrit>? APSList { get; set; }
             public NiveliStudimeve? NiveliStudimit { get; set; }
             public List<NiveliStudimeve>? NiveliStudimeve { get; set; }
@@ -170,15 +171,35 @@ namespace W23G37.Controllers
             return View(modeli);
         }
 
-        public async Task<IActionResult> VendosniNivelinEStudimeveNeDepartament()
+        public async Task<IActionResult> VendosniNivelinEStudimeveNeDepartament(int id)
         {
-            var NiveliStudimit = await _context.NiveliStudimeve.ToListAsync();
+            var NiveliStudimit = await _context.NiveliStudimeve
+                .Where(x => x.NiveliStudimeveID == id)
+                .FirstOrDefaultAsync();
+
+            var dep = await _context.NiveliStudimitDepartamenti
+                .Where(x => x.NiveliStudimitID == id)
+                .Select(x => x.DepartamentiID)
+                .ToListAsync();
+
             var Departamentet = await _context.Departamentet.ToListAsync();
+
+            List<Departamentet> DepartamentetPaNivelinStudimit = new();
+
+            foreach (var departamenti in Departamentet)
+            {
+                if (!dep.Contains(departamenti.DepartamentiID))
+                {
+                    DepartamentetPaNivelinStudimit.Add(departamenti);
+                }
+            }
+
 
             TeNdryshmeViewModel modeli = new()
             {
-                NiveliStudimeve = NiveliStudimit,
-                Departamentet = Departamentet,
+                NiveliStudimeveZgjedhur = NiveliStudimit.NiveliStudimeveID,
+                NiveliStudimit = NiveliStudimit,
+                Departamentet = DepartamentetPaNivelinStudimit,
             };
 
             return View(modeli);
@@ -188,13 +209,33 @@ namespace W23G37.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VendosniNivelinEStudimeveNeDepartament(TeNdryshmeViewModel a)
         {
-            var NiveliStudimit = await _context.NiveliStudimeve.ToListAsync();
+            var NiveliStudimit = await _context.NiveliStudimeve
+                 .Where(x => x.NiveliStudimeveID == a.NiveliStudimeveZgjedhur)
+                 .FirstOrDefaultAsync();
+
+            var dep = await _context.NiveliStudimitDepartamenti
+                .Where(x => x.NiveliStudimitID == a.NiveliStudimeveZgjedhur)
+                .Select(x => x.DepartamentiID)
+                .ToListAsync();
+
             var Departamentet = await _context.Departamentet.ToListAsync();
+
+            List<Departamentet> DepartamentetPaNivelinStudimit = new();
+
+            foreach (var departamenti in Departamentet)
+            {
+                if (!dep.Contains(departamenti.DepartamentiID))
+                {
+                    DepartamentetPaNivelinStudimit.Add(departamenti);
+                }
+            }
+
 
             TeNdryshmeViewModel modeli = new()
             {
-                NiveliStudimeve = NiveliStudimit,
-                Departamentet = Departamentet,
+                NiveliStudimeveZgjedhur = NiveliStudimit?.NiveliStudimeveID,
+                NiveliStudimit = NiveliStudimit,
+                Departamentet = DepartamentetPaNivelinStudimit,
             };
 
             if (ModelState.IsValid)
@@ -206,6 +247,16 @@ namespace W23G37.Controllers
                 };
 
                 await _context.NiveliStudimitDepartamenti.AddAsync(niveliStudimit);
+                await _context.SaveChangesAsync();
+
+                TarifatDepartamenti tarifatDepartamenti = new()
+                {
+                    DepartamentiID = (int)a.DepartamentiZgjedhur,
+                    NiveliStudimitID = a.NiveliStudimeveZgjedhur,
+                    TarifaVjetore = 0,
+                };
+
+                await _context.TarifatDepartamenti.AddAsync(tarifatDepartamenti);
                 await _context.SaveChangesAsync();
 
                 TempData["Message"] = "Niveli studimit u shtua me sukses per kete Departament!";
@@ -237,7 +288,7 @@ namespace W23G37.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ZbritjaShtoni(TeNdryshmeViewModel a)
         {
-            if (string.IsNullOrWhiteSpace(a.Zbritja?.EmriZbritjes) || !Regex.IsMatch(a.Zbritja?.EmriZbritjes, @"^[a-zA-ZçëÇË -]+$"))
+            if (string.IsNullOrWhiteSpace(a.Zbritja?.EmriZbritjes))
             {
                 ModelState.AddModelError("Zbritja.EmriZbritjes", "Lloji Zbritjes nuk duhet te jete i zbrazet dhe mund te permbaje vetem shkronja, hapesira dhe -!");
             }
@@ -252,6 +303,7 @@ namespace W23G37.Controllers
                 {
                     EmriZbritjes = a.Zbritja.EmriZbritjes,
                     Zbritja = a.Zbritja.Zbritja,
+                    LlojiZbritjes = a.ZbritjaZgjedhur
                 };
 
                 await _context.Zbritjet.AddAsync(zbritja);
@@ -263,6 +315,70 @@ namespace W23G37.Controllers
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> ZbritjaEdito(int id)
+        {
+            var zbritja = await _context.Zbritjet.Where(x => x.ZbritjaID == id).FirstOrDefaultAsync();
+
+            TeNdryshmeViewModel modeli = new()
+            {
+                Zbritja = zbritja,
+            };
+
+            return View(modeli);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ZbritjaEdito(TeNdryshmeViewModel a)
+        {
+            if (string.IsNullOrWhiteSpace(a.Zbritja?.EmriZbritjes))
+            {
+                ModelState.AddModelError("Zbritja.EmriZbritjes", "Lloji Zbritjes nuk duhet te jete i zbrazet dhe mund te permbaje vetem shkronja, hapesira dhe -!");
+            }
+            if (a.Zbritja?.Zbritja < 0.01)
+            {
+                ModelState.AddModelError("Zbritja.Zbritja", "Zbritja duhet te jete me e madhe se 0.01!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Zbritjet.Update(a.Zbritja);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = "Zbritja u perditesua me sukses!";
+
+                return RedirectToAction("ZbritjaIndex");
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> ZbritjaFshij(int id)
+        {
+            var zbritja = await _context.Zbritjet.Where(x => x.ZbritjaID == id).FirstOrDefaultAsync();
+
+            TeNdryshmeViewModel modeli = new()
+            {
+                Zbritja = zbritja,
+            };
+
+            return View(modeli);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ZbritjaFshij(TeNdryshmeViewModel a)
+        {
+            var zbritja = await _context.Zbritjet.Where(x => x.ZbritjaID == a.Zbritja.ZbritjaID).FirstOrDefaultAsync();
+
+            _context.Zbritjet.Remove(zbritja);
+            await _context.SaveChangesAsync();
+
+            TempData["Message"] = "Zbritja u fshi me sukses!";
+
+            return RedirectToAction("ZbritjaIndex");
         }
     }
 }

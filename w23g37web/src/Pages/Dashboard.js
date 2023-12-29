@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [perditeso, setPerditeso] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const [resetoFaqen, setResetoFaqen] = useState(0);
+
   const navigate = useNavigate();
 
   const getID = localStorage.getItem("id");
@@ -48,6 +50,8 @@ const Dashboard = () => {
             setEshteStudent(true);
           }
 
+          setResetoFaqen(prevCount => prevCount + 1);
+
           console.log(perdoruesi.data);
         } catch (err) {
           console.log(err);
@@ -61,6 +65,8 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [perditeso]);
+
+  
 
   return (
     <>
@@ -150,10 +156,10 @@ const Dashboard = () => {
                       <strong>Datëlindja: </strong>
                     </td>
                     <td>
-                    {new Date(
+                      {new Date(
                         teDhenat &&
-                        teDhenat.teDhenatPerdoruesit &&
-                        teDhenat.teDhenatPerdoruesit.dataLindjes
+                          teDhenat.teDhenatPerdoruesit &&
+                          teDhenat.teDhenatPerdoruesit.dataLindjes
                       ).toLocaleDateString("en-GB", { dateStyle: "short" })}
                     </td>
                   </tr>
@@ -290,12 +296,12 @@ const Dashboard = () => {
                         <strong>Data e regjistrimit:</strong>
                       </td>
                       <td>
-                      {new Date(
-                        teDhenat &&
-                        teDhenat.teDhenatRegjistrimitStudentit &&
-                        teDhenat.teDhenatRegjistrimitStudentit
-                          .dataRegjistrimit
-                      ).toLocaleDateString("en-GB", { dateStyle: "short" })}
+                        {new Date(
+                          teDhenat &&
+                            teDhenat.teDhenatRegjistrimitStudentit &&
+                            teDhenat.teDhenatRegjistrimitStudentit
+                              .dataRegjistrimit
+                        ).toLocaleDateString("en-GB", { dateStyle: "short" })}
                       </td>
                     </tr>
                     <tr>

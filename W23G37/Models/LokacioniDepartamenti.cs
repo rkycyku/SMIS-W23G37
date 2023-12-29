@@ -10,13 +10,13 @@ namespace W23G37.Models
         public int LokacioniDepartamentiID { get; set; }
 
         public int? LokacioniID { get; set; }
-        public int? DepartamentiID { get; set; }
+        public int? DepartamentiID { get; set; } = null;
 
         [ForeignKey("LokacioniID")]
-        public virtual Lokacionet Lokacioni { get; set; }
+        public virtual Lokacionet? Lokacioni { get; set; }
         [ForeignKey("DepartamentiID")]
         [JsonIgnore]
-        public virtual Departamentet Departamentet { get; set;}
+        public virtual Departamentet? Departamentet { get; set;}
 
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
     }

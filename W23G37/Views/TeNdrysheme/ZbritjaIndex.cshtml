@@ -28,6 +28,10 @@
             <th>
                 Zbritja ne %
             </th>
+            <th>
+                Lloji Zbritjes
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +46,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Zbritja) %
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LlojiZbritjes)
+                </td>
+                <td>
+                    <div>
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("ZbritjaEdito", new {id = item.ZbritjaID})'"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="btn btn-danger" onclick="location.href='@Url.Action("ZbritjaFshij", new {id = item.ZbritjaID})'"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
         </tr>
 }
     </tbody>

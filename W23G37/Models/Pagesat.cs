@@ -10,12 +10,13 @@ namespace W23G37.Models
         [Key]
         public int PagesaID { get; set; }
         public int? BankaID { get; set; }
-        public int? AplikimiID { get; set; }
+        public int? AplikimiID { get; set; } = null;
         public int? PersoniID { get; set; }
         public string? Pagesa { get; set; }
         public string? Faturimi { get; set; }
         public string? PershkrimiPageses { get; set; }
         public string? LlojiPageses { get; set; }
+        public string? KestiPageses { get; set; }
         public DateTime? DataPageses {  get; set; }
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
 

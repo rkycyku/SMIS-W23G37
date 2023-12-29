@@ -32,6 +32,7 @@ namespace W23G37.Data
         public DbSet<Bankat> Bankat {  get; set; }
         public DbSet<Pagesat> Pagesat { get; set; }
         public DbSet<Zbritjet> Zbritjet { get; set; }
-        public DbSet<ZbritjaStudenti> ZbritjaStudenti { get; set; }
+        public DbSet<TarifaStudenti> TarifaStudenti { get; set; }
+        public DbSet<TarifatDepartamenti> TarifatDepartamenti { get; set; }
     }
 }

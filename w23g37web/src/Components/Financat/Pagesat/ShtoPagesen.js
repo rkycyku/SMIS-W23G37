@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faBan, faL, faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import Col from "react-bootstrap/esm/Col";
-import useKeyboardNavigation from "../../Context/useKeyboardNavigation";
+import useKeyboardNavigation from "./../../../Context/useKeyboardNavigation";
 import DatePicker from "react-datepicker";
 
 const ShtoProduktin = (props) => {
