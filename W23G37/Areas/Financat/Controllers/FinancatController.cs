@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using W23G37.Data;
@@ -18,9 +19,12 @@ namespace W23G37.Areas.Financat.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public FinancatController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> UserManager;
+
+        public FinancatController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            UserManager = userManager;
         }
 
         public class FinancatModel
@@ -245,7 +249,7 @@ namespace W23G37.Areas.Financat.Controllers
         {
             var tarifa = await _context.TarifatDepartamenti.Include(x => x.NiveliStudimeve).Where(x => x.TarifaID == TarifaID).FirstOrDefaultAsync();
 
-            if(tarifa == null)
+            if (tarifa == null)
             {
                 return BadRequest("Kjo tarife nuk u gjet!");
             }
@@ -272,6 +276,116 @@ namespace W23G37.Areas.Financat.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(tarifatDepartamenti);
+        }
+
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ShfaqStudentet")]
+        public async Task<IActionResult> ShfaqStudentet()
+        {
+            var perdoruesit = await _context.Perdoruesit.Include(x => x.TeDhenatPerdoruesit)
+                .ToListAsync();
+
+            var perdoruesiList = new List<Perdoruesi>();
+
+            List<Object> studentetList = new();
+
+            foreach (var perdoruesi in perdoruesit)
+            {
+                var user = await UserManager.FindByIdAsync(perdoruesi.AspNetUserId);
+                var roles = (await UserManager.GetRolesAsync(user)).Where(role => role != "User").ToList();
+
+                var eshteStudent = await UserManager.IsInRoleAsync(user, "Student");
+
+                if (eshteStudent == true)
+                {
+                    var personiNgaKerkimi = await _context.Perdoruesit
+                        .Include(x => x.TeDhenatPerdoruesit)
+                        .Include(x => x.TeDhenatRegjistrimitStudentit)
+                        .ThenInclude(x => x.Departamentet)
+                        .Include(x => x.TeDhenatRegjistrimitStudentit)
+                        .ThenInclude(x => x.NiveliStudimeve)
+                        .Where(x => x.AspNetUserId == perdoruesi.AspNetUserId)
+                        .FirstOrDefaultAsync();
+
+                    var TarifaStudentit = await _context.TarifaStudenti.Include(x => x.Zbritja1).Include(x => x.Zbritja2).Where(x => x.StudentiID == personiNgaKerkimi.UserID).FirstOrDefaultAsync();
+
+                    var TarifaDepartamentit = await _context.TarifatDepartamenti
+                        .Where(x => x.DepartamentiID == personiNgaKerkimi.TeDhenatRegjistrimitStudentit.DepartamentiID && x.NiveliStudimitID
+                         == personiNgaKerkimi.TeDhenatRegjistrimitStudentit.NiveliStudimitID)
+                        .FirstOrDefaultAsync();
+
+                    var pagesat = await _context.Pagesat.Where(x => x.PersoniID == personiNgaKerkimi.UserID).ToListAsync();
+
+                    Object studenti = new
+                    {
+
+                        Studenti = new
+                        {
+                            AspNetUserID = personiNgaKerkimi.AspNetUserId,
+                            Studenti = $"{personiNgaKerkimi.Emri} {personiNgaKerkimi.TeDhenatPerdoruesit.EmriPrindit} {personiNgaKerkimi.Mbiemri}",
+                            IDStudentiFK = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.IdStudenti,
+                            KodiFinanciar = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.KodiFinanciar,
+                        },
+                        TeDhenatRegjistrimit = new
+                        {
+                            Departamenti = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.Departamentet.EmriDepartamentit,
+                            ShkurtesaDepartamentit = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.Departamentet.ShkurtesaDepartamentit,
+                            NiveliStudimeve = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.NiveliStudimeve.EmriNivelitStudimeve,
+                            ShkurtesaNivelitStudimeve = personiNgaKerkimi.TeDhenatRegjistrimitStudentit.NiveliStudimeve.ShkurtesaEmritNivelitStudimeve,
+                        },
+                        PagesatDheTarifa = new
+                        {
+                            TotPagesat = pagesat.Where(x => x.Pagesa != null).Sum(x => double.Parse(x.Pagesa)),
+                            TotTarifat = pagesat.Where(x => x.KestiPageses != null).Sum(x => double.Parse(x.KestiPageses)),
+                            TarifaDepartamentit =
+                            TarifaStudentit.TarifaFikse == null ? TarifaDepartamentit.TarifaVjetore - (TarifaDepartamentit.TarifaVjetore * (TarifaStudentit.Zbritja1?.Zbritja / 100)) - (TarifaDepartamentit.TarifaVjetore * (TarifaStudentit.Zbritja2 != null ? TarifaStudentit.Zbritja2.Zbritja / 100 : 0))
+                            :
+                            TarifaStudentit.TarifaFikse - (TarifaStudentit.TarifaFikse * (TarifaStudentit.Zbritja1?.Zbritja / 100)) - (TarifaStudentit.TarifaFikse * (TarifaStudentit.Zbritja2 != null ? TarifaStudentit.Zbritja2.Zbritja / 100 : 0)),
+                            Zbritja1 = new
+                            {
+                                EmriZbritjes = TarifaStudentit.Zbritja1?.EmriZbritjes,
+                                Zbritja = TarifaStudentit.Zbritja1?.Zbritja
+                            },
+                            Zbritja2 = new
+                            {
+                                EmriZbritjes = TarifaStudentit.Zbritja2?.EmriZbritjes,
+                                Zbritja = TarifaStudentit.Zbritja2?.Zbritja
+                            },
+                        }
+                    };
+
+                    perdoruesiList.Add(personiNgaKerkimi);
+
+                    studentetList.Add(studenti);
+                }
+            }
+
+            return Ok(studentetList);
+        }
+
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("PerditesoniTarifenStudentit")]
+        public async Task<IActionResult> PerditesoniTarifenStudentit(string StudentiID)
+        {
+            var perdoruesi = await _context.Perdoruesit.Where(x => x.AspNetUserId == StudentiID).FirstOrDefaultAsync();
+
+            var tarifaKerkim = await _context.TarifaStudenti.Where(x => x.StudentiID == perdoruesi.UserID).FirstOrDefaultAsync();
+
+            if (tarifaKerkim == null)
+            {
+                return BadRequest("Kjo tarife nuk u gjet!");
+            }
+
+            tarifaKerkim.Zbritja2ID = 1;
+
+            _context.TarifaStudenti.Update(tarifaKerkim);
+            await _context.SaveChangesAsync();
+
+            return Ok(tarifaKerkim);
         }
     }
 }

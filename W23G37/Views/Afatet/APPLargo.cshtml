@@ -1,0 +1,41 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+@{
+    ViewData["Title"] = "Largoni Afatin";
+}
+
+<h4>A jeni te sigurt qe deshironi te fshini kete Afat?</h4>
+<br />
+<table class="tableStyle table table-striped">
+    <tr>
+        <th>
+            Lloji Afatit
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.APP.LlojiAfatit)
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Data Fillimit Afatit
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.APP.DataFillimitAfatit)
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Data Perfundimit Afatit
+        </th>
+        <td>
+            @Html.DisplayFor(model => model.APP.DataMbarimitAfatit)
+        </td>
+    </tr>
+</table>
+
+<form asp-action="APPLargo">
+    <input type="hidden" asp-for="APP.APPID" />
+    <div class="form-group">
+        <button class="btn btn-primary" asp-action="APPIndex"><i class="fa-solid fa-arrow-left"></i></button>
+        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+    </div>
+</form>

@@ -29,7 +29,7 @@ namespace W23G37.Models
         public int UserID { get; set; }
 
         [JsonIgnore]
-        public virtual Perdoruesi User { get; set; } = null!;
+        public virtual Perdoruesi? User { get; set; }
 
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
     }

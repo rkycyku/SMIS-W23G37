@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace W23G37.Models
 {
@@ -16,6 +17,7 @@ namespace W23G37.Models
         [ForeignKey(nameof(SemestriID))]
         public virtual Semestri? Semestri { get; set; }
         [ForeignKey(nameof(StudentiID))]
+        [JsonIgnore]
         public virtual Perdoruesi? Studenti { get; set; }
         [ForeignKey(nameof(APSID))]
         public virtual AfatiParaqitjesSemestrit? AfatiParaqitjesSemestrit { get; set; }

@@ -14,7 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
-    options.EnableSensitiveDataLogging(); //Per testim
+    /*options.EnableSensitiveDataLogging(); //Per testim*/
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

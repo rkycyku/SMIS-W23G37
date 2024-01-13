@@ -1,0 +1,138 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Shtoni Afatin e Paraqitjes te Provimit";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="APPShtoni">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="formaSelect mb-3">
+                <label asp-for="APP.LlojiAfatit">Lloji i Afatit</label>
+                <select asp-for="APP.LlojiAfatit" class="form-control" required id="llojiAfatit">
+                    <option value="I Rregullt" id="zgjedhLlojin">Zgjedhni Llojin e Afatit</option>
+                    <option value="I Rregullt">I Rregullt</option>
+                    <option value="Jo i Rregullt">Jo i Rregullt</option>
+                </select>
+            </div>
+            <div class="formaSelect mb-3">
+                <label asp-for="AfatiZgjedhur">Afati Per Provimet e Muajit</label>
+                <select asp-for="AfatiZgjedhur" class="form-control" required id="afatiZgjedhur">
+                    <option disabled value="">Zgjedhni Muajin</option>
+                    <option id="afatiNentorit">Nëntorit</option>
+                    <option id="afatiShkurtit">Shkurtit</option>
+                    <option id="afatiPrillit">Prillit</option>
+                    <option id="afatiQershorit">Qershorit</option>
+                    <option id="afatiShtatorit">Shtatorit</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="APP.VitiAkademik" class="control-label">Vlen per Vitin Akademik</label>
+                <input asp-for="APP.VitiAkademik" type="text" class="form-control" id="yearRange" name="yearRange" placeholder="YYYY/YYYY" disabled>
+                <span asp-validation-for="APP.VitiAkademik" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="APP.DataFillimitAfatit" class="control-label">Data Fillimit per Paraqitje</label>
+                <input asp-for="APP.DataFillimitAfatit" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="fillimiAfatitProvimit" />
+                <span asp-validation-for="APP.DataFillimitAfatit" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="APP.DataMbarimitAfatit" class="control-label">Data Mbarimit per Paraqitje</label>
+                <input asp-for="APP.DataMbarimitAfatit" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="mbarimiAfatitProvimit" />
+                <span asp-validation-for="APP.DataMbarimitAfatit" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input asp-for="APP.DataFunditShfaqjesProvimeve" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="dataFunditShfaqjesProvimeve" hidden/>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("APPIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-add"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            llojiAfatit.addEventListener('change', function () {
+                if (llojiAfatit.value == "I Rregullt") {
+                    afatiNentorit.disabled = true;
+                    afatiPrillit.disabled = true;
+                    afatiShkurtit.disabled = false;
+                    afatiQershorit.disabled = false;
+                    afatiShtatorit.disabled = false;
+
+                    afatiShkurtit.selected = true;
+                    zgjedhLlojin.disabled = true;
+                } else {
+                    afatiShkurtit.disabled = true;
+                    afatiQershorit.disabled = true;
+                    afatiShtatorit.disabled = true;
+                    afatiNentorit.disabled = false;
+                    afatiPrillit.disabled = false;
+
+                    afatiNentorit.selected = true;
+                    zgjedhLlojin.disabled = true;
+                }
+            });
+
+
+            afatiZgjedhur.addEventListener('change', function () {
+                var today = new Date();
+                var currentYear = today.getFullYear();
+
+                if (afatiZgjedhur.value == "Nëntorit") {
+                    const dataFunditShfaqjesProvimeve = document.getElementById('dataFunditShfaqjesProvimeve');
+                    dataFunditShfaqjesProvimeve.value = `${(currentYear + 1)}-02-28`;
+
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('min', `${currentYear}-10-01`);
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('max', `${currentYear}-11-30`);
+                    document.getElementById('mbarimiAfatitProvimit').setAttribute('max', `${currentYear}-11-30`);
+                } else if (afatiZgjedhur.value == "Shkurtit") {
+                    const dataFunditShfaqjesProvimeve = document.getElementById('dataFunditShfaqjesProvimeve');
+                    dataFunditShfaqjesProvimeve.value = `${currentYear}-04-30`;
+
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('min', `${currentYear}-01-01`);
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('max', `${currentYear}-02-28`);
+                    document.getElementById('mbarimiAfatitProvimit').setAttribute('max', `${currentYear}-02-28`);
+                } else if (afatiZgjedhur.value == "Prillit") {
+                    const dataFunditShfaqjesProvimeve = document.getElementById('dataFunditShfaqjesProvimeve');
+                    dataFunditShfaqjesProvimeve.value = `${currentYear}-06-30`;
+
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('min', `${currentYear}-03-01`);
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('max', `${currentYear}-04-30`);
+                    document.getElementById('mbarimiAfatitProvimit').setAttribute('max', `${currentYear}-04-30`);
+                } else if (afatiZgjedhur.value == "Qershorit") {
+                    const dataFunditShfaqjesProvimeve = document.getElementById('dataFunditShfaqjesProvimeve');
+                    dataFunditShfaqjesProvimeve.value = `${currentYear}-09-30`;
+
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('min', `${currentYear}-05-01`);
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('max', `${currentYear}-06-30`);
+                    document.getElementById('mbarimiAfatitProvimit').setAttribute('max', `${currentYear}-06-30`);
+                } else if (afatiZgjedhur.value == "Shtatorit") {
+                    const dataFunditShfaqjesProvimeve = document.getElementById('dataFunditShfaqjesProvimeve');
+                    dataFunditShfaqjesProvimeve.value = `${currentYear}-11-30`;
+
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('min', `${currentYear}-08-01`);
+                    document.getElementById('fillimiAfatitProvimit').setAttribute('max', `${currentYear}-09-30`);
+                    document.getElementById('mbarimiAfatitProvimit').setAttribute('max', `${currentYear}-09-30`);
+                }
+                });
+
+
+            fillimiAfatitProvimit.addEventListener('change', function () {
+                if (fillimiAfatitProvimit.value) {
+                    mbarimiAfatitProvimit.min = fillimiAfatitProvimit.value;
+                } else {
+                    mbarimiAfatitProvimit.min = "@DateTime.Now.ToString("yyyy-MM-dd")";
+                }
+            });
+        });
+    </script>
+
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

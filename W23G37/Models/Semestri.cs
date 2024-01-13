@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace W23G37.Models
 {
@@ -11,6 +12,7 @@ namespace W23G37.Models
         public int? NiveliStudimeveID { get; set; }
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
         [ForeignKey(nameof(NiveliStudimeveID))]
+        [JsonIgnore]
         public virtual NiveliStudimeve? NiveliStudimeve { get; set; }
     }
 }

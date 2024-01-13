@@ -9,6 +9,8 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import DetajetTarifatDepartamentit from "../../Components/Financat/TarifatDepartamentit/DetajetTarifatDepartamentit";
 import { TailSpin } from "react-loader-spinner";
 import { Helmet } from "react-helmet";
+import { Form, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const TarifatDepartamentit = () => {
   const [teDhenat, setTeDhenat] = useState([]);
@@ -20,7 +22,11 @@ const TarifatDepartamentit = () => {
   const [pershkrimiMesazhit, setPershkrimiMesazhit] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [kerkimi, setKerkimi] = useState("");
+
   const getToken = localStorage.getItem("token");
+  const getID = localStorage.getItem("id");
+  const navigate = useNavigate();
 
   const authentikimi = {
     headers: {
@@ -32,6 +38,15 @@ const TarifatDepartamentit = () => {
     const shfaqDepartamentet = async () => {
       try {
         setLoading(true);
+
+        const rolet = await axios.get(
+          `https://localhost:7251/api/Perdoruesi/shfaqSipasID?idUserAspNet=${getID}`,
+          authentikimi
+        );
+        if (!rolet.data.rolet.includes("Financa")) {
+          navigate("/NukKeniAkses");
+        }
+
         const teDhenat = await axios.get(
           "https://localhost:7251/api/Financat/ShfaqniDepartamentet",
           authentikimi
@@ -51,6 +66,28 @@ const TarifatDepartamentit = () => {
     setShfaqTeDhenat(true);
     setId(id);
   };
+
+  const handleKerkimi = (event) => {
+    setKerkimi(event.target.value);
+  };
+
+  const filtrimiTeDhenave =
+    teDhenat &&
+    teDhenat.departamentet &&
+    teDhenat.departamentet.filter((departamenti) => {
+      return (
+        departamenti.emriDepartamentit
+          .toLowerCase()
+          .includes(kerkimi.toLowerCase()) ||
+        departamenti.shkurtesaDepartamentit
+          .toLowerCase()
+          .includes(kerkimi.toLowerCase()) ||
+        departamenti.departamentiID
+          .toString()
+          .toLowerCase()
+          .includes(kerkimi.toLowerCase())
+      );
+    });
 
   return (
     <div className="containerDashboardP">
@@ -81,46 +118,67 @@ const TarifatDepartamentit = () => {
       ) : (
         <>
           {shfaqTeDhenat && (
-          <DetajetTarifatDepartamentit setMbyllTeDhenat={() => {setShfaqTeDhenat(false); setPerditeso(Date.now())}} id={id} />
-        )}
+            <DetajetTarifatDepartamentit
+              setMbyllTeDhenat={() => {
+                setShfaqTeDhenat(false);
+                setPerditeso(Date.now());
+              }}
+              id={id}
+            />
+          )}
           {!shfaqTeDhenat && (
-            <table className="tableBig">
-              <thead>
-                <tr>
-                  <th>ID Departamentit</th>
-                  <th>Emri Departamentit</th>
-                  <th>Totali Niveleve te Studimit</th>
-                  <th>Funksione</th>
-                </tr>
-              </thead>
+            <>
+              <Row className="mb-3 gap-1">
+                <Col xs={6} md={4} className="p-0">
+                  <Form.Group controlId="search">
+                    <Form.Control
+                      type="text"
+                      placeholder="Kerkoni Studentin"
+                      value={kerkimi}
+                      onChange={handleKerkimi}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <table className="tableBig">
+                <thead>
+                  <tr>
+                    <th>ID Departamentit</th>
+                    <th>Emri Departamentit</th>
+                    <th>Totali Niveleve te Studimit</th>
+                    <th>Funksione</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {teDhenat &&
-                  teDhenat.departamentet &&
-                  teDhenat.departamentet.map((p) => {
-                    return (
-                      <tr key={p.departamentiID}>
-                        <td>{p.departamentiID}</td>
-                        <td>
-                          {p.emriDepartamentit} - {p.shkurtesaDepartamentit}
-                        </td>
-                        <td>
-                          {p.tarifatDepartamenti &&
-                            p.tarifatDepartamenti.length}
-                        </td>
-                        <td>
-                          <Button
-                            style={{ marginRight: "0.5em" }}
-                            variant="success"
-                            onClick={() => handleShfaqTeDhenat(p.departamentiID)}>
-                            <FontAwesomeIcon icon={faPenToSquare} />
-                          </Button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+                <tbody>
+                  {filtrimiTeDhenave &&
+                    filtrimiTeDhenave.map((p) => {
+                      return (
+                        <tr key={p.departamentiID}>
+                          <td>{p.departamentiID}</td>
+                          <td>
+                            {p.emriDepartamentit} - {p.shkurtesaDepartamentit}
+                          </td>
+                          <td>
+                            {p.tarifatDepartamenti &&
+                              p.tarifatDepartamenti.length}
+                          </td>
+                          <td>
+                            <Button
+                              style={{ marginRight: "0.5em" }}
+                              variant="success"
+                              onClick={() =>
+                                handleShfaqTeDhenat(p.departamentiID)
+                              }>
+                              <FontAwesomeIcon icon={faPenToSquare} />
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </>
           )}
         </>
       )}

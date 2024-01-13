@@ -236,7 +236,7 @@ namespace W23G37.Areas.Perdoruesit.Controllers
             return Ok(emailIPerdorur);
         }
 
-        [Authorize(Roles = "Admin, Menaxher, User")]
+        [Authorize]
         [HttpGet]
         [Route("KontrolloFjalekalimin")]
         public async Task<IActionResult> KontrolloFjalekalimin(string AspNetID, string fjalekalimi)
@@ -248,7 +248,7 @@ namespace W23G37.Areas.Perdoruesit.Controllers
             return Ok(kontrolloFjalekalimin);
         }
 
-        [Authorize(Roles = "Admin, Menaxher, User")]
+        [Authorize]
         [HttpPost]
         [Route("NdryshoFjalekalimin")]
         public async Task<IActionResult> NdryshoFjalekalimin(string AspNetID, string fjalekalimiAktual, string fjalekalimiIRi)
@@ -270,8 +270,7 @@ namespace W23G37.Areas.Perdoruesit.Controllers
             return Ok(passwodiINdryshuar);
         }
 
-        /*[Authorize(Roles = "Admin, Menaxher, User")]*/
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         [Route("ShfaqTeDhenatNgaID")]
         public async Task<IActionResult> ShfaqTeDhenatNgaID(string id)
@@ -292,10 +291,48 @@ namespace W23G37.Areas.Perdoruesit.Controllers
             return Ok(perdoruesi);
         }
 
+        /*[Authorize(Policy = "eshteStaf")]*/
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ShfaqTeDhenatPerEditim")]
+        public async Task<IActionResult> ShfaqTeDhenatPerEditim(string id)
+        {
+            var perdoruesi = await _context.Perdoruesit
+                .Include(x => x.TeDhenatPerdoruesit)
+                .Include(x => x.TeDhenatRegjistrimitStudentit)
+                .ThenInclude(x => x.Departamentet)
+                .Include(x => x.TeDhenatRegjistrimitStudentit)
+                .ThenInclude(x => x.NiveliStudimeve)
+                .Where(x => x.AspNetUserId.Equals(id)).FirstOrDefaultAsync();
+
+            if (perdoruesi == null)
+            {
+                return BadRequest("Perdoruesi nuk Ekziston!");
+            }
+
+            PerdoruesiJsonKthimi perdoruesiJson = new ()
+            {
+                Emri = perdoruesi.Emri,
+                Mbiemri = perdoruesi.Mbiemri,
+                Email = perdoruesi.TeDhenatPerdoruesit.EmailPersonal,
+                EmriPrindit = perdoruesi.TeDhenatPerdoruesit.EmriPrindit,
+                NrKontaktit = perdoruesi.TeDhenatPerdoruesit.NrKontaktit,
+                Qyteti = perdoruesi.TeDhenatPerdoruesit.Qyteti,
+                ZipKodi = perdoruesi.TeDhenatPerdoruesit.ZipKodi,
+                Adresa = perdoruesi.TeDhenatPerdoruesit.Adresa,
+                Shteti = perdoruesi.TeDhenatPerdoruesit.Shteti,
+                DataLindjes = perdoruesi.TeDhenatPerdoruesit.DataLindjes,
+                UserID = perdoruesi.UserID
+            };
+
+            return Ok(perdoruesiJson);
+        }
+
         public class PerdoruesiJsonKthimi
         {
             public int? UserID { get; set; }
             public string? Emri { get; set; }
+            public string? EmriPrindit { get; set; }
             public string? Mbiemri { get; set; }
             public string? Email { get; set; }
             public string? Username { get; set; }
@@ -306,6 +343,7 @@ namespace W23G37.Areas.Perdoruesit.Controllers
             public int? ZipKodi { get; set; }
             public string? Adresa { get; set; }
             public string? Shteti { get; set; }
+            public DateTime? DataLindjes { get; set; }
             public List<string>? Rolet { get; set; }
             public List<string>? RoletPerEditimit { get; set; }
         }

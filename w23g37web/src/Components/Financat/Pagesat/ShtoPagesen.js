@@ -138,6 +138,7 @@ const ShtoProduktin = (props) => {
       setFiltrimiPersonave(filtrimi);
     }
   };
+  
   const handleInputKeyDown = (e, kat) => {
     if (e.key === "Enter") {
       e.preventDefault();

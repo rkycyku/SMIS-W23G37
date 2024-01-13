@@ -26,6 +26,10 @@ import {
   faReceipt,
   faChartPie,
   faEuroSign,
+  faRectangleList,
+  faComputerMouse,
+  faScroll,
+  faHandHoldingDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -271,16 +275,16 @@ function Navbar(props) {
                       </ul>
                     </li>
                     <li>
-                      <Link to="/Statistika">
+                      <Link to="/TarifatStudenti">
                         <i class="bx bx-pie-chart-alt-2">
-                          <FontAwesomeIcon icon={faChartPie} />
+                          <FontAwesomeIcon icon={faHandHoldingDollar} />
                         </i>
-                        <span class="link_name">Statistika</span>
+                        <span class="link_name">Tarifat e Studenteve</span>
                       </Link>
                       <ul class="sub-menu blank">
                         <li>
-                          <Link class="link_name" to="/Statistika">
-                            Statistika
+                          <Link class="link_name" to="/TarifatStudenti">
+                          Tarifat e Studenteve
                           </Link>
                         </li>
                       </ul>
@@ -308,14 +312,31 @@ function Navbar(props) {
                       <ul class="sub-menu">
                         <li>
                           <Link class="link_name" to="#">
-                          Aplikimet e Reja
+                            Aplikimet e Reja
                           </Link>
                         </li>
                         <li>
                           <Link to="/AplikimetEReja">Lista Aplikimeve</Link>
                         </li>
                         <li>
-                          <Link to="/KrijoAplikiminERi">Krijoni Aplikim e Ri</Link>
+                          <Link to="/KrijoAplikiminERi">
+                            Krijoni Aplikim e Ri
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <Link to="/ListaStudenteve">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faRectangleList} />
+                        </i>
+                        <span class="link_name">Lista Studenteve</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/ListaStudenteve">
+                            Lista Studenteve
+                          </Link>
                         </li>
                       </ul>
                     </li>
@@ -336,6 +357,85 @@ function Navbar(props) {
                         <li>
                           <Link class="link_name" to="/RegjistrimiISemestrit">
                             Regjistrimi i Semestrit
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <Link to="/TranskriptaNotave">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faScroll} />
+                        </i>
+                        <span class="link_name">Transkripta Notave</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/TranskriptaNotave">
+                            Transkripta Notave
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <div class="iocn-link">
+                        <Link to="#">
+                          <i>
+                            <FontAwesomeIcon icon={faBook} />
+                          </i>
+                          <span class="link_name">Provimet</span>
+                        </Link>
+                        <i
+                          class="bx bxs-chevron-down arrow"
+                          onClick={handleArrowClick}>
+                          <FontAwesomeIcon icon={faChevronUp} />
+                        </i>
+                      </div>
+                      <ul class="sub-menu">
+                        <li>
+                          <Link class="link_name" to="#">
+                            Provimet
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/ProvimetEParaqitura">
+                            Provimet e Paraqitura
+                          </Link>
+                          <Link to="/ParaqitjaProvimit">Paraqit Provimet</Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <Link to="/PagesatEStudentit">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faReceipt} />
+                        </i>
+                        <span class="link_name">Pagesat</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/PagesatEStudentit">
+                            Pagesat
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </>
+                )}
+              {teDhenat &&
+                teDhenat.rolet &&
+                teDhenat.rolet.includes("Profesor") && (
+                  <>
+                    <li>
+                      <Link to="/VendosNotat">
+                        <i class="bx bx-pie-chart-alt-2">
+                          <FontAwesomeIcon icon={faComputerMouse} />
+                        </i>
+                        <span class="link_name">Vendos Notat</span>
+                      </Link>
+                      <ul class="sub-menu blank">
+                        <li>
+                          <Link class="link_name" to="/VendosNotat">
+                            Vendos Notat
                           </Link>
                         </li>
                       </ul>

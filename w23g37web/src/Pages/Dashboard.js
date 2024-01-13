@@ -40,17 +40,28 @@ const Dashboard = () => {
             `https://localhost:7251/api/Perdoruesi/shfaqSipasID?idUserAspNet=${getID}`,
             authentikimi
           );
+
+          if (rolet.data.rolet.includes("Student")) {
+            setEshteStudent(true);
+
+            const pagesat = await axios.get(
+              `https://localhost:7251/api/Studentet/ShfaqInfoPagesatStudentit?studentiID=${getID}`,
+              authentikimi
+            );
+
+            if (pagesat.data.mbetja < 0) {
+              navigate("/PagesatEPaPerfunduara");
+            }
+          }
+
           const perdoruesi = await axios.get(
             `https://localhost:7251/api/Perdoruesi/ShfaqTeDhenatNgaID?id=${getID}`,
             authentikimi
           );
+
           setTeDhenat(perdoruesi.data);
 
-          if (rolet.data.rolet.includes("Student")) {
-            setEshteStudent(true);
-          }
-
-          setResetoFaqen(prevCount => prevCount + 1);
+          setResetoFaqen((prevCount) => prevCount + 1);
 
           console.log(perdoruesi.data);
         } catch (err) {
@@ -65,8 +76,6 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, [perditeso]);
-
-  
 
   return (
     <>

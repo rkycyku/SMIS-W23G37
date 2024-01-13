@@ -66,18 +66,22 @@ function DetajetAplikimit(props) {
   function RuajDetajetRegjistrimit() {
     const teDhenatAplikimitRef = document.querySelector(".teDhenatAplikimit");
     const studenti =
-  ((teDhenatAplikimit &&
-    teDhenatAplikimit.aplikimetEReja &&
-    teDhenatAplikimit.aplikimetEReja.emri) || '') +
-  ' ' +
-  ((teDhenatAplikimit &&
-    teDhenatAplikimit.aplikimetEReja &&
-    teDhenatAplikimit.aplikimetEReja.emriPrindit) || '') +
-  ' ' +
-  ((teDhenatAplikimit &&
-    teDhenatAplikimit.aplikimetEReja &&
-    teDhenatAplikimit.aplikimetEReja.mbiemri) || '').toString();
-
+      ((teDhenatAplikimit &&
+        teDhenatAplikimit.aplikimetEReja &&
+        teDhenatAplikimit.aplikimetEReja.emri) ||
+        "") +
+      " " +
+      ((teDhenatAplikimit &&
+        teDhenatAplikimit.aplikimetEReja &&
+        teDhenatAplikimit.aplikimetEReja.emriPrindit) ||
+        "") +
+      " " +
+      (
+        (teDhenatAplikimit &&
+          teDhenatAplikimit.aplikimetEReja &&
+          teDhenatAplikimit.aplikimetEReja.mbiemri) ||
+        ""
+      ).toString();
 
     html2canvas(teDhenatAplikimitRef, { useCORS: true })
       .then((invoiceCanvas) => {
@@ -164,9 +168,11 @@ function DetajetAplikimit(props) {
               </td>
               <th>Kodi Financiar</th>
               <td>
-                {teDhenatAplikimit &&
-                  teDhenatAplikimit.aplikimetEReja &&
-                  teDhenatAplikimit.aplikimetEReja.kodiFinanciar}
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.aplikimetEReja &&
+                    teDhenatAplikimit.aplikimetEReja.kodiFinanciar}
+                </strong>
               </td>
             </tr>
             <br></br>
@@ -249,27 +255,32 @@ function DetajetAplikimit(props) {
                 Vjeqare
               </td>
             </tr>
-            <tr>
-              <th>Zbritja</th>
-              <td>
-                {teDhenatAplikimit &&
-                  teDhenatAplikimit.aplikimetEReja &&
-                  teDhenatAplikimit.aplikimetEReja.zbritja &&
-                  teDhenatAplikimit.aplikimetEReja.zbritja.emriZbritjes}{" "}
-                - Zbritja:{" "}
-                {teDhenatAplikimit &&
-                  teDhenatAplikimit.aplikimetEReja &&
-                  teDhenatAplikimit.aplikimetEReja.zbritja &&
-                  parseFloat(
-                    teDhenatAplikimit.aplikimetEReja.zbritja.zbritja
-                  ).toFixed(2)}{" "}
-                % - Kohezgjatja:{" "}
-                {teDhenatAplikimit &&
-                  teDhenatAplikimit.aplikimetEReja &&
-                  teDhenatAplikimit.aplikimetEReja.zbritja &&
-                  teDhenatAplikimit.aplikimetEReja.zbritja.llojiZbritjes}
-              </td>
-            </tr>
+            {teDhenatAplikimit &&
+              teDhenatAplikimit.aplikimetEReja &&
+              teDhenatAplikimit.aplikimetEReja.zbritja && (
+                <tr>
+                  <th>Zbritja</th>
+                  <td>
+                    {teDhenatAplikimit &&
+                      teDhenatAplikimit.aplikimetEReja &&
+                      teDhenatAplikimit.aplikimetEReja.zbritja &&
+                      teDhenatAplikimit.aplikimetEReja.zbritja
+                        .emriZbritjes}{" "}
+                    - Zbritja:{" "}
+                    {teDhenatAplikimit &&
+                      teDhenatAplikimit.aplikimetEReja &&
+                      teDhenatAplikimit.aplikimetEReja.zbritja &&
+                      parseFloat(
+                        teDhenatAplikimit.aplikimetEReja.zbritja.zbritja
+                      ).toFixed(2)}{" "}
+                    % - Kohezgjatja:{" "}
+                    {teDhenatAplikimit &&
+                      teDhenatAplikimit.aplikimetEReja &&
+                      teDhenatAplikimit.aplikimetEReja.zbritja &&
+                      teDhenatAplikimit.aplikimetEReja.zbritja.llojiZbritjes}
+                  </td>
+                </tr>
+              )}
           </thead>
         </Table>
         <hr />
@@ -283,51 +294,77 @@ function DetajetAplikimit(props) {
               Pagesa juaj fillestare duhet te behet per 3 muaj, Shenoni kodin
               financiar gjete pageses!
             </i>
+            <p>
+              Kodi Juaj Financiar eshte:{" "}
+              <strong>
+                {teDhenatAplikimit &&
+                  teDhenatAplikimit.aplikimetEReja &&
+                  teDhenatAplikimit.aplikimetEReja.kodiFinanciar}
+              </strong>
+            </p>
           </p>
-          <p>
-            Totali Vjetor Pa Zbritje:{" "}
-            <strong>
-              {teDhenatAplikimit &&
-                teDhenatAplikimit.tarifaDepartamenti &&
-                parseFloat(
-                  teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore
-                ).toFixed(2)}{" "}
-              €
-            </strong>
-          </p>
-          <p>
-            Zbritja:{" "}
-            <strong>
-              {teDhenatAplikimit &&
-                teDhenatAplikimit.tarifaDepartamenti &&
-                parseFloat(
-                  (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
-                    (teDhenatAplikimit &&
-                      teDhenatAplikimit.aplikimetEReja &&
-                      teDhenatAplikimit.aplikimetEReja.zbritja &&
-                      teDhenatAplikimit.aplikimetEReja.zbritja.zbritja)) /
-                    100
-                ).toFixed(2)}{" "}
-              €
-            </strong>
-          </p>
-          <p>
-            Totali Vjetor Me Zbritje:{" "}
-            <strong>
-              {teDhenatAplikimit &&
-                teDhenatAplikimit.tarifaDepartamenti &&
-                parseFloat(
-                  teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore -
-                    (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
-                      (teDhenatAplikimit &&
-                        teDhenatAplikimit.aplikimetEReja &&
-                        teDhenatAplikimit.aplikimetEReja.zbritja &&
-                        teDhenatAplikimit.aplikimetEReja.zbritja.zbritja)) /
-                      100
-                ).toFixed(2)}{" "}
-              €
-            </strong>
-          </p>
+          {teDhenatAplikimit &&
+          teDhenatAplikimit.aplikimetEReja &&
+          teDhenatAplikimit.aplikimetEReja.zbritja ? (
+            <>
+              <p>
+                Totali Vjetor Pa Zbritje:{" "}
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.tarifaDepartamenti &&
+                    parseFloat(
+                      teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore
+                    ).toFixed(2)}{" "}
+                  €
+                </strong>
+              </p>
+              <p>
+                Zbritja:{" "}
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.tarifaDepartamenti &&
+                    parseFloat(
+                      (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
+                        (teDhenatAplikimit &&
+                          teDhenatAplikimit.aplikimetEReja &&
+                          teDhenatAplikimit.aplikimetEReja.zbritja &&
+                          teDhenatAplikimit.aplikimetEReja.zbritja.zbritja)) /
+                        100
+                    ).toFixed(2)}{" "}
+                  €
+                </strong>
+              </p>
+              <p>
+                Totali Vjetor Me Zbritje:{" "}
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.tarifaDepartamenti &&
+                    parseFloat(
+                      teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore -
+                        (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
+                          (teDhenatAplikimit &&
+                            teDhenatAplikimit.aplikimetEReja &&
+                            teDhenatAplikimit.aplikimetEReja.zbritja &&
+                            teDhenatAplikimit.aplikimetEReja.zbritja.zbritja)) /
+                          100
+                    ).toFixed(2)}{" "}
+                  €
+                </strong>
+              </p>
+            </>
+          ) : (
+            <p>
+              Totali Vjetor:{" "}
+              <strong>
+                {teDhenatAplikimit &&
+                  teDhenatAplikimit.tarifaDepartamenti &&
+                  parseFloat(
+                    teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore
+                  ).toFixed(2)}{" "}
+                €
+              </strong>
+            </p>
+          )}
 
           <h5>
             Pagesa juaj qe duhet te behet per 3 keste te menjehershem eshte:{" "}
@@ -349,22 +386,42 @@ function DetajetAplikimit(props) {
             </strong>
           </h5>
           <h6>
-            Ne rast se behet pagesa ne teresi ju fitoni + 5% zbritje ekstra, ne
-            ate rast Totali Juaj per Pagese do te jete:{" "}
-            <strong>
+            <i>
+              Ne rast se behet pagesa ne teresi ju fitoni
+              <strong> 5% </strong>zbritje ekstra, ne ate rast Totali Juaj per
+              Pagese do te jete:{" "}
               {teDhenatAplikimit &&
-                teDhenatAplikimit.tarifaDepartamenti &&
-                parseFloat(
-                  teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore -
-                    (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
-                      (teDhenatAplikimit &&
-                        teDhenatAplikimit.aplikimetEReja &&
-                        teDhenatAplikimit.aplikimetEReja.zbritja &&
-                        teDhenatAplikimit.aplikimetEReja.zbritja.zbritja + 5)) /
-                      100
-                ).toFixed(2)}{" "}
-              €
-            </strong>
+              teDhenatAplikimit.aplikimetEReja &&
+              teDhenatAplikimit.aplikimetEReja.zbritja ? (
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.tarifaDepartamenti &&
+                    parseFloat(
+                      teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore -
+                        (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
+                          (teDhenatAplikimit &&
+                            teDhenatAplikimit.aplikimetEReja &&
+                            teDhenatAplikimit.aplikimetEReja.zbritja &&
+                            teDhenatAplikimit.aplikimetEReja.zbritja.zbritja +
+                              5)) /
+                          100
+                    ).toFixed(2)}{" "}
+                  €
+                </strong>
+              ) : (
+                <strong>
+                  {teDhenatAplikimit &&
+                    teDhenatAplikimit.tarifaDepartamenti &&
+                    parseFloat(
+                      teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore -
+                        (teDhenatAplikimit.tarifaDepartamenti.tarifaVjetore *
+                          5) /
+                          100
+                    ).toFixed(2)}{" "}
+                  €
+                </strong>
+              )}
+            </i>
           </h6>
           <Table striped bordered hover className="mt-3">
             <thead>

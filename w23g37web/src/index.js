@@ -12,9 +12,8 @@ import { TitleProvider } from "./Context/TitleProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-  
-  <TitleProvider>
-        <Navbar />
-        </TitleProvider>
-    </BrowserRouter>
+    <TitleProvider>
+      <Navbar />
+    </TitleProvider>
+  </BrowserRouter>
 );

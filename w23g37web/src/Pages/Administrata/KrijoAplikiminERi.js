@@ -10,6 +10,7 @@ import { Row } from "react-bootstrap";
 import Mesazhi from "../../Components/TeTjera/layout/Mesazhi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 const KrijoAplikiminERi = () => {
   const [emri, setEmri] = useState("");
@@ -50,6 +51,8 @@ const KrijoAplikiminERi = () => {
   );
 
   const getToken = localStorage.getItem("token");
+  const getID = localStorage.getItem("id");
+  const navigate = useNavigate();
 
   const authentikimi = {
     headers: {
@@ -60,6 +63,14 @@ const KrijoAplikiminERi = () => {
   useEffect(() => {
     const vendosDepartamentet = async () => {
       try {
+        const rolet = await axios.get(
+          `https://localhost:7251/api/Perdoruesi/shfaqSipasID?idUserAspNet=${getID}`,
+          authentikimi
+        );
+        if (!rolet.data.rolet.includes("Administrat")) {
+          navigate("/NukKeniAkses");
+        }
+
         const departamentet = await axios.get(
           `https://localhost:7251/api/Administrata/shfaqDepartamentet`,
           authentikimi

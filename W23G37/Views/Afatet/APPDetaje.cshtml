@@ -1,0 +1,125 @@
+﻿@model W23G37.Controllers.AfatetController.AfatetViewModel
+
+@{
+    ViewData["Title"] = "Detajet per Afatin e " + (Model.APP.Afati).ToString() + ' ' +(Model.APP.VitiAkademik).ToString();
+}
+<div style="display: flex; flex-direction: row;">
+    <div style="flex: 1;">
+    <table class="tableStyle table table-striped mt-4">
+        <tr>
+            <th>
+                ID:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.APP.APPID)
+            </td>
+        </tr>
+            <tr>
+                <th>
+                    Afati i:
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.APP.Afati)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Lloji i Afatit: 
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.APP.LlojiAfatit)
+                </td>
+            </tr>
+        <tr>
+            <th>
+               Viti Akademik:
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.APP.VitiAkademik)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Afati Paraqitjes:
+            </th>
+            <td>
+                    @($"{Model.APP.DataFillimitAfatit:dd/MM/yyyy}") - @($"{Model.APP.DataMbarimitAfatit:dd/MM/yyyy}")
+            </td>
+        </tr>
+            <tr>
+                <th>
+                    Data Krijimit:
+                </th>
+                <td>
+                    @($"{Model.APP.DataKrijimit:dd/MM/yyyy}")
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Tot te Paraqitur:
+                </th>
+                <td>
+                    @{
+                        var numeroStudentet = Model?.ParaqitjaProvimeve?
+                        .Select(pp => pp.StudentiID) // Assuming StudentID is the unique identifier
+                        .Distinct()
+                        .Count();
+                    }
+                    @numeroStudentet Student
+                </td>
+            </tr>
+    </table>
+    </div>
+    <div style="margin-left: 1em; flex: 2;">
+        <table class="tableStyle table table-striped mt-4">
+            <tr>
+                <th colspan="7" style="text-align: center;">
+                    Studentet që e kanë paraqitur provime ne këtë Afat
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Studenti
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Departamenti
+                </th>
+                <th>
+                    Niveli Studimeve
+                </th>
+                <th>
+                    Totali Provimeve te Paraqitura
+                </th>
+            </tr>
+            @foreach (var item in Model.ParaqitjaProvimitTotProvimeve)
+            {
+                <tr>
+                    <td>
+                        @item.Key.Emri @item.Key.Mbiemri
+                    </td>
+                    
+                    <td>
+                        @item.Key.Email
+                    </td>
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("Details", "Departamentet", new { id=item.Key.TeDhenatRegjistrimitStudentit?.DepartamentiID})'">@item.Key?.TeDhenatRegjistrimitStudentit?.Departamentet?.ShkurtesaDepartamentit</a>
+                    </td>
+
+                    <td>
+                        <a class="DetajetLink" onclick="location.href='@Url.Action("DetajetNiveliStudimit", "TeNdrysheme", new { id=item.Key?.TeDhenatRegjistrimitStudentit?.NiveliStudimitID})'">@item.Key?.TeDhenatRegjistrimitStudentit?.NiveliStudimeve?.ShkurtesaEmritNivelitStudimeve</a>
+                    </td>
+
+                    <td>
+                        @item.Value Provime
+                    </td>
+                    </tr>
+            }
+        </table>
+    </div>
+</div>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("APPIndex")'"><i class="fa-solid fa-arrow-left"></i></button>
+</div>

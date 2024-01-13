@@ -152,11 +152,11 @@ namespace W23G37.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LendetViewModel l)
         {
-            if (string.IsNullOrWhiteSpace(l.Lenda?.EmriLendes) || !Regex.IsMatch(l.Lenda.EmriLendes, @"^[a-zA-z\s]+$"))
+            if (string.IsNullOrWhiteSpace(l.Lenda?.EmriLendes) || !Regex.IsMatch(l.Lenda.EmriLendes, @"^[a-zA-Z][a-zA-Z0-9 /ëçÇË,-]*$"))
             {
-                ModelState.AddModelError("Lendet.EmriLendes", "Emri Lendes nuk duhet te jete i zbrazet dhe duhet te permbaj vetem shkronja!");
+                ModelState.AddModelError("Lenda.EmriLendes", "Emri Lendes nuk duhet te jete i zbrazet dhe duhet te permbaj vetem shkronja!");
             }
-            if (string.IsNullOrWhiteSpace(l.Lenda?.ShkurtesaLendes) || !Regex.IsMatch(l.Lenda.ShkurtesaLendes, @"^[a-zA-z\s]{4}$"))
+            if (string.IsNullOrWhiteSpace(l.Lenda?.ShkurtesaLendes) || !Regex.IsMatch(l.Lenda.ShkurtesaLendes, @"^[a-zA-Z][a-zA-Z0-9]{0,3}$"))
             {
                 ModelState.AddModelError("Lenda.ShkurtesaLendes", "Shkurtesa Lendes nuk duhet te jete i zbrazet dhe duhet te permbaj me se shumti 4 shkronja!");
             }

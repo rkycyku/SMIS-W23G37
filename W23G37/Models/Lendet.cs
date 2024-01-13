@@ -14,5 +14,7 @@ namespace W23G37.Models
         public int? SemestriLigjerimit { get; set; }
 
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
+
+        public virtual List<LendetDepartamentiProfesori>? LDPList { get; set; }
     }
 }

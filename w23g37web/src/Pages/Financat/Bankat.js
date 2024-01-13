@@ -11,6 +11,7 @@ import EditoBanken from "../../Components/Financat/Bankat/EditoBanken";
 import Modal from "react-bootstrap/Modal";
 import { TailSpin } from 'react-loader-spinner';
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 const Bankat = () => {
   const [bankat, setBankat] = useState([]);
@@ -24,6 +25,8 @@ const Bankat = () => {
   const [loading, setLoading] = useState(false);
 
   const getToken = localStorage.getItem("token");
+  const getID = localStorage.getItem("id");
+  const navigate = useNavigate();
 
   const authentikimi = {
     headers: {
@@ -35,6 +38,15 @@ const Bankat = () => {
     const shfaqBankat = async () => {
       try {
         setLoading(true);
+
+        const rolet = await axios.get(
+          `https://localhost:7251/api/Perdoruesi/shfaqSipasID?idUserAspNet=${getID}`,
+          authentikimi
+        );
+        if (!rolet.data.rolet.includes("Financa")) {
+          navigate("/NukKeniAkses");
+        }
+
         const bankat = await axios.get(
           "https://localhost:7251/api/Financat/ShfaqBankat", authentikimi
         );

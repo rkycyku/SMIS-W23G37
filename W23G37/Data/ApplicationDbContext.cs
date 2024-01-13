@@ -34,5 +34,8 @@ namespace W23G37.Data
         public DbSet<Zbritjet> Zbritjet { get; set; }
         public DbSet<TarifaStudenti> TarifaStudenti { get; set; }
         public DbSet<TarifatDepartamenti> TarifatDepartamenti { get; set; }
+        public DbSet<AfatiParaqitjesProvimit> AfatiParaqitjesProvimit { get; set; } 
+        public DbSet<ParaqitjaProvimit> ParaqitjaProvimit { get; set; }
+        public DbSet<NotatStudenti> NotatStudenti { get; set; }
     }
 }

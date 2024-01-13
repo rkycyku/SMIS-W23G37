@@ -15,10 +15,12 @@ namespace W23G37.Models
         public string AspNetUserId { get; set; }
         public DateTime? DataKrijimit { get; set; } = DateTime.Now;
         [ForeignKey("AspNetUserId")]
-        public IdentityUser AspNetUser { get; set; }
+        public IdentityUser? AspNetUser { get; set; }
 
         public virtual TeDhenatPerdoruesit? TeDhenatPerdoruesit { get; set; }
         public virtual TeDhenatRegjistrimitStudentit? TeDhenatRegjistrimitStudentit { get; set; }
+        public virtual ParaqitjaSemestrit? ParaqitjaSemestrit { get; set; }
+        public virtual ParaqitjaProvimit? ParaqitjaProvimit { get; set; }
     }
 }
 

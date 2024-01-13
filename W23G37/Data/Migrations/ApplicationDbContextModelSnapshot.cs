@@ -220,6 +220,40 @@ namespace W23G37.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("W23G37.Models.AfatiParaqitjesProvimit", b =>
+                {
+                    b.Property<int>("APPID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("APPID"), 1L, 1);
+
+                    b.Property<string>("Afati")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataFillimitAfatit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataFunditShfaqjesProvimeve")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataKrijimit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataMbarimitAfatit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LlojiAfatit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VitiAkademik")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("APPID");
+
+                    b.ToTable("AfatiParaqitjesProvimit");
+                });
+
             modelBuilder.Entity("W23G37.Models.AfatiParaqitjesSemestrit", b =>
                 {
                     b.Property<int>("APSID")
@@ -596,6 +630,40 @@ namespace W23G37.Data.Migrations
                     b.ToTable("NiveliStudimitDepartamenti");
                 });
 
+            modelBuilder.Entity("W23G37.Models.NotatStudenti", b =>
+                {
+                    b.Property<int>("NotaStudentiID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotaStudentiID"), 1L, 1);
+
+                    b.Property<DateTime?>("DataVendosjesSeNotes")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LendaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Nota")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParaqitjaProvimitID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentiID")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotaStudentiID");
+
+                    b.HasIndex("LendaID");
+
+                    b.HasIndex("ParaqitjaProvimitID");
+
+                    b.HasIndex("StudentiID");
+
+                    b.ToTable("NotatStudenti");
+                });
+
             modelBuilder.Entity("W23G37.Models.Pagesat", b =>
                 {
                     b.Property<int>("PagesaID")
@@ -647,6 +715,48 @@ namespace W23G37.Data.Migrations
                     b.ToTable("Pagesat");
                 });
 
+            modelBuilder.Entity("W23G37.Models.ParaqitjaProvimit", b =>
+                {
+                    b.Property<int>("ParaqitjaProvimitID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ParaqitjaProvimitID"), 1L, 1);
+
+                    b.Property<int?>("APPID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataParaqitjes")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataVendosjesSeNotes")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LDPID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusiINotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StudentiID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ParaqitjaProvimitID");
+
+                    b.HasIndex("APPID");
+
+                    b.HasIndex("LDPID");
+
+                    b.HasIndex("StudentiID")
+                        .IsUnique()
+                        .HasFilter("[StudentiID] IS NOT NULL");
+
+                    b.ToTable("ParaqitjaProvimit");
+                });
+
             modelBuilder.Entity("W23G37.Models.ParaqitjaSemestrit", b =>
                 {
                     b.Property<int>("ParaqitjaSemestritID")
@@ -681,7 +791,9 @@ namespace W23G37.Data.Migrations
 
                     b.HasIndex("SemestriID");
 
-                    b.HasIndex("StudentiID");
+                    b.HasIndex("StudentiID")
+                        .IsUnique()
+                        .HasFilter("[StudentiID] IS NOT NULL");
 
                     b.ToTable("ParaqitjaSemestrit");
                 });
@@ -1080,7 +1192,7 @@ namespace W23G37.Data.Migrations
                         .HasForeignKey("DepartamentiID");
 
                     b.HasOne("W23G37.Models.Lendet", "Lendet")
-                        .WithMany()
+                        .WithMany("LDPList")
                         .HasForeignKey("LendaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1145,6 +1257,27 @@ namespace W23G37.Data.Migrations
                     b.Navigation("NiveliStudimeve");
                 });
 
+            modelBuilder.Entity("W23G37.Models.NotatStudenti", b =>
+                {
+                    b.HasOne("W23G37.Models.Lendet", "Lenda")
+                        .WithMany()
+                        .HasForeignKey("LendaID");
+
+                    b.HasOne("W23G37.Models.ParaqitjaProvimit", "Provimi")
+                        .WithMany()
+                        .HasForeignKey("ParaqitjaProvimitID");
+
+                    b.HasOne("W23G37.Models.Perdoruesi", "Studenti")
+                        .WithMany()
+                        .HasForeignKey("StudentiID");
+
+                    b.Navigation("Lenda");
+
+                    b.Navigation("Provimi");
+
+                    b.Navigation("Studenti");
+                });
+
             modelBuilder.Entity("W23G37.Models.Pagesat", b =>
                 {
                     b.HasOne("W23G37.Models.AplikimetEReja", "AplikimetEReja")
@@ -1166,6 +1299,27 @@ namespace W23G37.Data.Migrations
                     b.Navigation("Perdoruesi");
                 });
 
+            modelBuilder.Entity("W23G37.Models.ParaqitjaProvimit", b =>
+                {
+                    b.HasOne("W23G37.Models.AfatiParaqitjesProvimit", "AfatiParaqitjesProvimit")
+                        .WithMany()
+                        .HasForeignKey("APPID");
+
+                    b.HasOne("W23G37.Models.LendetDepartamentiProfesori", "LendetDepartamentiProfesori")
+                        .WithMany()
+                        .HasForeignKey("LDPID");
+
+                    b.HasOne("W23G37.Models.Perdoruesi", "Studenti")
+                        .WithOne("ParaqitjaProvimit")
+                        .HasForeignKey("W23G37.Models.ParaqitjaProvimit", "StudentiID");
+
+                    b.Navigation("AfatiParaqitjesProvimit");
+
+                    b.Navigation("LendetDepartamentiProfesori");
+
+                    b.Navigation("Studenti");
+                });
+
             modelBuilder.Entity("W23G37.Models.ParaqitjaSemestrit", b =>
                 {
                     b.HasOne("W23G37.Models.AfatiParaqitjesSemestrit", "AfatiParaqitjesSemestrit")
@@ -1181,8 +1335,8 @@ namespace W23G37.Data.Migrations
                         .HasForeignKey("SemestriID");
 
                     b.HasOne("W23G37.Models.Perdoruesi", "Studenti")
-                        .WithMany()
-                        .HasForeignKey("StudentiID");
+                        .WithOne("ParaqitjaSemestrit")
+                        .HasForeignKey("W23G37.Models.ParaqitjaSemestrit", "StudentiID");
 
                     b.Navigation("AfatiParaqitjesSemestrit");
 
@@ -1218,7 +1372,7 @@ namespace W23G37.Data.Migrations
             modelBuilder.Entity("W23G37.Models.Semestri", b =>
                 {
                     b.HasOne("W23G37.Models.NiveliStudimeve", "NiveliStudimeve")
-                        .WithMany()
+                        .WithMany("Semestrat")
                         .HasForeignKey("NiveliStudimeveID");
 
                     b.Navigation("NiveliStudimeve");
@@ -1327,8 +1481,22 @@ namespace W23G37.Data.Migrations
                     b.Navigation("TarifatDepartamenti");
                 });
 
+            modelBuilder.Entity("W23G37.Models.Lendet", b =>
+                {
+                    b.Navigation("LDPList");
+                });
+
+            modelBuilder.Entity("W23G37.Models.NiveliStudimeve", b =>
+                {
+                    b.Navigation("Semestrat");
+                });
+
             modelBuilder.Entity("W23G37.Models.Perdoruesi", b =>
                 {
+                    b.Navigation("ParaqitjaProvimit");
+
+                    b.Navigation("ParaqitjaSemestrit");
+
                     b.Navigation("TeDhenatPerdoruesit");
 
                     b.Navigation("TeDhenatRegjistrimitStudentit");

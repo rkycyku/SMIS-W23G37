@@ -161,7 +161,7 @@ namespace W23G37.Data.Migrations
                 columns: new[] { "PagesaID", "BankaID", "AplikimiID", "PersoniID", "Pagesa", "Faturimi", "PershkrimiPageses", "LlojiPageses", "DataPageses", "DataKrijimit" },
             values: new object[,]
             {
-            { 1, 1, null, 2, "920", null, "Pagese nga Studenti - Pagesa e Komplet vitit nga Studenti me kod financiar 010100001", "Hyrese", "2023-12-19T23:00:00.000Z", "2023-12-20T11:30:04.685Z"}
+            { 1, 1, null, 2, "1440", null, "Pagese nga Studenti - Pagesa e Komplet vitit nga Studenti me kod financiar 010100001", "Hyrese", "2023-12-19T23:00:00.000Z", "2023-12-20T11:30:04.685Z"}
         });
             migrationBuilder.InsertData(
                table: "TeDhenatRegjistrimitStudentit",

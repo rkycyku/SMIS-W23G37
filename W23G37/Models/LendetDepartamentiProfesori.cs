@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace W23G37.Models
 {
@@ -13,6 +14,7 @@ namespace W23G37.Models
         public string? Pozita { get; set; }
 
         [ForeignKey("LendaID")]
+        [JsonIgnore]
         public virtual Lendet? Lendet { get; set; }
         [ForeignKey("DepartamentiID")]
         public virtual Departamentet? Departamentet { get; set; }
