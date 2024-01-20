@@ -10,7 +10,7 @@ Sistemi Permban keto Role:
 - **Asistent**
 - **Student**
 
-Sistemi permban funksione te ndryshme si *Paraqitja e Transkriptes, Vertetimin Studentor, Pagesat e Studentit, Paraqitjen e Provimeve, Menaxhimin e Lendeve, Menaxhimin e Studenteve, Krijimin e llogarive, Menaxhimin e Departamenteve dhe Lokacioneve, Menaxhimin e Financave*, si dhe shume funksione te tjera te ndryshme te cilat tashme veqse jane tashme funksionale.
+Sistemi permban funksione te ndryshme si *Paraqitja e Transkriptes, Vertetimin Studentor, Pagesat e Studentit, Paraqitjen e Provimeve, Menaxhimin e Lendeve, Menaxhimin e Studenteve, Krijimin e llogarive, Menaxhimin e Departamenteve dhe Lokacioneve, Menaxhimin e Financave*, si dhe shume funksione te tjera te ndryshme te cilat tashme veqse jane funksionale.
 
 Ky projekt eshte i punuar ne
 - **React JS** - Frontend
